@@ -1,5 +1,13 @@
 # aide
 Azusa Pacific University Senior Capstone Project
+## Aide Architecture
+  ```shell
+  App/
+    assets/
+	components/
+	screens/
+	util/
+  index.js
 
 Naming Convention Style Guide
 * camelCase
