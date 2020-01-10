@@ -11,6 +11,28 @@ Naming Convention Style Guide
   var lblCourseTitle
   ```
 
+Git Guide
+## Creating a branch
+  ```shell
+  $ git checkout develop
+  $ git pull
+  $ git checkout -b feature/001-login-screen
+  ```
+## Merging a branch to production
+  ```shell
+  $ git checkout test
+  $ git pull
+  $ git merge origin/feature/001-login-screen
+  # Begin to test the feature that was merged
+  
+  # Once it passes all the tests
+  $ git checkout develop
+  $ git pull
+  $ git merge origin/feature/001-login-screen
+  $ git checkout master
+  $ git merge origin/develop
+  ```
+
 Git Style Guide
 ## Branches
 
