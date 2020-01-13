@@ -45,7 +45,6 @@ Azusa Pacific University Senior Capstone Project
   $ git checkout master
   $ git merge origin/develop
   ```
-  ```
 
 ## Git Style Guide
 ## Branches
