@@ -8,8 +8,9 @@ Azusa Pacific University Senior Capstone Project
 	screens/
 	util/
   index.js
+  ```
 
-Naming Convention Style Guide
+## Naming Convention Style Guide
 * camelCase
 * for UI components, start with the general name of the UI component
   
@@ -19,20 +20,24 @@ Naming Convention Style Guide
   var lblCourseTitle
   ```
 
-Git Guide
+## Git Guide
 ## Creating a branch
   ```shell
   $ git checkout develop
   $ git pull
   $ git checkout -b feature/001-login-screen
   ```
-## Merging a branch to production
+
+## Testing a branch
   ```shell
   $ git checkout test
   $ git pull
   $ git merge origin/feature/001-login-screen
   # Begin to test the feature that was merged
+  ```
   
+## Merging a branch to production
+  ```shell
   # Once it passes all the tests
   $ git checkout develop
   $ git pull
@@ -40,8 +45,9 @@ Git Guide
   $ git checkout master
   $ git merge origin/develop
   ```
+  ```
 
-Git Style Guide
+## Git Style Guide
 ## Branches
 
 * Choose *short* and *descriptive* names:
