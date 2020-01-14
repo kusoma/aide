@@ -15,7 +15,7 @@ export default class Login extends Component {
   {
     super();
     this.state = {
-      email: "",
+      username: "",
       password: "",
     }
   }
@@ -23,35 +23,40 @@ export default class Login extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>AI</Text>
-        <Text style={styles.title}>DE</Text>
+        <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
+          <Text style={[styles.title, styles.titleLeft]}>AI</Text>
+          <Text style={styles.title}>DE</Text>
+        </View>
         <View style={styles.forms}> 
           <TextField
             style={{
                     width: 300,
-                    marginBottom: 20
+                    marginBottom: 5,
+                    fontSize: 18,
                   }}
-            label="Email"
-            placeholder="john.doe@example.com"
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
+            placeholder="Username"
+            onChangeText={username => this.setState({ username })}
+            value={this.state.username}
             autoCapitalize="none"
           />
           <TextField
             style={{
                 width: 300,
-                marginBottom: 20
+                marginBottom: 5,
+                fontSize: 18
               }}
-            label="Password"
+            placeholder="Password"
             secureTextEntry={this.state.showPassword}
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
             autoCapitalize="none"
           />
         </View>
-       
         <TouchableOpacity> 
-          <Text style={styles.text}> Forgot password? </Text> 
+          <Text style={styles.text}> Forgot password or username? </Text> 
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.signInButton}>
+          <Text style={styles.signInButtonText}> Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity> 
           <Text style={styles.text}> Create an Account </Text> 
@@ -70,21 +75,40 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   forms: {
-    borderRadius: 4,
+    borderRadius: 12,
     borderWidth: 0.5,
-    borderColor: 'rgba(0,0,10,1)',
+    borderColor: '#000',
     height: Constant.MAX_HEIGHT / 3.5,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: 'rgba(0,0,0,0.5)',
-    shadowOffset: { width: 5, height: 5},
-    shadowRadius: 2
+    shadowColor: '#000',
+    shadowOffset: { width: 3, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 12,
+    
+  },
+  signInButton: {
+    backgroundColor: Constant.COLORS.MAROON,
+    width: Constant.MAX_WIDTH / 3,
+    height: 47,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  signInButtonText: {
+    letterSpacing: -0.41,
+    color: '#fff',
+    fontSize: 24,
   },
   title: {
-      fontSize: 30,
-      fontFamily: Fonts.Comfortaa
+      fontSize: 72,
+      fontFamily: Fonts.Comfortaa,
+      letterSpacing: 10,
+  },
+  titleLeft: {
+    color: Constant.COLORS.MAROON,
   },
   text: {
+    fontSize: 18,
     color: Constant.COLORS.MAROON,
   }
 });

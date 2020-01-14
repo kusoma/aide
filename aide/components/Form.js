@@ -1,11 +1,12 @@
 import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
+import { Constant } from '../utils/Variables';
 
 const styles = StyleSheet.create({
   row: {
     marginHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#E4E4E4",
+    borderBottomColor: Constant.COLORS.MAROON,
     marginBottom: 11
   },
   label: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     marginBottom: 7
   },
   textfield: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "400",
     color: "#828282",
     marginBottom: 4
@@ -34,7 +35,7 @@ export const TextField = ({ label, ...props }) => (
     <Text style={styles.label}>{label}</Text>
     <TextInput
       style={styles.textfield}
-      placeholderTextColor="#828282"
+      placeholderTextColor="#808080"
       {...props}
     />
   </View>
