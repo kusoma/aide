@@ -4,7 +4,7 @@ import { Constant } from '../utils/Variables';
 
 const styles = StyleSheet.create({
   row: {
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: Constant.COLORS.MAROON,
     marginBottom: 11

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.5",
-    "expo": "^35.0.1",
+    "expo": "^35.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
