@@ -10,6 +10,8 @@ Azusa Pacific University Senior Capstone Project
   index.js
   ```
 
+test
+
 ## Naming Convention Style Guide
 * camelCase
 * for UI components, start with the general name of the UI component
