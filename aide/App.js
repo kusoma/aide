@@ -6,9 +6,10 @@ import UserSettings from "./screens/UserSettings";
 
 const MainNavigator = createStackNavigator(
   {
-    //Login: { screen: Login },
-    //Signup: { screen: Signup },
+    Signup: { screen: Signup },
+    Login: { screen: Login },
     UserSettings: { screen: UserSettings }
+    // Signup: {screen: Signup},
   },
   {
     headerMode: "none",
