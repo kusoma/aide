@@ -4,8 +4,9 @@ import Login from './screens/Login';
 import Signup from './screens/Signup';
 
 const MainNavigator = createStackNavigator({
-  Login: {screen: Login},
-  Signup: {screen: Signup},
+  Signup: { screen: Signup },
+  Login: { screen: Login },
+  //Signup: {screen: Signup},
 }, {
   headerMode: 'none',
   navigationOptions: {
