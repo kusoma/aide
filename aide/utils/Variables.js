@@ -5,6 +5,7 @@ export const Constant = {
     MAX_HEIGHT: Dimensions.get('screen').height,
     COLORS: {
         MAROON: '#B10101',
+        SHADOW_COLOR: 'rgba(0,0,0,0.25)'
     }
 
 }

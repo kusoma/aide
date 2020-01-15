@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   View
-   } from 'react-native';
+} from 'react-native';
+import * as Font from 'expo-font';
 import { Constant } from '../utils/Variables';
 import { Fonts } from '../utils/Fonts';
 import { TextField } from '../components/Form';
@@ -19,6 +20,15 @@ export default class Login extends Component {
       password: "",
     }
   }
+
+  async componentDidMount()
+  {
+    await Font.loadAsync({
+      'Comfortaa': require('../assets/fonts/Comfortaa_Regular.ttf'),
+      'Comfortaa_Bold': require('../assets/fonts/Comfortaa_Bold.ttf'),
+    });
+  }
+
 
   render() {
     return (
@@ -52,14 +62,14 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
         </View>
-        <TouchableOpacity> 
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}> 
           <Text style={styles.text}> Forgot password or username? </Text> 
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signInButton}>
+        <TouchableOpacity style={[styles.signInButton, {top: 30 }]}>
           <Text style={styles.signInButtonText}> Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity> 
-          <Text style={styles.text}> Create an Account </Text> 
+          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4  }]}> Create an Account </Text> 
         </TouchableOpacity>
       </ScrollView>
     );
@@ -68,36 +78,42 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    flex: 1,
     justifyContent: 'center',
     paddingVertical: 20
   },
   forms: {
-    borderRadius: 12,
-    borderWidth: 0.5,
-    borderColor: '#000',
-    height: Constant.MAX_HEIGHT / 3.5,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    height: Constant.MAX_HEIGHT / 3.5,
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: 'rgba(0,0,0,0.25)',
     shadowOffset: { width: 3, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 12,
-    
+    marginBottom: 4
   },
   signInButton: {
     backgroundColor: Constant.COLORS.MAROON,
-    width: Constant.MAX_WIDTH / 3,
-    height: 47,
+    borderRadius: 50,
+    width: Constant.MAX_WIDTH / 2,
+    height: 60,
+    left: Constant.MAX_WIDTH / 2 - 30,
     justifyContent: 'center',
     alignContent: 'center',
+    shadowColor: 'rgba(0,0,0,0.25)',
+    shadowOffset: { width: 3, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 12,
   },
   signInButtonText: {
     letterSpacing: -0.41,
     color: '#fff',
     fontSize: 24,
+    left: 30
   },
   title: {
       fontSize: 72,
