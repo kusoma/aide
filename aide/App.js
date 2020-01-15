@@ -1,17 +1,22 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import Login from "./screens/Login";
+import Signup from "./screens/Signup";
+import UserSettings from "./screens/UserSettings";
 
-const MainNavigator = createStackNavigator({
-  Login: {screen: Login},
-  Signup: {screen: Signup},
-}, {
-  headerMode: 'none',
-  navigationOptions: {
-    headerVisible: false,
+const MainNavigator = createStackNavigator(
+  {
+    //Login: { screen: Login },
+    //Signup: { screen: Signup },
+    UserSettings: { screen: UserSettings }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
   }
-});
+);
 
 const App = createAppContainer(MainNavigator);
 
