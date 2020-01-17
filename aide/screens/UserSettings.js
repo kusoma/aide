@@ -8,8 +8,8 @@ import {
   Image
 } from "react-native";
 import { Constant } from "../utils/Variables";
-import { Fonts } from "../utils/Fonts";
-import { TextFieldSet } from "../components/AcountForms";
+import { TextField } from "../components/Form";
+import Icons from "../utils/Icons";
 
 export default class Login extends Component {
   constructor() {
@@ -35,10 +35,10 @@ export default class Login extends Component {
             left: 235,
             top: 40
           }}
-          source={require("../assets/profilePic.png")}
+          // source={require("../assets/profilePic.png")}
         />
         <View style={styles.forms}>
-          <TextFieldSet
+          <TextField
             style={{
               width: 350,
               marginBottom: 8
@@ -49,7 +49,7 @@ export default class Login extends Component {
             value={this.state.firstName}
             autoCapitalize="none"
           />
-          <TextFieldSet
+          <TextField
             style={{
               width: 350,
               marginBottom: 8
@@ -60,7 +60,7 @@ export default class Login extends Component {
             value={this.state.lastName}
             autoCapitalize="none"
           />
-          <TextFieldSet
+          <TextField
             style={{
               width: 350,
               marginBottom: 8
@@ -71,7 +71,7 @@ export default class Login extends Component {
             value={this.state.Username}
             autoCapitalize="none"
           />
-          <TextFieldSet
+          <TextField
             style={{
               width: 350,
               marginBottom: 8
@@ -86,7 +86,7 @@ export default class Login extends Component {
 
         <View style={styles.forms2}>
           <Image
-            source={require("../assets/Backsettings.png")}
+          //  source={require("../assets/Backsettings.png")}
             style={{
               position: "absolute",
               left: -30,
@@ -94,7 +94,7 @@ export default class Login extends Component {
             }}
           />
           <Image
-            source={require("../assets/Separator.png")}
+           // source={require("../assets/Separator.png")}
             style={{
               position: "absolute",
               left: -30,
@@ -102,7 +102,7 @@ export default class Login extends Component {
             }}
           />
           <Image
-            source={require("../assets/keyIcon.png")}
+            source={Icons.key}
             style={{
               width: 15,
               height: 15,
@@ -117,7 +117,7 @@ export default class Login extends Component {
             <Text style={styles.text}> Change Password </Text>
           </TouchableOpacity>
           <Image
-            source={require("../assets/googleIcon.png")}
+            source={Icons.google}
             style={{
               width: 15,
               height: 15,
@@ -130,7 +130,7 @@ export default class Login extends Component {
             <Text style={styles.text}> Connect Google </Text>
           </TouchableOpacity>
           <Image
-            source={require("../assets/Separator.png")}
+        //    source={require("../assets/Separator.png")}
             style={{
               position: "absolute",
               left: -30,
@@ -138,7 +138,7 @@ export default class Login extends Component {
             }}
           />
           <Image
-            source={require("../assets/canvasIcon.png")}
+            source={Icons.canvas}
             style={{
               width: 15,
               height: 15,
@@ -153,7 +153,7 @@ export default class Login extends Component {
             <Text style={styles.text}> Connect Canvas </Text>
           </TouchableOpacity>
           <Image
-            source={require("../assets/Separator.png")}
+           // source={require("../assets/Separator.png")}
             style={{
               position: "absolute",
               left: -30,
@@ -161,7 +161,7 @@ export default class Login extends Component {
             }}
           />
           <Image
-            source={require("../assets/calendarIcon.png")}
+            source={Icons.calendar}
             style={{
               width: 14,
               height: 14,
@@ -178,7 +178,7 @@ export default class Login extends Component {
         </View>
         <View style={styles.forms3}>
           <Image
-            source={require("../assets/StudPrefBack.png")}
+           // source={require("../assets/StudPrefBack.png")}
             style={{
               position: "absolute",
               left: -30,
@@ -186,7 +186,7 @@ export default class Login extends Component {
             }}
           />
           <Image
-            source={require("../assets/lightbulb.png")}
+            source={Icons.lightBlub}
             style={{
               width: 20,
               height: 20,
@@ -202,7 +202,7 @@ export default class Login extends Component {
           </TouchableOpacity>
           <View style={styles.forms3}>
             <Image
-              source={require("../assets/logoutback.png")}
+              // source={require("../assets/logoutback.png")}
               style={{
                 position: "absolute",
                 left: -30,
@@ -210,7 +210,7 @@ export default class Login extends Component {
               }}
             />
             <Image
-              source={require("../assets/Logouticon.png")}
+              source={Icons.logout}
               style={{
                 width: 13,
                 height: 13,
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    fontFamily: Fonts.Comfortaa,
+    fontFamily: 'Comfortaa',
     paddingRight: Constant.MAX_HEIGHT * 0.3,
     marginBottom: 60,
     paddingTop: 100,

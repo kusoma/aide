@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import * as Font from 'expo-font';
-import { Constant } from '../utils/Variables';
-import { Fonts } from '../utils/Fonts';
+import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
+
 
 export default class Login extends Component {
   constructor() {
@@ -20,28 +19,21 @@ export default class Login extends Component {
     }
   }
 
-  async componentDidMount()
-  {
-    await Font.loadAsync({
-      'Comfortaa': require('../assets/fonts/Comfortaa_Regular.ttf'),
-      'Comfortaa_Bold': require('../assets/fonts/Comfortaa_Bold.ttf'),
-    });
-  }
-
-
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
-          <Text style={[styles.title, styles.titleLeft]}>AI</Text>
-          <Text style={styles.title}>DE</Text>
+          <Text style={[GlobalStyle.title, styles.titleLeft]}>AI</Text>
+          <Text style={GlobalStyle.title}>DE</Text>
         </View>
-        <View style={styles.forms}> 
+        <View style={[styles.forms, GlobalStyle.shadow]}> 
           <TextField
+            image="person"
             style={{
-                    width: 300,
-                    marginBottom: 5,
-                    fontSize: 18,
+              width: 300,
+              marginBottom: 5,
+              fontSize: 16,
+              fontFamily: 'Comfortaa',
                   }}
             placeholder="Username"
             onChangeText={username => this.setState({ username })}
@@ -52,7 +44,8 @@ export default class Login extends Component {
             style={{
                 width: 300,
                 marginBottom: 5,
-                fontSize: 18
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
             placeholder="Password"
             secureTextEntry={this.state.showPassword}
@@ -64,8 +57,8 @@ export default class Login extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}> 
           <Text style={styles.text}> Forgot password or username? </Text> 
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.signInButton, {top: 30 }]}>
-          <Text style={styles.signInButtonText}> Sign In </Text>
+        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]}>
+          <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity> 
           <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4  }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text> 
@@ -87,13 +80,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 12,
-    height: Constant.MAX_HEIGHT / 3.5,
+    height: Constant.MAX_HEIGHT / 5.5,
     justifyContent: 'center',
-    shadowColor: 'rgba(0,0,0,0.25)',
-    shadowOffset: { width: 3, height: 8 },
-    shadowOpacity: 0.8,
-    shadowRadius: 12,
-    marginBottom: 4
+    marginBottom: 10,
   },
   signInButton: {
     backgroundColor: Constant.COLORS.MAROON,
@@ -103,27 +92,20 @@ const styles = StyleSheet.create({
     left: Constant.MAX_WIDTH / 2 - 30,
     justifyContent: 'center',
     alignContent: 'center',
-    shadowColor: 'rgba(0,0,0,0.25)',
-    shadowOffset: { width: 3, height: 8 },
-    shadowOpacity: 0.8,
-    shadowRadius: 12,
   },
   signInButtonText: {
     letterSpacing: -0.41,
     color: '#fff',
     fontSize: 24,
-    left: 30
-  },
-  title: {
-      fontSize: 72,
-      fontFamily: Fonts.Comfortaa,
-      letterSpacing: 10,
+    left: 30,
+    // fontFamily: 'System font'
   },
   titleLeft: {
     color: Constant.COLORS.MAROON,
   },
   text: {
     fontSize: 18,
+    fontFamily: 'Comfortaa',
     color: Constant.COLORS.MAROON,
   }
 });

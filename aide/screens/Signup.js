@@ -8,9 +8,9 @@ import {
   Image,
   StatusBar
 } from 'react-native';
-import { Constant } from '../utils/Variables';
-import { Fonts } from '../utils/Fonts';
-import { TextField } from '../components/SignUpForm';
+import { Constant, GlobalStyle } from '../utils/Variables';
+import { TextField } from '../components/Form';
+import Icons from '../utils/Icons';
 
 export default class SignUp extends Component {
   constructor() {
@@ -29,23 +29,25 @@ export default class SignUp extends Component {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar barStyle="dark-content" />
-        <Text style={styles.title}>wel<Text style={styles.text}>come</Text></Text>
+        <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
+          <Text style={[GlobalStyle.title, {fontSize: 60}]}>Wel</Text> 
+          <Text style={[GlobalStyle.title, styles.text, {fontSize: 60}]}>come</Text>
+        </View>
         <Image
           style={styles.image}
-          source={require('../assets/Ellipse4.png')}
+          // source={require('../assets/Ellipse4.png')}
         />
         <Text style={styles.greyText}>
           Add a Photo
         </Text>
         <View style={styles.forms}>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/person.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="First Name"
               onChangeText={firstName => this.setState({ firstName })}
@@ -54,13 +56,12 @@ export default class SignUp extends Component {
             />
           </View>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/person.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="Last Name"
               onChangeText={lastName => this.setState({ lastName })}
@@ -69,13 +70,12 @@ export default class SignUp extends Component {
             />
           </View>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/person.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="Username"
               onChangeText={userName => this.setState({ userName })}
@@ -84,13 +84,12 @@ export default class SignUp extends Component {
             />
           </View>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/email.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="Email"
               onChangeText={email => this.setState({ email })}
@@ -99,41 +98,39 @@ export default class SignUp extends Component {
             />
           </View>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/key.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="Password"
-              //secureTextEntry={this.state.showPassword}
+              // secureTextEntry={this.state.showPassword}
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
               autoCapitalize="none"
             />
           </View>
           <View style={styles.row}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/key.png')}
-            />
             <TextField
               style={{
                 width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
               placeholder="Confirm Password"
-              //secureTextEntry={this.state.showPassword}
+              // secureTextEntry={this.state.showPassword}
               onChangeText={confirmPassword => this.setState({ confirmPassword })}
-              value={this.state.confimrPassword}
+              value={this.state.confirmPassword}
               autoCapitalize="none"
             />
           </View>
         </View>
 
         <View>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("Login")}>
+          <TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, {width: Constant.MAX_WIDTH/ 1.5}]} onPress={() => this.props.navigation.navigate("Login")}>
             <Text style={styles.createText}> Create Account </Text>
           </TouchableOpacity>
         </View>
@@ -160,14 +157,12 @@ const styles = StyleSheet.create({
     marginBottom: 35
   },
   title: {
-    fontSize: 60,
-    fontFamily: Fonts.Comfortaa,
-    marginTop: -30,
-    marginBottom: 25
+    fontSize: 72,
+    fontFamily: 'Comfortaa_Bold',
+    letterSpacing: 10,
   },
   text: {
     color: Constant.COLORS.MAROON,
-    fontSize: 60
   },
   image: {
     height: 120,
@@ -180,7 +175,7 @@ const styles = StyleSheet.create({
   },
   createText: {
     color: "#fff",
-    fontFamily: Fonts.Comfortaa,
+    fontFamily: 'Comfortaa_Bold',
     fontSize: 24
   },
   textFont: {
@@ -188,15 +183,15 @@ const styles = StyleSheet.create({
   },
   greyText: {
     color: "grey",
-    fontFamily: Fonts.Comfortaa,
+    fontFamily: 'Comfortaa_Bold',
     marginBottom: 15
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  // row: {
+  //   flexDirection: 'row',
+  //   marginBottom: 15,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   button: {
     backgroundColor: Constant.COLORS.MAROON,
     paddingVertical: 10,
