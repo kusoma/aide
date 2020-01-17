@@ -1,23 +1,27 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
-import Forgotpassword from './screens/Forgotpassword';
-import UserSettings from './screens/UserSettings';
+import React, { useState } from 'react';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import MainNavigation from "./router/MainNavigation";
+import BottomNavigation from "./router/BottomNavigation";
+import Fonts from "./utils/Fonts"
 
-const MainNavigator = createStackNavigator({
-  UserSettings: { screen: UserSettings },
-  Login: {screen: Login},
-  Forgotpassword: {screen: Forgotpassword},
-  Signup: {screen: Signup},
+const getFont = () => 
+   Font.loadAsync({
+    'Comfortaa': Fonts.Comfortaa,
+    'Comfortaa_Bold': Fonts.Comfortaa_Bold,
+});
 
-}, {
-  headerMode: 'none',
-  navigationOptions: {
-    headerVisible: false,
-  }}
-);
+export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-const App = createAppContainer(MainNavigator);
+ if(fontLoaded) {
+   return ( <BottomNavigation />);
+ }  
+   return (
+     <AppLoading
+       startAsync={getFont}
+       onFinish={() => setFontLoaded(true)}
+     />
+    )
 
-export default App;
+}

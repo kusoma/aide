@@ -57,19 +57,6 @@ const styles = StyleSheet.create({
       paddingVertical: 20
     },
     forms: {
-    //   alignItems: 'center',
-    //   borderColor: '#fff',
-    //   borderRadius: 12,
-    //   borderWidth: 0.5,
-    //   height: Constant.MAX_HEIGHT / 6,
-    //   width: 100,
-    //   justifyContent: 'center',
-    //   shadowColor: Constant.COLORS.SHADOW_COLOR,
-    //   shadowOffset: { width: 3, height: 8 },
-    //   shadowOpacity: 0.8,
-    //   shadowRadius: 12,
-
-
     backgroundColor: '#fff',
     width: Constant.MAX_WIDTH/ 1.25,
     height: Constant.MAX_HEIGHT / 9,
@@ -103,6 +90,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 72,
         letterSpacing: 10,
+        fontFamily: 'Comfortaa_Bold',
     },
     titleLeft: {
       color: Constant.COLORS.MAROON,
