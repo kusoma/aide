@@ -5,7 +5,10 @@ import Signup from '../screens/Signup';
 import Forgotpassword from '../screens/Forgotpassword';
 import UserSettings from '../screens/UserSettings';
 
+import MonlthyView from '../screens/MonthlyView';
+
 const MainNavigator = createStackNavigator({
+  Monthly: {screen: MonlthyView},
   Login: {screen: Login},
   Forgotpassword: {screen: Forgotpassword},
   Signup: {screen: Signup},
