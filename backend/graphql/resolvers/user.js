@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 
 module.exports = {
@@ -7,10 +8,10 @@ module.exports = {
             if (!user) {
                 throw new Error('User does not exist.');
             }
-
+            const hashedToken = await bcrypt.hash(googleToken, 12);
             const result = await User.findOneAndUpdate(
                 {_id: userID},
-                {googleToken: googleToken},
+                {googleToken: hashedToken},
                 {new: true}
             );
             
@@ -25,10 +26,10 @@ module.exports = {
             if (!user) {
                 throw new Error('User does not exist.');
             }
-
+            const hashedToken = await bcrypt.hash(canvasToken, 12);
             const result = await User.findOneAndUpdate(
                 {_id: userID},
-                {canvasToken: canvasToken},
+                {canvasToken: hashedToken},
                 {new: true}
             );
 
