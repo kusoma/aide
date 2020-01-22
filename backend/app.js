@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('./models/user');
 
+const utils = require('./app_util');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -52,39 +54,7 @@ app.use(
     graphqlHttp({
         schema: buildSchema(schema),
         rootValue: {
-            createUser: (args) => {
-                User.findOne({email: args.userInput.email})
-                    .then(user => {
-                        if (user) {
-                            throw new Error('Email already taken!');
-                            return bcrypt.hash(args.userInput.password, 12);
-                        }
-                    })
-                    .then(hashedPassword => {
-                        const user = new User({
-                            firstName: args.userInput.firstName,
-                            lastName: args.userInput.lastName,
-                            username: args.userInput.username,
-                            email: args.userInput.email,
-                            password: args.userInput.password,
-                            canvasToken: args.userInput.canvasToken,
-                            googleToken: args.userInput.googleToken
-                        });
-                        return user 
-                            .save()
-                            .then(result => {
-                                console.log(result);
-                                return {...result._doc};
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    })
-                    .catch(err => {
-                        throw err;
-                    });
-            }
-        
+            createUser: (args) => { utils.createUser(args); }
         },
         graphiql: true
     })
