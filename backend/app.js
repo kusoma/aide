@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const { graphql, buildSchema } = require('graphql');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const User = require('./models/user');
 
@@ -47,28 +48,43 @@ const schema =  `
 `
 
 app.use(
-    '/graphql',
+    '/api',
     graphqlHttp({
         schema: buildSchema(schema),
         rootValue: {
             createUser: (args) => {
-                const user = new User({
-                    firstName: args.userInput.firstName,
-                    lastName: args.userInput.lastName,
-                    username: args.userInput.username,
-                    email: args.userInput.email,
-                    password: args.userInput.password
-                });
-                return user 
-                    .save()
-                    .then(result => {
-                        console.log(result);
-                        return {...result._doc};
+                User.findOne({email: args.userInput.email})
+                    .then(user => {
+                        if (user) {
+                            throw new Error('Email already taken!');
+                            return bcrypt.hash(args.userInput.password, 12);
+                        }
+                    })
+                    .then(hashedPassword => {
+                        const user = new User({
+                            firstName: args.userInput.firstName,
+                            lastName: args.userInput.lastName,
+                            username: args.userInput.username,
+                            email: args.userInput.email,
+                            password: args.userInput.password,
+                            canvasToken: args.userInput.canvasToken,
+                            googleToken: args.userInput.googleToken
+                        });
+                        return user 
+                            .save()
+                            .then(result => {
+                                console.log(result);
+                                return {...result._doc};
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
                     })
                     .catch(err => {
-                        console.log(err);
+                        throw err;
                     });
             }
+        
         },
         graphiql: true
     })
