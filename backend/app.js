@@ -27,26 +27,39 @@ const schema =  `
     }
 
     type RootQuery {
-        user(email: String): User
+        user: User!
     }
 
     type RootMutation {
         createUser(userInput: UserInput): User
     }
+
+    schema {
+        query: RootQuery
+        mutation: RootMutation
+    }
 `
 
+// app.use('/', (req, res, next) => {
+//     res.send('working api');
+// })
+
+
 app.use(
-    '/api',
+    '/graphql',
     graphqlHttp({
         schema: buildSchema(schema),
         rootValue: {
+            user: () => {
+                return null;
+            },
             createUser: (args) => {
                 const user = new User({
                     firstName: args.userInput.firstName,
                     lastName: args.userInput.lastName,
                     email: args.userInput.email,
                     password: args.userInput.password
-                })
+                });
                 return user 
                     .save()
                     .then(result => {
@@ -55,13 +68,14 @@ app.use(
                     })
                     .catch(err => {
                         console.log(err);
-                    })
+                    });
             }
-        }
+        },
+        graphiql: true
     })
 );
 
-mongoose.connect()
+mongoose.connect('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
 .then(() => {
     app.listen(3000);
 })
