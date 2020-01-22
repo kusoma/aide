@@ -28,6 +28,8 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
+    addGoogleToken(userID: ID!, googleToken:String): User
+    addCanvasToken(userID: ID!, canvasToken:String): User
 }
 
 schema {
