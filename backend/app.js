@@ -23,22 +23,27 @@ const schema =  `
     input UserInput {
         firstName: String!
         lastName: String!
-        username!
+        username: String!
         email: String!
         password: String!
     }
 
     type RootQuery {
-        user(email: String): User
+        user: User
     }
 
     type RootMutation {
         createUser(userInput: UserInput): User
     }
+
+    schema {
+        query: RootQuery
+        mutation: RootMutation
+    }
 `
 
 app.use(
-    '/api',
+    '/graphql',
     graphqlHttp({
         schema: buildSchema(schema),
         rootValue: {
@@ -46,10 +51,10 @@ app.use(
                 const user = new User({
                     firstName: args.userInput.firstName,
                     lastName: args.userInput.lastName,
-                    username: args.user.username,g
+                    username: args.userInput.username,
                     email: args.userInput.email,
                     password: args.userInput.password
-                })
+                });
                 return user 
                     .save()
                     .then(result => {
@@ -58,9 +63,10 @@ app.use(
                     })
                     .catch(err => {
                         console.log(err);
-                    })
+                    });
             }
-        }
+        },
+        graphiql: true
     })
 );
 
