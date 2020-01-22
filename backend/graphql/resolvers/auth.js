@@ -13,7 +13,6 @@ module.exports = {
             const user = new User({
                 firstName: args.userInput.firstName,
                 lastName: args.userInput.lastName,
-                username: args.userInput.username,
                 email: args.userInput.email,
                 password: hashedPassword,
             });
