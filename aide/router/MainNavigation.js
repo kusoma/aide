@@ -2,12 +2,12 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Login from '../screens/Login'
 import Signup from '../screens/Signup';
-import Forgotpassword from '../screens/Forgotpassword';
+import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
 
 const MainNavigator = createStackNavigator({
   Login: {screen: Login},
-  Forgotpassword: {screen: Forgotpassword},
+  ForgotPassword: {screen: ForgotPassword},
   Signup: {screen: Signup},
   UserSettings: { screen: UserSettings },
 

@@ -10,12 +10,14 @@ import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
 
 
+
 export default class Login extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
       password: "",
+      showPassword: true,
     }
   }
 
@@ -28,7 +30,7 @@ export default class Login extends Component {
         </View>
         <View style={[styles.forms, GlobalStyle.shadow]}> 
           <TextField
-            image="person"
+            image="user"
             style={{
               width: 300,
               marginBottom: 5,
@@ -41,6 +43,7 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
           <TextField
+            image="key"
             style={{
                 width: 300,
                 marginBottom: 5,
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 24,
     left: 30,
-    // fontFamily: 'System font'
+    fontFamily: 'Comfortaa'
   },
   titleLeft: {
     color: Constant.COLORS.MAROON,

@@ -11,16 +11,9 @@ export default class app extends Component {
             email: ""
         }
     }
-    // const resetPassword()
-    // {
-    //     console.log('here')
-    //     this.props.navigation.navigate('Login');
-    // }
 
     render()
     {
-
-
         return (
           <ScrollView contentContainerStyle={styles.container}>
             <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
@@ -29,6 +22,7 @@ export default class app extends Component {
             </View>
             <TouchableOpacity style={styles.forms}> 
               <TextField
+                image="envelope"
                 style={{
                         width: 300,
                         marginBottom: 5,
