@@ -3,14 +3,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  Image
 } from "react-native";
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
-import Icons from "../utils/Icons";
+
 
 export default class Login extends Component {
   constructor() {

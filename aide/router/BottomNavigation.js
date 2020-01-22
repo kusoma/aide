@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 
 import Login from '../screens/Login'
 import Signup from '../screens/Signup';
-import Forgotpassword from '../screens/Forgotpassword';
+import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
 
 import Icons from '../utils/Icons';
@@ -20,7 +20,7 @@ const BottomNavigator = createMaterialBottomTabNavigator({
               </View>),  
         }  
     },
-    Forgotpassword: {screen: Forgotpassword, 
+    ForgotPassword: {screen: ForgotPassword, 
         navigationOptions:{    
             tabBarIcon: ({ tintColor }) => (  
               <View>  
