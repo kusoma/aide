@@ -1,60 +1,70 @@
-import React, { Component } from 'react';
-import { 
+import React, { Component } from "react";
+import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
-   } from 'react-native';
-import { Constant } from '../utils/Variables';
-import { Fonts } from '../utils/Fonts';
+} from 'react-native';
+import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
 
+
+
 export default class Login extends Component {
-  constructor()
-  {
+  constructor() {
     super();
     this.state = {
-      email: "",
+      username: "",
       password: "",
+      showPassword: true,
     }
   }
 
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>AI</Text>
-        <Text style={styles.title}>DE</Text>
-        <View style={styles.forms}> 
+        <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
+          <Text style={[GlobalStyle.title, styles.titleLeft]}>AI</Text>
+          <Text style={GlobalStyle.title}>DE</Text>
+        </View>
+        <View style={[styles.forms, GlobalStyle.shadow]}> 
           <TextField
+            image="user"
             style={{
-                    width: 300,
-                    marginBottom: 20
+              width: 300,
+              marginBottom: 5,
+              fontSize: 16,
+              fontFamily: 'Comfortaa',
                   }}
-            label="Email"
-            placeholder="john.doe@example.com"
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
+            placeholder="Username"
+            onChangeText={username => this.setState({ username })}
+            value={this.state.username}
             autoCapitalize="none"
           />
           <TextField
+            image="key"
             style={{
                 width: 300,
-                marginBottom: 20
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
-            label="Password"
+            placeholder="Password"
             secureTextEntry={this.state.showPassword}
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
             autoCapitalize="none"
           />
         </View>
-       
-        <TouchableOpacity> 
-          <Text style={styles.text}> Forgot password? </Text> 
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}> 
+          <Text style={styles.text}> Forgot password or username? </Text> 
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]}>
+          <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity> 
-          <Text style={styles.text}> Create an Account </Text> 
+          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4  }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text> 
         </TouchableOpacity>
       </ScrollView>
     );
@@ -63,28 +73,42 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    flex: 1,
     justifyContent: 'center',
     paddingVertical: 20
   },
   forms: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: 'rgba(0,0,10,1)',
-    height: Constant.MAX_HEIGHT / 3.5,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    height: Constant.MAX_HEIGHT / 5.5,
     justifyContent: 'center',
-    shadowColor: 'rgba(0,0,0,0.5)',
-    shadowOffset: { width: 5, height: 5},
-    shadowRadius: 2
+    marginBottom: 10,
   },
-  title: {
-      fontSize: 30,
-      fontFamily: Fonts.Comfortaa
+  signInButton: {
+    backgroundColor: Constant.COLORS.MAROON,
+    borderRadius: 50,
+    width: Constant.MAX_WIDTH / 2,
+    height: 60,
+    left: Constant.MAX_WIDTH / 2 - 30,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  signInButtonText: {
+    letterSpacing: -0.41,
+    color: '#fff',
+    fontSize: 24,
+    left: 30,
+    fontFamily: 'Comfortaa'
+  },
+  titleLeft: {
+    color: Constant.COLORS.MAROON,
   },
   text: {
+    fontSize: 18,
+    fontFamily: 'Comfortaa',
     color: Constant.COLORS.MAROON,
   }
 });
