@@ -7,8 +7,9 @@ import {
   View,
   Image
 } from "react-native";
-import { Constant } from "../utils/Variables";
+import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
+import { WideButton } from "../components/Buttons";
 import Icons from "../utils/Icons";
 
 export default class Login extends Component {
@@ -18,227 +19,80 @@ export default class Login extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      Username: ""
+      userName: ""
     };
   }
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={GlobalStyle.container}>
         <Text style={styles.title}>Account</Text>
-        <Image
+        <TextField
+          image="user"
           style={{
-            width: 115,
-            height: 115,
-            marginBottom: 60,
-            position: "absolute",
-            left: 235,
-            top: 40
-          }}
-          // source={require("../assets/profilePic.png")}
+                width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
+              }}
+          placeholder="First Name"
+          onChangeText={firstName => this.setState({ firstName })}
+          value={this.state.firstName}
+          autoCapitalize="words"
         />
-        <View style={styles.forms}>
-          <TextField
-            style={{
-              width: 350,
-              marginBottom: 8
-            }}
-            label="First Name"
-            placeholder="Johann"
-            onChangeText={firstName => this.setState({ firstName })}
-            value={this.state.firstName}
-            autoCapitalize="none"
-          />
-          <TextField
-            style={{
-              width: 350,
-              marginBottom: 8
-            }}
-            label="Last Name"
-            placeholder="Schmidt"
-            onChangeText={lastName => this.setState({ lastName })}
-            value={this.state.lastName}
-            autoCapitalize="none"
-          />
-          <TextField
-            style={{
-              width: 350,
-              marginBottom: 8
-            }}
-            label="Username"
-            placeholder="jschmidt17"
-            onChangeText={Username => this.setState({ Username })}
-            value={this.state.Username}
-            autoCapitalize="none"
-          />
-          <TextField
-            style={{
-              width: 350,
-              marginBottom: 8
-            }}
-            label="Email"
-            placeholder="jschmidt17@apu.edu"
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
-            autoCapitalize="none"
-          />
-        </View>
-
-        <View style={styles.forms2}>
-          <Image
-          //  source={require("../assets/Backsettings.png")}
-            style={{
-              position: "absolute",
-              left: -30,
-              top: 40
-            }}
-          />
-          <Image
-           // source={require("../assets/Separator.png")}
-            style={{
-              position: "absolute",
-              left: -30,
-              top: 85
-            }}
-          />
-          <Image
-            source={Icons.key}
-            style={{
-              width: 15,
-              height: 15,
-              position: "absolute",
-              left: -17,
-              top: 56
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("UserSettings")}
-          >
-            <Text style={styles.text}> Change Password </Text>
-          </TouchableOpacity>
-          <Image
-            source={Icons.google}
-            style={{
-              width: 15,
-              height: 15,
-              position: "absolute",
-              left: -17,
-              top: 96
-            }}
-          />
-          <TouchableOpacity>
-            <Text style={styles.text}> Connect Google </Text>
-          </TouchableOpacity>
-          <Image
-        //    source={require("../assets/Separator.png")}
-            style={{
-              position: "absolute",
-              left: -30,
-              top: 125
-            }}
-          />
-          <Image
-            source={Icons.canvas}
-            style={{
-              width: 15,
-              height: 15,
-              position: "absolute",
-              left: -17,
-              top: 135
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("UserSettings")}
-          >
-            <Text style={styles.text}> Connect Canvas </Text>
-          </TouchableOpacity>
-          <Image
-           // source={require("../assets/Separator.png")}
-            style={{
-              position: "absolute",
-              left: -30,
-              top: 161
-            }}
-          />
-          <Image
-            source={Icons.calendar}
-            style={{
-              width: 14,
-              height: 14,
-              position: "absolute",
-              left: -17,
-              top: 175
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("UserSettings")}
-          >
-            <Text style={styles.text}> Connect Device Calendar </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.forms3}>
-          <Image
-           // source={require("../assets/StudPrefBack.png")}
-            style={{
-              position: "absolute",
-              left: -30,
-              top: 22
-            }}
-          />
-          <Image
-            source={Icons.lightBlub}
-            style={{
-              width: 20,
-              height: 20,
-              position: "absolute",
-              left: -17,
-              top: 30
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("UserSettings")}
-          >
-            <Text style={styles.text}> Study Preferences </Text>
-          </TouchableOpacity>
-          <View style={styles.forms3}>
-            <Image
-              // source={require("../assets/logoutback.png")}
-              style={{
-                position: "absolute",
-                left: -30,
-                top: 22
+        <TextField
+          image="user"
+          style={{
+                width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
-            />
-            <Image
-              source={Icons.logout}
-              style={{
-                width: 13,
-                height: 13,
-                position: "absolute",
-                left: -13,
-                top: 35
+          placeholder="Last Name"
+          onChangeText={lastName => this.setState({ lastName })}
+          value={this.state.lastName}
+          autoCapitalize="words"
+        />
+        <TextField
+          image="user"
+          style={{
+                width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
               }}
-            />
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("UserSettings")}
-            >
-              <Text style={styles.textlogout}> Log Out </Text>
-            </TouchableOpacity>
-          </View>
+          placeholder="Username"
+          onChangeText={userName => this.setState({ userName })}
+          value={this.state.userName}
+          autoCapitalize="none"
+        />
+        <TextField
+          image="envelope"
+          style={{
+                width: 300,
+                marginBottom: 5,
+                fontSize: 16,
+                fontFamily: 'Comfortaa',
+              }}
+          placeholder="Email"
+          onChangeText={email => this.setState({ email })}
+          value={this.state.email}
+          autoCapitalize="none"
+        />
+        <View style={{ marginTop: 10, marginBottom: 20}}>
+          <WideButton label="Change Password" image="key" imageColor="#000" />
+          <WideButton label="Connect Google" image="google" imageColor="#000" />
+          <WideButton label="Connect Canvas" />
+          <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
         </View>
+        <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
+        <WideButton label="Log Out " buttonStyle={{backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D'}} textStyle={{ color: '#fff'}} image="share" imageColor="#fff" />
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 30
-  },
   forms: {
     height: Constant.MAX_HEIGHT / 3.5,
     alignItems: "center",
@@ -258,9 +112,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     fontFamily: 'Comfortaa',
-    paddingRight: Constant.MAX_HEIGHT * 0.3,
-    marginBottom: 60,
-    paddingTop: 100,
     color: Constant.COLORS.MAROON
   },
   text: {

@@ -43,6 +43,7 @@ export default class SignUp extends Component {
         <View style={styles.forms}>
           <View style={styles.row}>
             <TextField
+              image="user"
               style={{
                 width: 300,
                 marginBottom: 5,
@@ -57,6 +58,7 @@ export default class SignUp extends Component {
           </View>
           <View style={styles.row}>
             <TextField
+              image="user"
               style={{
                 width: 300,
                 marginBottom: 5,
@@ -71,6 +73,7 @@ export default class SignUp extends Component {
           </View>
           <View style={styles.row}>
             <TextField
+              image="user"
               style={{
                 width: 300,
                 marginBottom: 5,
@@ -85,6 +88,7 @@ export default class SignUp extends Component {
           </View>
           <View style={styles.row}>
             <TextField
+              image="envelope"
               style={{
                 width: 300,
                 marginBottom: 5,
@@ -99,6 +103,7 @@ export default class SignUp extends Component {
           </View>
           <View style={styles.row}>
             <TextField
+              image="key"
               style={{
                 width: 300,
                 marginBottom: 5,
@@ -114,6 +119,7 @@ export default class SignUp extends Component {
           </View>
           <View style={styles.row}>
             <TextField
+              image="key"
               style={{
                 width: 300,
                 marginBottom: 5,
