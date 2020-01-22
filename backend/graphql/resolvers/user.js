@@ -12,10 +12,12 @@ module.exports = {
             const result = await User.findOneAndUpdate(
                 {_id: userID},
                 {googleToken: hashedToken},
-                {new: true}
-            );
+                {new: true})
+            .catch(err => {
+                throw err;
+            });
             
-            return {...result._doc, googleToken: null, canvasToken: null, password: null}
+            // return {...result._doc, googleToken: null, canvasToken: null, password: null}
         } catch (err) {
             throw err;
         }
@@ -30,10 +32,12 @@ module.exports = {
             const result = await User.findOneAndUpdate(
                 {_id: userID},
                 {canvasToken: hashedToken},
-                {new: true}
-            );
+                {new: true})
+            .catch(err => {
+                throw err;
+            });;
 
-            return {...result._doc, googleToken: null,  canvasToken: null, password: null}
+            // return {...result._doc, googleToken: null,  canvasToken: null, password: null}
         } catch (err) {
             throw err;
         }
