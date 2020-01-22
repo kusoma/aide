@@ -15,6 +15,7 @@ const schema =  `
         _id: ID!
         firstName: String!
         lastName: String!
+        username: String!
         email: String!
         password: String!
     }
@@ -22,6 +23,7 @@ const schema =  `
     input UserInput {
         firstName: String!
         lastName: String!
+        username!
         email: String!
         password: String!
     }
@@ -44,6 +46,7 @@ app.use(
                 const user = new User({
                     firstName: args.userInput.firstName,
                     lastName: args.userInput.lastName,
+                    username: args.user.username,
                     email: args.userInput.email,
                     password: args.userInput.password
                 })
