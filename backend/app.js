@@ -18,6 +18,8 @@ const schema =  `
         username: String!
         email: String!
         password: String!
+        canvasToken: String
+        googleToken: String
     }
 
     input UserInput {
@@ -26,6 +28,8 @@ const schema =  `
         username: String!
         email: String!
         password: String!
+        canvasToken: String
+        googleToken: String
     }
 
     type RootQuery {
@@ -70,6 +74,7 @@ app.use(
     })
 );
 
+// TODO: connect to mongodb server instead of local
 mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false`)
 .then(() => {
     app.listen(3000);

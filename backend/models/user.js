@@ -24,6 +24,14 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    canvasToken: {
+        type: String,
+        required: false
+    },
+    googleToken: {
+        type: String,
+        required: false
     }
 })
 
