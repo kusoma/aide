@@ -23,6 +23,18 @@ module.exports = {
         } catch(err) {
             throw err;
         };
+    },
+    // TODO: add tokens
+    login: async ({ email, password}) => {
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            throw new Error('User does not exist!');
+        }
+        const isEqual = await bcrypt.compare(password, user.password);
+        if (!isEqual) {
+            throw new Error('Incorrect password!');
+        }
+        return user;
     }
 }
 
