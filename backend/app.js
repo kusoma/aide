@@ -46,7 +46,7 @@ app.use(
                 const user = new User({
                     firstName: args.userInput.firstName,
                     lastName: args.userInput.lastName,
-                    username: args.user.username,
+                    username: args.user.username,g
                     email: args.userInput.email,
                     password: args.userInput.password
                 })
@@ -64,7 +64,7 @@ app.use(
     })
 );
 
-mongoose.connect()
+mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false`)
 .then(() => {
     app.listen(3000);
 })
