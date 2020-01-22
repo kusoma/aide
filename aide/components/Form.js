@@ -2,7 +2,6 @@ import React from "react";
 import { Text, View, TextInput, StyleSheet, Image} from "react-native";
 import Icons from '../utils/Icons';
 import { Constant } from '../utils/Variables';
-import Fonts from "../utils/Fonts";
 
 const styles = StyleSheet.create({
   row: {
@@ -35,8 +34,6 @@ const styles = StyleSheet.create({
 });
 
 const isValidImage = (image) => {
-  console.log('this is image', image);
-
   const source = `Icons.${image}`;
   if(Icons.source)
     return source;
