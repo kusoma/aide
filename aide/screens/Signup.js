@@ -18,7 +18,6 @@ export default class SignUp extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      userName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -29,13 +28,13 @@ export default class SignUp extends Component {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar barStyle="dark-content" />
-        <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
-          <Text style={[GlobalStyle.title, {fontSize: 60}]}>Wel</Text> 
-          <Text style={[GlobalStyle.title, styles.text, {fontSize: 60}]}>come</Text>
+        <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
+          <Text style={[GlobalStyle.title, { fontSize: 60 }]}>Wel</Text>
+          <Text style={[GlobalStyle.title, styles.text, { fontSize: 60 }]}>come</Text>
         </View>
         <Image
           style={styles.image}
-          // source={require('../assets/Ellipse4.png')}
+        // source={require('../assets/Ellipse4.png')}
         />
         <Text style={styles.greyText}>
           Add a Photo
@@ -68,21 +67,6 @@ export default class SignUp extends Component {
               placeholder="Last Name"
               onChangeText={lastName => this.setState({ lastName })}
               value={this.state.lastName}
-              autoCapitalize="none"
-            />
-          </View>
-          <View style={styles.row}>
-            <TextField
-              image="user"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
-              placeholder="Username"
-              onChangeText={userName => this.setState({ userName })}
-              value={this.state.userName}
               autoCapitalize="none"
             />
           </View>
@@ -136,7 +120,7 @@ export default class SignUp extends Component {
         </View>
 
         <View>
-          <TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, {width: Constant.MAX_WIDTH/ 1.5}]} onPress={() => this.props.navigation.navigate("Login")}>
+          <TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, { width: Constant.MAX_WIDTH / 1.5 }]} onPress={() => this.props.navigation.navigate("Login")}>
             <Text style={styles.createText}> Create Account </Text>
           </TouchableOpacity>
         </View>
