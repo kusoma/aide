@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
+const request = require('request');
 
 const schema = require('./graphql/schema/index');
 const graphqlResolvers = require('./graphql/resolvers/index');
@@ -18,26 +19,21 @@ app.use(
     })
 );
 
-app.use(
+app.get(
     '/canvas',
-    (err, res, next) => {
-        var request = require('request');
-
-        var headers = {
-            'Authorization': 'Bearer 2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO'
+    (req, res) => {
+        //const canvasToken = req.param('canvasToken');
+        const canvasToken = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
+        const headers = {
+            'Authorization': `Bearer ${canvasToken}`
         };
 
-        var options = {
+        const options = {
             url: 'https://canvas.apu.edu/api/v1/users/self/upcoming_events',
             headers: headers
         };
 
-        request(options, (err, response, body) => {
-            if (err) throw err;
-            if (response.statusCode == 200) {
-                res.send(body);
-            }
-        });
+        request.get(options).pipe(res);
     }
 )
 
