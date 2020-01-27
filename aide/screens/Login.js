@@ -15,7 +15,7 @@ export default class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: "",
       showPassword: true,
     }
@@ -24,32 +24,32 @@ export default class Login extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={{ flexDirection:'row', top: 125, position: 'absolute' }}>
+        <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
           <Text style={[GlobalStyle.title, styles.titleLeft]}>AI</Text>
           <Text style={GlobalStyle.title}>DE</Text>
         </View>
-        <View style={[styles.forms, GlobalStyle.shadow]}> 
+        <View style={[styles.forms, GlobalStyle.shadow]}>
           <TextField
-            image="user"
+            image="envelope"
             style={{
               width: 300,
               marginBottom: 5,
               fontSize: 16,
               fontFamily: 'Comfortaa',
-                  }}
-            placeholder="Username"
-            onChangeText={username => this.setState({ username })}
-            value={this.state.username}
+            }}
+            placeholder="Email"
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
             autoCapitalize="none"
           />
           <TextField
             image="key"
             style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              width: 300,
+              marginBottom: 5,
+              fontSize: 16,
+              fontFamily: 'Comfortaa',
+            }}
             placeholder="Password"
             secureTextEntry={this.state.showPassword}
             onChangeText={password => this.setState({ password })}
@@ -57,14 +57,19 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
         </View>
+<<<<<<< HEAD
         <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}> 
           <Text style={styles.text}> Forgot password or username? </Text> 
+=======
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}>
+          <Text style={styles.text}> Forgot password or email? </Text>
+>>>>>>> feature/009-user-frontend-backend
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]}>
+        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, { top: 30 }]}>
           <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
         </TouchableOpacity>
-        <TouchableOpacity> 
-          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4  }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text> 
+        <TouchableOpacity>
+          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4 }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text>
         </TouchableOpacity>
       </ScrollView>
     );
