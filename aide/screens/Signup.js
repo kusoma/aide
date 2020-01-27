@@ -32,13 +32,6 @@ export default class SignUp extends Component {
           <Text style={[GlobalStyle.title, { fontSize: 60 }]}>Wel</Text>
           <Text style={[GlobalStyle.title, styles.text, { fontSize: 60 }]}>come</Text>
         </View>
-        <Image
-          style={styles.image}
-        // source={require('../assets/Ellipse4.png')}
-        />
-        <Text style={styles.greyText}>
-          Add a Photo
-        </Text>
         <View style={styles.forms}>
           <View style={styles.row}>
             <TextField
