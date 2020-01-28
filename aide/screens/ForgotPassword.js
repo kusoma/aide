@@ -11,6 +11,7 @@ export default class app extends Component {
     }
   }
 
+  
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
