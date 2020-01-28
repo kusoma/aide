@@ -15,7 +15,7 @@ export default class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: "",
       showPassword: true,
     }
@@ -30,16 +30,16 @@ export default class Login extends Component {
         </View>
         <View style={[styles.forms, GlobalStyle.shadow]}>
           <TextField
-            image="user"
+            image="envelope"
             style={{
               width: 300,
               marginBottom: 5,
               fontSize: 16,
               fontFamily: 'Comfortaa',
             }}
-            placeholder="Username"
-            onChangeText={username => this.setState({ username })}
-            value={this.state.username}
+            placeholder="Email"
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
             autoCapitalize="none"
           />
           <TextField
@@ -57,13 +57,8 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
         </View>
-<<<<<<< HEAD
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}> 
-          <Text style={styles.text}> Forgot password or username? </Text> 
-=======
         <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
           <Text style={styles.text}> Forgot password or username? </Text>
->>>>>>> origin/feature/012-bottom-tab-settings
         </TouchableOpacity>
         <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, { top: 30 }]}>
           <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
