@@ -57,8 +57,8 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
         </View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}>
-          <Text style={styles.text}> Forgot password or email? </Text>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+          <Text style={styles.text}> Forgot password or username? </Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, { top: 30 }]}>
           <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
