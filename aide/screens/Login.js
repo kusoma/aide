@@ -7,9 +7,10 @@ import {
   View
 } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField } from '../components/Form';
+import { TextField, ErrorText } from '../components/Form';
+import { useQuery } from '@apollo/react-hooks';
 
-
+import { requestUser } from '../graphql/queries';
 
 export default class Login extends Component {
   constructor() {
@@ -18,10 +19,50 @@ export default class Login extends Component {
       email: "",
       password: "",
       showPassword: true,
+      iserror: false,
     }
   }
 
+   handleLogin(userEmail, userPassword) {
+    console.log('this is email and password: ', userEmail, userPassword);
+    
+    let requestBody = {
+      query: `
+        query {
+          login(email: "${userEmail}", password: "${userPassword}") {
+            email,
+            password
+          }
+        }
+      `
+    };
+  
+    fetch('http://localhost:3000/api?', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+    .then(resData => {
+      if (resData.errors)
+        this.state.iserror = true;
+      else 
+        this.props.navigation.navigate('UserSettings')
+    })
+    .catch(err => {
+      console.log('this is error ',err);
+    });
+  }
+
+
   render() {
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
@@ -60,12 +101,18 @@ export default class Login extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
           <Text style={styles.text}> Forgot password or username? </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, { top: 30 }]}>
-          <Text style={styles.signInButtonText} onPress={() => this.props.navigation.navigate('UserSettings')}> Sign In </Text>
+        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]}>
+          <Text style={styles.signInButtonText} onPress={() => this.handleLogin(this.state.email, this.state.password)}> Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4 }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text>
         </TouchableOpacity>
+        { this.state.iserror ?
+                <ErrorText text="Incorrect Email or Password" />
+            :
+            <React.Fragment />
+        }
+
       </ScrollView>
     );
   }
