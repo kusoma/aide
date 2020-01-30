@@ -116,7 +116,7 @@ export default class Login extends Component {
           <Text style={styles.signInButtonText} > Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4 }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text>
+          <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4 }]} onPress={() => this.props.navigation.navigate('SignUp')}> Create an Account </Text>
         </TouchableOpacity>
         { this.state.iserror ?
                 <ErrorText text="Incorrect Email or Password" />
