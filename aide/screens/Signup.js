@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React, 
+{ Component } from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Image,
   StatusBar
 } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
-import Icons from '../utils/Icons';
 
 export default class SignUp extends Component {
   constructor() {
@@ -23,6 +22,56 @@ export default class SignUp extends Component {
       confirmPassword: "",
     }
   }
+
+  handleSignUp() {
+    if (this.state.password.trim().length === 0 || this.state.confirmPassword.trim().length === 0 || this.state.password.trim() !== this.state.confirmPassword.trim()) {
+      return;
+    }
+
+    let requestBody = {
+      query: `
+      mutation {
+        createUser(userInput:{firstName:"${this.state.firstName}", lastName:"${this.state.lastName}", email:"${this.state.email}",password:"${this.state.password}"}) 
+        {
+          firstName
+          lastName
+          email
+        }
+      }
+      `
+    };
+
+    fetch('http://localhost:3000/api?', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw new Error('Failed!');
+      }
+      return res.json();
+    })
+      .then(resData => {
+        if (resData.errors) {
+          this.state.iserror = true;
+          this.state.email = resData.errors.message;
+        } else {
+          console.log(resData);
+          let info = {
+            firstName: resData.data.createUser.firstName,
+            lastName: resData.data.createUser.lastName,
+            email: resData.data.createUser.email
+          }
+          this.props.navigation.navigate('UserSettings', info)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
 
   render() {
     return (
@@ -113,7 +162,7 @@ export default class SignUp extends Component {
         </View>
 
         <View>
-          <TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, { width: Constant.MAX_WIDTH / 1.5 }]} onPress={() => this.props.navigation.navigate("Login")}>
+          <TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, { width: Constant.MAX_WIDTH / 1.5 }]} onPress={() => this.handleSignUp()}>
             <Text style={styles.createText}> Create Account </Text>
           </TouchableOpacity>
         </View>
@@ -169,12 +218,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Comfortaa_Bold',
     marginBottom: 15
   },
-  // row: {
-  //   flexDirection: 'row',
-  //   marginBottom: 15,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   button: {
     backgroundColor: Constant.COLORS.MAROON,
     paddingVertical: 10,

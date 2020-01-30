@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField, ErrorText } from '../components/Form';
-import { useQuery } from '@apollo/react-hooks';
-
-import { requestUser } from '../graphql/queries';
+import { 
+  Constant, 
+  GlobalStyle 
+} from '../utils/Variables';
+import { 
+  TextField, 
+  ErrorText 
+} from '../components/Form';
 
 export default class Login extends Component {
   constructor() {
@@ -24,14 +27,13 @@ export default class Login extends Component {
   }
 
    handleLogin(userEmail, userPassword) {
-    console.log('this is email and password: ', userEmail, userPassword);
-    
     let requestBody = {
       query: `
         query {
           login(email: "${userEmail}", password: "${userPassword}") {
-            email,
-            password
+            firstName
+            lastName
+            email
           }
         }
       `
@@ -45,15 +47,25 @@ export default class Login extends Component {
       }
     }).then(res => {
       if (res.status !== 200 && res.status !== 201) {
-        throw new Error('Failed!');
+        // throw new Error('Failed!');
+        this.state.email = "Invalid Credentials"
       }
       return res.json();
     })
     .then(resData => {
-      if (resData.errors)
+      if (resData.errors) {
         this.state.iserror = true;
-      else 
-        this.props.navigation.navigate('UserSettings')
+        this.state.email = resData.errors.message;
+      } else {
+        console.log(resData);
+        console.log(resData.data);
+        let info = {
+          firstName: resData.data.login.firstName,
+          lastName: resData.data.login.lastName,
+          email: resData.data.login.email
+        }
+        this.props.navigation.navigate('UserSettings', info)
+      }
     })
     .catch(err => {
       console.log('this is error ',err);
@@ -62,7 +74,6 @@ export default class Login extends Component {
 
 
   render() {
-
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
@@ -101,8 +112,8 @@ export default class Login extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
           <Text style={styles.text}> Forgot password or username? </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]}>
-          <Text style={styles.signInButtonText} onPress={() => this.handleLogin(this.state.email, this.state.password)}> Sign In </Text>
+        <TouchableOpacity style={[styles.signInButton, GlobalStyle.shadow, {top: 30 }]} onPress={() => this.handleLogin(this.state.email, this.state.password)}>
+          <Text style={styles.signInButtonText} > Sign In </Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text style={[styles.text, { top: Constant.MAX_HEIGHT / 4 }]} onPress={() => this.props.navigation.navigate('Signup')}> Create an Account </Text>

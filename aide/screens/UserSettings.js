@@ -5,18 +5,22 @@ import {
   Text,
   View,
 } from "react-native";
-import { Constant, GlobalStyle } from "../utils/Variables";
+import { 
+  Constant, 
+  GlobalStyle 
+} from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
 
 
 export default class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { navigation } = this.props;
     this.state = {
-      email: "",
-      firstName: "",
-      lastName: "",
+      email: navigation.getParam("email"),
+      firstName: navigation.getParam("firstName"),
+      lastName: navigation.getParam("lastName"),
     };
   }
 
