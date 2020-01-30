@@ -10,7 +10,6 @@ export default class app extends Component {
       email: ""
     }
   }
-
   
   render() {
     return (

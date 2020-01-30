@@ -1,4 +1,4 @@
-import React, 
+import React,
 { Component } from 'react';
 import {
   ScrollView,
@@ -82,78 +82,51 @@ export default class SignUp extends Component {
           <Text style={[GlobalStyle.title, styles.text, { fontSize: 60 }]}>come</Text>
         </View>
         <View style={styles.forms}>
-          <View style={styles.row}>
+          <View>
             <TextField
               image="user"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              style={styles.image}
               placeholder="First Name"
               onChangeText={firstName => this.setState({ firstName })}
               value={this.state.firstName}
               autoCapitalize="none"
             />
           </View>
-          <View style={styles.row}>
+          <View>
             <TextField
               image="user"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              style={styles.image}
               placeholder="Last Name"
               onChangeText={lastName => this.setState({ lastName })}
               value={this.state.lastName}
               autoCapitalize="none"
             />
           </View>
-          <View style={styles.row}>
+          <View>
             <TextField
               image="envelope"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              style={styles.image}
               placeholder="Email"
               onChangeText={email => this.setState({ email })}
               value={this.state.email}
               autoCapitalize="none"
             />
           </View>
-          <View style={styles.row}>
+          <View>
             <TextField
               image="key"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              style={styles.image}
               placeholder="Password"
-              // secureTextEntry={this.state.showPassword}
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
               autoCapitalize="none"
             />
           </View>
-          <View style={styles.row}>
+          <View>
             <TextField
               image="key"
-              style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+              style={styles.image}
               placeholder="Confirm Password"
-              // secureTextEntry={this.state.showPassword}
               onChangeText={confirmPassword => this.setState({ confirmPassword })}
               value={this.state.confirmPassword}
               autoCapitalize="none"
@@ -168,7 +141,7 @@ export default class SignUp extends Component {
         </View>
 
         <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}>
-          <Text style={[styles.text, styles.textFont]}> Sign In </Text>
+          <Text style={ styles.text }> Sign In </Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -188,42 +161,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 35
   },
-  title: {
-    fontSize: 72,
-    fontFamily: 'Comfortaa_Bold',
-    letterSpacing: 10,
-  },
   text: {
     color: Constant.COLORS.MAROON,
   },
   image: {
-    height: 120,
-    width: 120,
-    marginBottom: 20
-  },
-  icon: {
-    height: 20,
-    width: 20
+    width: 300,
+    marginBottom: 5,
+    fontSize: 16,
+    fontFamily: 'Comfortaa',
   },
   createText: {
     color: "#fff",
     fontFamily: 'Comfortaa_Bold',
     fontSize: 24
-  },
-  textFont: {
-    fontSize: 24,
-  },
-  greyText: {
-    color: "grey",
-    fontFamily: 'Comfortaa_Bold',
-    marginBottom: 15
-  },
-  button: {
-    backgroundColor: Constant.COLORS.MAROON,
-    paddingVertical: 10,
-    paddingHorizontal: 45,
-    alignItems: "center",
-    marginHorizontal: 20,
-    marginBottom: 180
   },
 });

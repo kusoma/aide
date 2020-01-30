@@ -81,37 +81,10 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  forms: {
-    height: Constant.MAX_HEIGHT / 3.5,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  forms2: {
-    height: Constant.MAX_HEIGHT / 3.5,
-    paddingRight: Constant.MAX_HEIGHT / 12,
-    paddingTop: 48
-  },
-  forms3: {
-    height: Constant.MAX_HEIGHT / 3.5,
-    paddingRight: Constant.MAX_HEIGHT / 7.3,
-    paddingTop: 25
-  },
   title: {
     fontSize: 36,
     fontWeight: "bold",
     fontFamily: 'Comfortaa',
     color: Constant.COLORS.MAROON
   },
-  text: {
-    color: Constant.COLORS.MAROON,
-    paddingVertical: 6,
-    fontSize: 17,
-    marginBottom: 7
-  },
-  textlogout: {
-    color: "white",
-    paddingVertical: 6,
-    fontSize: 17,
-    marginBottom: 7
-  }
 });
