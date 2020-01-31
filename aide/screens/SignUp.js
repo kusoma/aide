@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, StatusBar } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField } from '../components/Form';
+import { TextField, ErrorText } from '../components/Form';
 import { callGraphql } from '../utils/API';
 
 export default class SignUp extends Component {
@@ -13,13 +13,26 @@ export default class SignUp extends Component {
 			email: "",
 			password: "",
 			confirmPassword: "",
-			isError: false
+			isError: false,
+			isErrorText: ''
 		}
 	}
 
-	signUpHandler(firstName, lastName, email, password) {
-		if (this.state.password.trim() !== this.state.confirmPassword.trim()) {
-			this.state.isError = true;
+	signUpHandler() {
+		firstName = this.state.firstName
+		lastName = this.state.lastName
+		email = this.state.email
+		password = this.state.password
+		confirmPassword = this.state.confirmPassword
+
+		if (firstName.trim().length === 0 || lastName.trim().length === 0 || email.trim().length === 0) {
+			this.setState({ isError: true })
+			this.setState({ isErrorText: 'Fields cannot be empty!'})
+		}
+
+		if (password.trim() !== confirmPassword.trim()) {
+			this.setState({ isError: true })
+			this.setState({ isErrorText: 'Passwords do not match!'})
 			return;
 		}
 
@@ -103,7 +116,7 @@ export default class SignUp extends Component {
 					/>
 				</View>
 				
-				<TouchableOpacity style={[GlobalStyle.pillButton, {width: Constant.MAX_WIDTH / 1.5}]} onPress={() => this.handleSignUp()}>
+				<TouchableOpacity style={[GlobalStyle.pillButton, {width: Constant.MAX_WIDTH / 1.5}]} onPress={() => this.signUpHandler()}>
 					<Text style={GlobalStyle.pillButtonText}> Create Account </Text>
 				</TouchableOpacity>
 
@@ -111,6 +124,8 @@ export default class SignUp extends Component {
 					{/* TODO: Get this to match placement with 'Create an Account'  */}
 					<Text style={{ color: Constant.COLORS.MAROON }}> Sign In </Text>
 				</TouchableOpacity>
+
+				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <React.Fragment />}
 			</ScrollView>
 		);
 	}

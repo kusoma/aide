@@ -12,10 +12,14 @@ export default class Login extends Component {
 			password: "",
 			showPassword: true,
 			isError: false,
+			isErrorText: ''
 		}
 	}
 
-	loginHandler(email, password) {
+	loginHandler() {
+		const email = this.state.email;
+		const password = this.state.password;
+
 		let request = {
 			query: `
 			  query {
@@ -30,7 +34,8 @@ export default class Login extends Component {
 	
 		callGraphql(request, (json) => {
 			if (json.errors) {
-				this.state.isError = true
+				this.setState({ isError: true })
+				this.setState({ isErrorText: json.errors[0].message })
 			} else {
 				let user = {
 					firstName: json.data.login.firstName,
@@ -67,7 +72,7 @@ export default class Login extends Component {
 				</View>
 
 				<TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-					<Text style={GlobalStyle.text}> Forgot password or username? </Text>
+					<Text style={GlobalStyle.text}> Forgot password? </Text>
 				</TouchableOpacity>
 				
 				<TouchableOpacity
@@ -81,7 +86,7 @@ export default class Login extends Component {
 				</TouchableOpacity>
 
 				{/* TODO: Double check on error message */}
-				{this.state.isError ? <ErrorText text="Incorrect Email or Password" /> : <React.Fragment />}
+				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <React.Fragment />}
 			</ScrollView>
 		);
 	}
