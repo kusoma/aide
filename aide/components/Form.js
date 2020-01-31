@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, View, TextInput, StyleSheet, Image} from "react-native";
-import Icons from '../utils/Icons';
-import { Constant } from '../utils/Variables';
+import { Text, View, TextInput, StyleSheet, Image } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Constant, GlobalStyle } from '../utils/Variables';
 
 const styles = StyleSheet.create({
   row: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 7
   },
-  textfield: {
+  textField: {
     fontSize: 20,
     fontWeight: "400",
     color: "#828282",
@@ -33,25 +33,37 @@ const styles = StyleSheet.create({
   }
 });
 
-const isValidImage = (image) => {
-  const source = `Icons.${image}`;
-  if(Icons.source)
-    return source;
-  return Icons.person;
+const IsValidImage = ({ image, imageColor }) => {
+  const color = imageColor || Constant.COLORS.MAROON;
+
+  if (image !== null) {
+    return (
+      <View style={{ marginRight: 10, marginBottom: 5 }}>
+        <Icon name={image} size={30} color={color} />
+      </View>
+    )
+  }
 }
 
-export const TextField = ({ image, label, ...props }) => (
+export const TextField = ({ image, imageColor, label, ...props }) => (
   <View style={styles.row}>
     <Text style={styles.label}>{label}</Text>
-    <View> 
-      <Image source={isValidImage} />
+    <View style={{ flexDirection: 'row' }}>
+      <IsValidImage image={image} imageColor={imageColor} />
       <TextInput
-        style={styles.textfield}
+        style={styles.textField}
         placeholderTextColor="#808080"
         {...props}
       />
     </View>
 
+  </View>
+);
+
+export const Aide = () => (
+  <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
+    <Text style={[GlobalStyle.title, { color: Constant.COLORS.MAROON }]}>AI</Text>
+    <Text style={GlobalStyle.title}>DE</Text>
   </View>
 );
 
