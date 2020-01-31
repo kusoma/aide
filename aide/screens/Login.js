@@ -85,7 +85,6 @@ export default class Login extends Component {
 					<Text style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}> Create an Account </Text>
 				</TouchableOpacity>
 
-				{/* TODO: Double check on error message */}
 				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <React.Fragment />}
 			</ScrollView>
 		);
