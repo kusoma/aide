@@ -67,7 +67,7 @@ export default class Login extends Component {
           value={this.state.email}
           autoCapitalize="none"
         />
-        <View style={{ marginTop: 10, marginBottom: 20 }}>
+        <View style={{ marginTop: 16, marginBottom: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
           <WideButton label="Connect Canvas" />

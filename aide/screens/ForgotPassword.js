@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { Constant } from '../utils/Variables';
-import { TextField } from '../components/Form';
+import { TextField, Aide } from '../components/Form';
 
 export default class app extends Component {
   constructor() {
@@ -14,10 +14,7 @@ export default class app extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
-          <Text style={[styles.title, styles.titleLeft]}>AI</Text>
-          <Text style={styles.title}>DE</Text>
-        </View>
+        <Aide></Aide>
         <TouchableOpacity style={styles.forms}>
           <TextField
             image="envelope"

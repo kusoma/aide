@@ -9,7 +9,7 @@ import {
   StatusBar
 } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField } from '../components/Form';
+import { TextField, Ai } from '../components/Form';
 
 export default class SignUp extends Component {
   constructor() {
