@@ -23,7 +23,7 @@ module.exports = {
             throw err;
         };
     },
-    // TODO: add tokens
+    
     login: async ({ email, password }) => {
         const user = await User.findOne({ email: email });
         if (!user) {

@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Login from '../screens/Login'
-import Signup from '../screens/Signup';
+import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
 
@@ -30,8 +30,8 @@ const BottomNavigator = createMaterialBottomTabNavigator({
       tabBarColor: '#8B1D1D',
     }
   },
-  Signup: {
-    screen: Signup,
+  SignUp: {
+    screen: SignUp,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
