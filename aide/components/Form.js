@@ -3,8 +3,6 @@ import { Text, View, TextInput, StyleSheet, Image } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Constant, GlobalStyle } from '../utils/Variables';
 
-
-
 const styles = StyleSheet.create({
   row: {
     marginHorizontal: 10,

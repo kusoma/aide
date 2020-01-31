@@ -1,15 +1,7 @@
-import React,
-{ Component } from 'react';
-import {
-	ScrollView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-	StatusBar
-} from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, Text, TouchableOpacity, View, StatusBar } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField, Ai } from '../components/Form';
+import { TextField } from '../components/Form';
 import { callGraphql } from '../utils/API';
 
 export default class SignUp extends Component {
@@ -67,6 +59,7 @@ export default class SignUp extends Component {
 					<Text style={[GlobalStyle.title, { fontSize: 60 }]}>Wel</Text>
 					<Text style={[GlobalStyle.title, { color: Constant.COLORS.MAROON, fontSize: 60 }]}>come</Text>
 				</View>
+				
 				<View style={GlobalStyle.form}>
 					<TextField
 						image="user"
@@ -74,7 +67,7 @@ export default class SignUp extends Component {
 						placeholder="First Name"
 						onChangeText={firstName => this.setState({ firstName })}
 						value={this.state.firstName}
-						autoCapitalize="none"
+						autoCapitalize="words"
 					/>
 					<TextField
 						image="user"
@@ -82,9 +75,8 @@ export default class SignUp extends Component {
 						placeholder="Last Name"
 						onChangeText={lastName => this.setState({ lastName })}
 						value={this.state.lastName}
-						autoCapitalize="none"
+						autoCapitalize="words"
 					/>
-
 					<TextField
 						image="envelope"
 						style={GlobalStyle.formIcon}
@@ -110,7 +102,7 @@ export default class SignUp extends Component {
 						autoCapitalize="none"
 					/>
 				</View>
-
+				
 				<TouchableOpacity style={[GlobalStyle.pillButton, {width: Constant.MAX_WIDTH / 1.5}]} onPress={() => this.handleSignUp()}>
 					<Text style={GlobalStyle.pillButtonText}> Create Account </Text>
 				</TouchableOpacity>

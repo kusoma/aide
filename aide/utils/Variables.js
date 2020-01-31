@@ -1,6 +1,5 @@
 import { Dimensions , StyleSheet } from 'react-native';
 
-
 export const Constant = {
     MAX_WIDTH: Dimensions.get('screen').width,
     MAX_HEIGHT: Dimensions.get('screen').height,

@@ -76,10 +76,8 @@ export default class Login extends Component {
 					<Text style={GlobalStyle.pillButtonSideText} > Sign In </Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity>
-					<Text
-						style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}
-						onPress={() => this.props.navigation.navigate('SignUp')}> Create an Account </Text>
+				<TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
+					<Text style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}> Create an Account </Text>
 				</TouchableOpacity>
 
 				{/* TODO: Double check on error message */}

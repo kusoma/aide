@@ -7,7 +7,6 @@ async function callGraphql (request, callback) {
 		headers: { 'Content-Type': 'application/json' }
 	})
 		.then(res => {
-			// console.log(res);
 			if (res.status !== 200 && res.status !== 201) {
 				throw new Error('Failed!');
 			}
@@ -17,7 +16,6 @@ async function callGraphql (request, callback) {
 			callback(data)
 		})
 		.catch(err => {
-			// console.log(err);
 			return err;
 		});
 }

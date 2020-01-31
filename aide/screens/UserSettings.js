@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { 
-  Constant, 
-  GlobalStyle 
-} from "../utils/Variables";
+import { ScrollView, Text, View } from "react-native";
+import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
-
 
 export default class Login extends Component {
   constructor(props) {
@@ -55,10 +46,10 @@ export default class Login extends Component {
           />
         </View>
         
-        <View style={{ marginTop: 16, marginBottom: 16 }}>
+        <View style={{ margin: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
-          <WideButton label="Connect Canvas" />
+          <WideButton label="Connect Canvas" image="google" imageColor="#000"/>
           <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
         </View>
         
@@ -70,7 +61,3 @@ export default class Login extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-});
