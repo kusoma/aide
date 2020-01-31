@@ -41,7 +41,7 @@ export const GlobalStyle = StyleSheet.create({
     },
     pillButtonText: {
 		color: "#fff",
-		fontFamily: 'Comfortaa_Bold',
+		fontFamily: 'Comfortaa',
 		fontSize: 24
     },
     pillButtonSide: {
