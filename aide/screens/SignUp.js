@@ -62,16 +62,16 @@ export default class SignUp extends Component {
 
 	render() {
 		return (
-			<ScrollView contentContainerStyle={styles.container}>
+			<ScrollView contentContainerStyle={GlobalStyle.container}>
 				<StatusBar barStyle="dark-content" />
 				<View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
 					<Text style={[GlobalStyle.title, { fontSize: 60 }]}>Wel</Text>
 					<Text style={[GlobalStyle.title, styles.text, { fontSize: 60 }]}>come</Text>
 				</View>
-				<View style={styles.forms}>
+				<View style={GlobalStyle.form}>
 						<TextField
 							image="user"
-							style={styles.image}
+							style={GlobalStyle.formIcon}
 							placeholder="First Name"
 							onChangeText={firstName => this.setState({ firstName })}
 							value={this.state.firstName}
@@ -79,7 +79,7 @@ export default class SignUp extends Component {
 						/>
 						<TextField
 							image="user"
-							style={styles.image}
+							style={GlobalStyle.formIcon}
 							placeholder="Last Name"
 							onChangeText={lastName => this.setState({ lastName })}
 							value={this.state.lastName}
@@ -88,7 +88,7 @@ export default class SignUp extends Component {
 
 						<TextField
 							image="envelope"
-							style={styles.image}
+							style={GlobalStyle.formIcon}
 							placeholder="Email"
 							onChangeText={email => this.setState({ email })}
 							value={this.state.email}
@@ -96,7 +96,7 @@ export default class SignUp extends Component {
 						/>
 						<TextField
 							image="key"
-							style={styles.image}
+							style={GlobalStyle.formIcon}
 							placeholder="Password"
 							onChangeText={password => this.setState({ password })}
 							value={this.state.password}
@@ -104,7 +104,7 @@ export default class SignUp extends Component {
 						/>
 						<TextField
 							image="key"
-							style={styles.image}
+							style={GlobalStyle.formIcon}
 							placeholder="Confirm Password"
 							onChangeText={confirmPassword => this.setState({ confirmPassword })}
 							value={this.state.confirmPassword}
@@ -113,11 +113,11 @@ export default class SignUp extends Component {
 				</View>
 
 					<TouchableOpacity style={[GlobalStyle.pillButton, GlobalStyle.shadow, { width: Constant.MAX_WIDTH / 1.5 }]} onPress={() => this.handleSignUp()}>
-						<Text style={styles.createText}> Create Account </Text>
+						<Text style={GlobalStyle.pillButtonText}> Create Account </Text>
 					</TouchableOpacity>
 
 				<TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}>
-					<Text style={styles.text}> Sign In </Text>
+					<Text style={{color: Constant.COLORS.MAROON}}> Sign In </Text>
 				</TouchableOpacity>
 			</ScrollView>
 		);
@@ -125,30 +125,5 @@ export default class SignUp extends Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-		paddingVertical: 20
-	},
-	forms: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginBottom: 35
-	},
-	text: {
-		color: Constant.COLORS.MAROON,
-	},
-	image: {
-		width: 300,
-		marginBottom: 5,
-		fontSize: 16,
-		fontFamily: 'Comfortaa',
-	},
-	createText: {
-		color: "#fff",
-		fontFamily: 'Comfortaa_Bold',
-		fontSize: 24
-	},
+
 });

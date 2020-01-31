@@ -22,9 +22,8 @@ export const GlobalStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 12,
-        height: Constant.MAX_HEIGHT / 5.5,
         justifyContent: 'center',
-        marginBottom: 10,
+        margin: 16
     },
     formIcon: {
         width: 300,
@@ -39,6 +38,11 @@ export const GlobalStyle = StyleSheet.create({
         height: 60,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    pillButtonText: {
+		color: "#fff",
+		fontFamily: 'Comfortaa_Bold',
+		fontSize: 24
     },
     pillButtonSide: {
         backgroundColor: Constant.COLORS.MAROON,
