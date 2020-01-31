@@ -27,64 +27,50 @@ export default class Login extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={GlobalStyle.container}>
-        <Text style={styles.title}>Account</Text>
-        <TextField
-          image="user"
-          style={{
-            width: 300,
-            marginBottom: 5,
-            fontSize: 16,
-            fontFamily: 'Comfortaa',
-          }}
-          placeholder="First Name"
-          onChangeText={firstName => this.setState({ firstName })}
-          value={this.state.firstName}
-          autoCapitalize="words"
-        />
-        <TextField
-          image="user"
-          style={{
-            width: 300,
-            marginBottom: 5,
-            fontSize: 16,
-            fontFamily: 'Comfortaa',
-          }}
-          placeholder="Last Name"
-          onChangeText={lastName => this.setState({ lastName })}
-          value={this.state.lastName}
-          autoCapitalize="words"
-        />
-        <TextField
-          image="envelope"
-          style={{
-            width: 300,
-            marginBottom: 5,
-            fontSize: 16,
-            fontFamily: 'Comfortaa',
-          }}
-          placeholder="Email"
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-          autoCapitalize="none"
-        />
+        <Text style={GlobalStyle.heading}>Account</Text>
+        <View>
+          <TextField
+            image="user"
+            style={GlobalStyle.formIcon}
+            placeholder="First Name"
+            onChangeText={firstName => this.setState({ firstName })}
+            value={this.state.firstName}
+            autoCapitalize="words"
+          />
+          <TextField
+            image="user"
+            style={GlobalStyle.formIcon}
+            placeholder="Last Name"
+            onChangeText={lastName => this.setState({ lastName })}
+            value={this.state.lastName}
+            autoCapitalize="words"
+          />
+          <TextField
+            image="envelope"
+            style={GlobalStyle.formIcon}
+            placeholder="Email"
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+            autoCapitalize="none"
+          />
+        </View>
+        
         <View style={{ marginTop: 16, marginBottom: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
           <WideButton label="Connect Canvas" />
           <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
         </View>
-        <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
-        <WideButton label="Log Out " buttonStyle={{ backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D' }} textStyle={{ color: '#fff' }} image="share" imageColor="#fff" />
+        
+        <View>
+          <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
+          <WideButton label="Log Out " buttonStyle={{ backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D' }} textStyle={{ color: '#fff' }} image="share" imageColor="#fff" />
+        </View>
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 36,
-    fontWeight: "bold",
-    fontFamily: 'Comfortaa',
-    color: Constant.COLORS.MAROON
-  },
+
 });

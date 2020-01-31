@@ -14,7 +14,8 @@ export default class app extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={GlobalStyle.container}>
-        <Aide></Aide>
+        <Aide/>
+        {/* TODO: Get this matching width of login */}
         <View style={styles.forms}>
           <TextField
             image="envelope"

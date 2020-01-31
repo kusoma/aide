@@ -82,6 +82,12 @@ export const GlobalStyle = StyleSheet.create({
         fontFamily: 'Comfortaa_Bold',
         letterSpacing: 10,
     },
+    heading: {
+        fontSize: 36,
+        fontWeight: "bold",
+        fontFamily: 'Comfortaa',
+        color: Constant.COLORS.MAROON  
+    }
 });
 
 

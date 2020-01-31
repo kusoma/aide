@@ -30,7 +30,7 @@ export default class Login extends Component {
 	
 		callGraphql(request, (json) => {
 			if (json.errors) {
-	
+				this.state.isError = true
 			} else {
 				let user = {
 					firstName: json.data.login.firstName,
@@ -45,7 +45,7 @@ export default class Login extends Component {
 	render() {
 		return (
 			<ScrollView contentContainerStyle={GlobalStyle.container}>
-				<Aide></Aide>
+				<Aide/>
 				<View style={[GlobalStyle.form, GlobalStyle.shadow]}>
 					<TextField
 						image="envelope"
@@ -65,19 +65,24 @@ export default class Login extends Component {
 						autoCapitalize="none"
 					/>
 				</View>
+
 				<TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
 					<Text style={GlobalStyle.text}> Forgot password or username? </Text>
 				</TouchableOpacity>
+				
 				<TouchableOpacity
 					style={[GlobalStyle.pillButtonSide, GlobalStyle.shadow, { top: 30 }]}
 					onPress={() => this.loginHandler(this.state.email, this.state.password)}>
 					<Text style={GlobalStyle.pillButtonSideText} > Sign In </Text>
 				</TouchableOpacity>
+
 				<TouchableOpacity>
 					<Text
 						style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}
 						onPress={() => this.props.navigation.navigate('SignUp')}> Create an Account </Text>
 				</TouchableOpacity>
+
+				{/* TODO: Double check on error message */}
 				{this.state.isError ? <ErrorText text="Incorrect Email or Password" /> : <React.Fragment />}
 			</ScrollView>
 		);
