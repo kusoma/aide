@@ -1,54 +1,61 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Login from '../screens/Login'
 import Signup from '../screens/Signup';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
 
-import Icons from '../utils/Icons';
-
-
 const BottomNavigator = createMaterialBottomTabNavigator({
-    Login: {screen: Login,
-        navigationOptions:{    
-            tabBarIcon: ({ tintColor }) => (  
-              <View>  
-                <Image style={{width: 30, height: 30}} source={Icons.calendar} />  
-              </View>),  
-        }  
-    },
-    ForgotPassword: {screen: ForgotPassword, 
-        navigationOptions:{    
-            tabBarIcon: ({ tintColor }) => (  
-              <View>  
-                <Image style={{width: 30, height: 30}} source={Icons.canvas} />  
-              </View>),  
-        }  },
-    Signup: {screen: Signup,
-        navigationOptions:{    
-            tabBarIcon: ({ tintColor }) => (  
-              <View>  
-                <Image style={{width: 20, height: 30}} source={Icons.lightBlub} />  
-              </View>),  
-        }  
-    },
-    UserSettings: { screen: UserSettings,
-        navigationOptions:{    
-            tabBarIcon: ({ tintColor }) => (  
-              <View>  
-                <Image style={{width: 20, height: 30}} source={Icons.person} />  
-              </View>),  
-        }  
-    },
-    }, {
-        labeled: false,
-        activeColor: '#000',
-        inactiveColor: '#000',
-        barStyle: { backgroundColor: '#EAEAEA' },
-    })
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={25} name={"calendar"} />
+        </View>),
+      tabBarColor: '#8B1D1D',
+    }
+  },
+  ForgotPassword: {
+    screen: ForgotPassword,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={25} name={"tasks"} />
+        </View>),
+      tabBarColor: '#8B1D1D',
+    }
+  },
+  Signup: {
+    screen: Signup,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={25} name={"lightbulb-o"} />
+        </View>),
+      tabBarColor: '#8B1D1D',
+    }
+  },
+  UserSettings: {
+    screen: UserSettings,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={25} name={"user"} />
+        </View>),
+      tabBarColor: '#8B1D1D',
+    }
+  }
+},
+  {
+    labeled: false,
+    activeColor: '#FFF',
+    inactiveColor: '#C0C0C0',
+  })
 
 
 const App = createAppContainer(BottomNavigator);

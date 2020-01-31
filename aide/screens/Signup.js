@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
-import Icons from '../utils/Icons';
 
 export default class SignUp extends Component {
   constructor() {
