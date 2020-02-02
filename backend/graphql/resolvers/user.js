@@ -6,7 +6,7 @@ module.exports = {
         try {
             const user = await User.findOne({_id: userID})
             if (!user) {
-                throw new Error('User does not exist.');
+                throw new Error('User does not exist!');
             }
             const hashedToken = await bcrypt.hash(googleToken, 12);
             const result = await User.findOneAndUpdate(
@@ -17,7 +17,7 @@ module.exports = {
                 throw err;
             });
             
-            // return {...result._doc, googleToken: null, canvasToken: null, password: null}
+            return {...result._doc, googleToken: null, canvasToken: null, password: null}
         } catch (err) {
             throw err;
         }
@@ -26,7 +26,7 @@ module.exports = {
         try {
             const user = await User.findOne({_id: userID})
             if (!user) {
-                throw new Error('User does not exist.');
+                throw new Error('User does not exist!');
             }
             const hashedToken = await bcrypt.hash(canvasToken, 12);
             const result = await User.findOneAndUpdate(
@@ -35,9 +35,26 @@ module.exports = {
                 {new: true})
             .catch(err => {
                 throw err;
-            });;
+            });
 
-            // return {...result._doc, googleToken: null,  canvasToken: null, password: null}
+            return {...result._doc, googleToken: null,  canvasToken: null, password: null}
+        } catch (err) {
+            throw err;
+        }
+    },
+    setStudyPreference: async({userID, studyPreference}) => {
+        try {
+            const user = await User.findOne({_id: userID})
+            if (!user) {
+                throw new Error('User does not exist!')
+            }
+            const result = await User.findOneAndUpdate(
+                {_id: userID},
+                {canvasToken: hashedToken},
+                {new: true})
+            .catch(err => {
+                throw err;
+            });
         } catch (err) {
             throw err;
         }

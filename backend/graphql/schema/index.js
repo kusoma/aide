@@ -9,6 +9,7 @@ type User {
     password: String
     canvasToken: String
     googleToken: String
+    studyPreference: StudyPreference
 }
 
 input UserInput {
@@ -18,6 +19,18 @@ input UserInput {
     password: String!
     canvasToken: String
     googleToken: String
+}
+
+type StudyPreference {
+    length: Int!
+    break: Int!
+    technique: String!
+}
+
+type StudyPreferenceInput {
+    length: Int!
+    break: Int!
+    technique: String!
 }
 
 type RootQuery {
