@@ -22,14 +22,15 @@ input UserInput {
 }
 
 type StudyPreference {
-    length: Int!
-    break: Int!
+    _id: ID!
+    studyLength: Int!
+    breakLength: Int!
     technique: String!
 }
 
-type StudyPreferenceInput {
-    length: Int!
-    break: Int!
+input StudyPreferenceInput {
+    studyLength: Int!
+    breakLength: Int!
     technique: String!
 }
 
@@ -39,8 +40,9 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    setGoogleToken(userID: ID!, googleToken:String): User
-    setCanvasToken(userID: ID!, canvasToken:String): User
+    setGoogleToken(userID: ID!, googleToken: String): User
+    setCanvasToken(userID: ID!, canvasToken: String): User
+    setStudyPreference(userID: ID!, studyPreferenceInput: StudyPreferenceInput): StudyPreference
 }
 
 schema {
