@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 
 module.exports = {
-    addGoogleToken: async({userID, googleToken}) => {
+    setGoogleToken: async({userID, googleToken}) => {
         try {
             const user = await User.findOne({_id: userID})
             if (!user) {
@@ -22,7 +22,7 @@ module.exports = {
             throw err;
         }
     },
-    addCanvasToken: async({userID, canvasToken}) => {
+    setCanvasToken: async({userID, canvasToken}) => {
         try {
             const user = await User.findOne({_id: userID})
             if (!user) {
