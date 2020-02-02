@@ -9,7 +9,7 @@ type User {
     password: String
     canvasToken: String
     googleToken: String
-    studyPreference: StudyPreference
+    studyPreference: StudyPreference!
 }
 
 input UserInput {
@@ -19,6 +19,7 @@ input UserInput {
     password: String!
     canvasToken: String
     googleToken: String
+    studyPreference: StudyPreferenceInput!
 }
 
 type StudyPreference {
