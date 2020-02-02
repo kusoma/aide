@@ -16,7 +16,7 @@ module.exports = {
                 lastName: args.userInput.lastName,
                 email: args.userInput.email,
                 password: hashedPassword,
-                // Create new StudyPreference
+                // Create new StudyPreference 
                 studyPreference: new StudyPreference({
                     studyLength: args.userInput.studyPreference.studyLength,
                     breakLength: args.userInput.studyPreference.breakLength,
