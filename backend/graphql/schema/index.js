@@ -41,7 +41,6 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    setGoogleToken(userID: ID!, googleToken: String): User
     setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, studyPreferenceInput: StudyPreferenceInput): StudyPreference
 }
