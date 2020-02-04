@@ -35,6 +35,39 @@ input StudyPreferenceInput {
     technique: String!
 }
 
+type ClassSetting {
+    _id: ID!
+    classNumber: String!
+    classTitle: String!
+    test: Boolean!
+    testStudyLength: Int!
+    testBreakLength: Int!
+    homeworkAutomate: Boolean!
+    homeworkStudyLength: Int!
+    homeworkBreakLength: Int!
+    quizAutomate: Boolean!
+    quizStudyLength: Int!
+    quizBreakLength: Int!
+    days: [Int]!
+    friends: [String]!
+}
+
+type ClassSettingInput {
+    classNumber: String!
+    classTitle: String!
+    testAutomate: Boolean!
+    testStudyLength: Int!
+    testBreakLength: Int!
+    homeworkAutomate: Boolean!
+    homeworkStudyLength: Int!
+    homeworkBreakLength: Int!
+    quizAutomate: Boolean!
+    quizStudyLength: Int!
+    quizBreakLength: Int!
+    days: [Int]!
+    friends: [Email]!
+}
+
 type RootQuery {
     login(email: String!, password: String!): User
 }

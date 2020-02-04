@@ -23,10 +23,6 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    googleToken: {
-        type: String,
-        required: false
-    },
     studyPreference: {
         type: Schema.Types.ObjectId,
         ref: 'StudyPreference'
