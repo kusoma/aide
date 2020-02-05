@@ -59,7 +59,6 @@ export default class SignUp extends Component {
 				}
 				this.props.navigation.navigate('UserSettings', user);
 			}
-
 		})
 	}
 
