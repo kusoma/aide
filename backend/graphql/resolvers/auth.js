@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
+const StudyPreference = require('../../models/studyPreference');
 
 module.exports = {
     createUser: async args => {
@@ -15,6 +16,12 @@ module.exports = {
                 lastName: args.userInput.lastName,
                 email: args.userInput.email,
                 password: hashedPassword,
+                // Create new StudyPreference 
+                studyPreference: new StudyPreference({
+                    studyLength: args.userInput.studyPreference.studyLength,
+                    breakLength: args.userInput.studyPreference.breakLength,
+                    technique: args.userInput.studyPreference.technique
+                })
             });
             const result = await user.save();
 
