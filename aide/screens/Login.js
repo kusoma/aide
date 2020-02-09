@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField, ErrorText, Aide } from '../components/Form';
+import { TextField, ErrorText } from '../components/Form';
+import  { Title } from '../components/Title';
 import { callGraphql } from '../utils/API';
 
 export default class Login extends Component {
@@ -50,7 +51,7 @@ export default class Login extends Component {
 	render() {
 		return (
 			<ScrollView contentContainerStyle={GlobalStyle.container}>
-				<Aide/>
+				<Title first="AI" second="DE" />
 				<View style={[GlobalStyle.form, GlobalStyle.shadow]}>
 					<TextField
 						image="envelope"
@@ -70,21 +71,18 @@ export default class Login extends Component {
 						autoCapitalize="none"
 					/>
 				</View>
-
 				<TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
 					<Text style={GlobalStyle.text}> Forgot password? </Text>
-				</TouchableOpacity>
-				
+				</TouchableOpacity>		
 				<TouchableOpacity
 					style={[GlobalStyle.pillButtonSide, GlobalStyle.shadow, { top: 30 }]}
 					onPress={() => this.loginHandler(this.state.email, this.state.password)}>
 					<Text style={GlobalStyle.pillButtonSideText} > Sign In </Text>
 				</TouchableOpacity>
-
+				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <ErrorText text={""} />}
 				<TouchableOpacity style={{top: Constant.MAX_HEIGHT * 0.3}} onPress={() => this.props.navigation.navigate('SignUp')}>
 					<Text style={[GlobalStyle.text]}> Create an Account</Text>
 				</TouchableOpacity>
-				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <React.Fragment />}
 			</ScrollView>
 		);
 	}

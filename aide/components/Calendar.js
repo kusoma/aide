@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from "moment";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { Constant } from '../utils/Variables'
 

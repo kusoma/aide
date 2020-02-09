@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Login from '../screens/Login'
+import MonthlyView from '../screens/MonthlyView';
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
@@ -13,8 +13,8 @@ import { Constant } from '../utils/Variables';
 const ICON_SIZE = 25;
 
 const BottomNavigator = createMaterialBottomTabNavigator({
-  Login: {
-    screen: Login,
+  MonthlyView: {
+    screen: MonthlyView,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
