@@ -42,7 +42,7 @@ export default class Login extends Component {
 					lastName: json.data.login.lastName,
 					email: json.data.login.email
 				}
-				this.props.navigation.navigate('UserSettings', user);
+				this.props.navigation.navigate('BottomNavigation', user);
 			}
 		})
 	}
@@ -81,10 +81,9 @@ export default class Login extends Component {
 					<Text style={GlobalStyle.pillButtonSideText} > Sign In </Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
-					<Text style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}> Create an Account </Text>
+				<TouchableOpacity style={{top: Constant.MAX_HEIGHT * 0.3}} onPress={() => this.props.navigation.navigate('SignUp')}>
+					<Text style={[GlobalStyle.text]}> Create an Account</Text>
 				</TouchableOpacity>
-
 				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <React.Fragment />}
 			</ScrollView>
 		);

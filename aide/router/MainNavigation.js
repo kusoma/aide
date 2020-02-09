@@ -4,6 +4,7 @@ import Login from '../screens/Login'
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
+import BottomNavigation from '../router/BottomNavigation';
 
 import MonlthyView from '../screens/MonthlyView';
 
@@ -13,6 +14,7 @@ const MainNavigator = createStackNavigator({
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
   UserSettings: { screen: UserSettings },
+  BottomNavigation: { screen: BottomNavigation},
 
 }, {
   headerMode: 'none',
