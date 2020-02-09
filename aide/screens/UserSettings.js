@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
-
 
 export default class Login extends Component {
   constructor() {
@@ -28,11 +22,11 @@ export default class Login extends Component {
         <TextField
           image="user"
           style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+            width: 300,
+            marginBottom: 5,
+            fontSize: 16,
+            fontFamily: "Comfortaa"
+          }}
           placeholder="First Name"
           onChangeText={firstName => this.setState({ firstName })}
           value={this.state.firstName}
@@ -41,11 +35,11 @@ export default class Login extends Component {
         <TextField
           image="user"
           style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+            width: 300,
+            marginBottom: 5,
+            fontSize: 16,
+            fontFamily: "Comfortaa"
+          }}
           placeholder="Last Name"
           onChangeText={lastName => this.setState({ lastName })}
           value={this.state.lastName}
@@ -54,11 +48,11 @@ export default class Login extends Component {
         <TextField
           image="user"
           style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+            width: 300,
+            marginBottom: 5,
+            fontSize: 16,
+            fontFamily: "Comfortaa"
+          }}
           placeholder="Username"
           onChangeText={userName => this.setState({ userName })}
           value={this.state.userName}
@@ -67,24 +61,40 @@ export default class Login extends Component {
         <TextField
           image="envelope"
           style={{
-                width: 300,
-                marginBottom: 5,
-                fontSize: 16,
-                fontFamily: 'Comfortaa',
-              }}
+            width: 300,
+            marginBottom: 5,
+            fontSize: 16,
+            fontFamily: "Comfortaa"
+          }}
           placeholder="Email"
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
           autoCapitalize="none"
         />
-        <View style={{ marginTop: 10, marginBottom: 20}}>
+        <View style={{ marginTop: 10, marginBottom: 20 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
-          <WideButton label="Connect Google" image="google" imageColor="#000" />
           <WideButton label="Connect Canvas" />
-          <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
+          <WideButton
+            label="Connect Device Calendar"
+            image="calendar-o"
+            imageColor="#000"
+          />
         </View>
-        <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
-        <WideButton label="Log Out " buttonStyle={{backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D'}} textStyle={{ color: '#fff'}} image="share" imageColor="#fff" />
+        <WideButton
+          label="Study Preferences"
+          image="lightbulb-o"
+          imageColor="#000"
+        />
+        <WideButton
+          label="Log Out "
+          buttonStyle={{
+            backgroundColor: Constant.COLORS.MAROON,
+            borderColor: "#8B1D1D"
+          }}
+          textStyle={{ color: "#fff" }}
+          image="share"
+          imageColor="#fff"
+        />
       </ScrollView>
     );
   }
@@ -109,7 +119,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    fontFamily: 'Comfortaa',
+    fontFamily: "Comfortaa",
     color: Constant.COLORS.MAROON
   },
   text: {
