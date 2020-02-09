@@ -39,7 +39,17 @@ export default class SignUp extends Component {
 		let request = {
 			query: `
 			mutation {
-				createUser(userInput:{firstName:"${firstName}", lastName:"${lastName}", email:"${email}",password:"${password}"})  {
+				createUser(userInput:{
+					firstName:"${firstName}", 
+					lastName:"${lastName}", 
+					email:"${email}", 
+					password:"${password}", 
+					studyPreference: {
+						studyLength: 30,
+						breakLength: 5,
+						technique: "Pomodoro"
+					}
+				})  {
 					firstName
 					lastName
 					email
@@ -50,12 +60,13 @@ export default class SignUp extends Component {
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, (json) => {
 			if (json.errors) {
-
+				this.setState({ isError: true })
+				this.setState({ isErrorText: json.errors[0].message })
 			} else {
 				let user = {
-					firstName: json.data.login.firstName,
-					lastName: json.data.login.lastName,
-					email: json.data.login.email
+					firstName: json.data.createUser.firstName,
+					lastName: json.data.createUser.lastName,
+					email: json.data.createUser.email
 				}
 				this.props.navigation.navigate('UserSettings', user);
 			}

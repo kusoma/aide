@@ -30,13 +30,8 @@ const BottomNavigator = createMaterialBottomTabNavigator({
       tabBarColor: '#8B1D1D',
     }
   },
-<<<<<<< HEAD
-  Signup: {
-    screen: Signup,
-=======
   SignUp: {
     screen: SignUp,
->>>>>>> origin/develop
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>

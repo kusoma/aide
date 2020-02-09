@@ -9,6 +9,7 @@ type User {
     password: String
     canvasToken: String
     googleToken: String
+    studyPreference: StudyPreference!
 }
 
 input UserInput {
@@ -18,6 +19,20 @@ input UserInput {
     password: String!
     canvasToken: String
     googleToken: String
+    studyPreference: StudyPreferenceInput!
+}
+
+type StudyPreference {
+    _id: ID!
+    studyLength: Int!
+    breakLength: Int!
+    technique: String!
+}
+
+input StudyPreferenceInput {
+    studyLength: Int!
+    breakLength: Int!
+    technique: String!
 }
 
 type RootQuery {
@@ -26,8 +41,9 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    addGoogleToken(userID: ID!, googleToken:String): User
-    addCanvasToken(userID: ID!, canvasToken:String): User
+    setGoogleToken(userID: ID!, googleToken: String): User
+    setCanvasToken(userID: ID!, canvasToken: String): User
+    setStudyPreference(userID: ID!, studyPreferenceInput: StudyPreferenceInput): StudyPreference
 }
 
 schema {
