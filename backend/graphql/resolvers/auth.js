@@ -21,7 +21,8 @@ module.exports = {
                     studyLength: args.userInput.studyPreference.studyLength,
                     breakLength: args.userInput.studyPreference.breakLength,
                     technique: args.userInput.studyPreference.technique
-                })
+                }),
+                classSetting: undefined
             });
             const result = await user.save();
 

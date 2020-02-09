@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 const StudyPreference = require('../../models/studyPreference');
+const ClassSetting = require('../../models/classSetting');
 
 module.exports = {
     setCanvasToken: async ({ userID, canvasToken }) => {
@@ -38,6 +39,31 @@ module.exports = {
             const result = await user.save();
 
             return { ...result.studyPreference }
+        } catch (err) {
+            throw err;
+        }
+    },
+    addClassSetting: async({ args, req }) => {
+        const classSetting = new ClassSetting({
+            classNumber: args.ClassSettingInput.classNumber,
+            classTitle: args.ClassSettingInput.classTitle,
+            testAutomate: args.ClassSettingInput.testAutomate,
+            testStudyLength: args.ClassSettingInput.testStudyLength,
+            testBreakLength: args.ClassSettingInput.testBreakLength,
+            homeworkAutomate: args.ClassSettingInput.homeworkAutomate,
+            homeworkStudyLength: args.ClassSettingInput.homeworkStudyLength,
+            homeworkBreakLength: args.ClassSettingInput.homeworkBreakLength,
+            quizAutomate: args.ClassSettingInput.quizAutomate,
+            quizStudyLength: args.ClassSettingInput.quizStudyLength,
+            quizBreakLength: quizBreakLength,
+            days: [],
+            friends: []
+        })
+        try {
+        
+    
+
+
         } catch (err) {
             throw err;
         }

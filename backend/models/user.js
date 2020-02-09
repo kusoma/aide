@@ -26,7 +26,11 @@ const userSchema = new Schema({
     studyPreference: {
         type: Schema.Types.ObjectId,
         ref: 'StudyPreference'
-    }
+    },
+    classSetting: [{
+        type: Schema.Types.ObjectId,
+        ref: 'ClassSetting'
+    }]
 })
 
 module.exports = mongoose.model('User', userSchema);

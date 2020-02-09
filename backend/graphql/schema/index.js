@@ -8,8 +8,8 @@ type User {
     email: String!
     password: String
     canvasToken: String
-    googleToken: String
     studyPreference: StudyPreference!
+    classSetting: [ClassSetting!]
 }
 
 input UserInput {
@@ -18,8 +18,8 @@ input UserInput {
     email: String!
     password: String!
     canvasToken: String
-    googleToken: String
-    studyPreference: StudyPreferenceInput!
+    studyPreference: StudyPreferenceInput
+    classSetting: [ClassSettingInput]
 }
 
 type StudyPreference {
@@ -39,7 +39,7 @@ type ClassSetting {
     _id: ID!
     classNumber: String!
     classTitle: String!
-    test: Boolean!
+    testAutomate: Boolean!
     testStudyLength: Int!
     testBreakLength: Int!
     homeworkAutomate: Boolean!
@@ -52,7 +52,7 @@ type ClassSetting {
     friends: [String]!
 }
 
-type ClassSettingInput {
+input ClassSettingInput {
     classNumber: String!
     classTitle: String!
     testAutomate: Boolean!
@@ -65,7 +65,7 @@ type ClassSettingInput {
     quizStudyLength: Int!
     quizBreakLength: Int!
     days: [Int]!
-    friends: [Email]!
+    friends: [String]!
 }
 
 type RootQuery {
@@ -76,6 +76,7 @@ type RootMutation {
     createUser(userInput: UserInput): User
     setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, studyPreferenceInput: StudyPreferenceInput): StudyPreference
+    addClassSetting(classSettingInput: ClassSettingInput): [ClassSetting!]
 }
 
 schema {

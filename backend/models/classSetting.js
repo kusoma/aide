@@ -10,7 +10,7 @@ const classSettingsSchema = new Schema({
         type: String,
         required: true
     },
-    test: {
+    testAutomate: {
         type: Boolean,
         required: true
     },
@@ -55,3 +55,5 @@ const classSettingsSchema = new Schema({
         required: false
     }]
 })
+
+module.exports = mongoose.model('ClassSetting', classSettingsSchema);
