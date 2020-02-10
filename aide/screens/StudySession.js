@@ -1,3 +1,4 @@
+//prettier-ignore-start
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Text, View, StatusBar, Dimensions, Picker, Platform, Image, TouchableOpacity } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
@@ -40,27 +41,26 @@ const styles = StyleSheet.create({
 		//top: screen.height / 4.5
 	},
 	breakHeading: {
-		fontFamily: 'Comfortaa'
-	},
-	timerHeading: {
-		fontFamily: 'Comfortaa'
+		fontFamily: 'Comfortaa',
+		fontSize: 20
 	},
 	breakText: {
-		fontFamily: 'Comfortaa'
+		fontFamily: 'Comfortaa',
+		fontSize: 24
 	},
 	timerText: {
 		fontFamily: 'Comfortaa',
 		fontSize: 40,
 		color: '#000'
 	},
-	buttonStart: {},
-	buttonStop: {},
-	buttonBreak: {},
+	button: {},
 	techniqueHeading: {
-		fontFamily: 'Comfortaa'
+		fontFamily: 'Comfortaa',
+		fontSize: 20
 	},
 	techniqueText: {
-		fontFamily: 'Comfortaa'
+		fontFamily: 'Comfortaa',
+		fontSize: 24
 	}
 });
 
@@ -141,12 +141,30 @@ export default class StudySession extends Component {
 				<Ionicons name='ios-settings' size={32} style={styles.settingsIcon} />
 				{/* Heading */}
 				<Row>
-					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, color: '#000', fontFamily: 'Comfortaa_Bold' }}>study</Text>
-					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, fontFamily: 'Comfortaa_Bold', color: activeStatusColor }}> session </Text>
+					<Text
+						style={{
+							...GlobalStyle.heading,
+							...styles.mainHeading,
+							color: '#000',
+							fontFamily: 'Comfortaa_Bold'
+						}}
+					>
+						study
+					</Text>
+					<Text
+						style={{
+							...GlobalStyle.heading,
+							...styles.mainHeading,
+							fontFamily: 'Comfortaa_Bold',
+							color: activeStatusColor
+						}}
+					>
+						session
+					</Text>
 				</Row>
 				<View style={{ alignItems: 'center' }}>
 					{/* Timer Icon */}
-					<Image source={require('../assets/timer.png')} style={styles.timerIconOn} />
+					<Image source={require('../assets/timer.png')} style={{ ...styles.timerIconOn, color: activeStatusColor }} />
 					{/* TOTAL Seconds Text */}
 					<Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text>
 				</View>
@@ -154,7 +172,14 @@ export default class StudySession extends Component {
 					{/* Break Text */}
 					<Text style={styles.breakHeading}>{breakHeadingText}</Text>
 					{/* BREAK Seconds Text */}
-					<Text style={{ ...styles.breakText, color: activeStatusColor }}>{`${minutesBreak}:${secondsBreak}s`}</Text>
+					<Text
+						style={{
+							...styles.breakText,
+							color: activeStatusColor
+						}}
+					>
+						{`${minutesBreak}:${secondsBreak}s`}
+					</Text>
 				</View>
 				<View style={{ alignItems: 'center' }}>
 					{/* Current Technique Text */}
@@ -163,14 +188,21 @@ export default class StudySession extends Component {
 					<Text style={{ ...styles.techniqueText, color: activeStatusColor }}>pomodoro</Text>
 				</View>
 				{/* End session button */}
-				<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
-					<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
-				</TouchableOpacity>
+				{this.state.isRunningTimer ? (
+					<TouchableOpacity id='sessionButton' onPress={this.stop} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
+						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>End Session</Text>
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
+						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
+					</TouchableOpacity>
+				)}
 			</View>
 		);
 	}
 }
 
+//prettier-ignore-start
 // If the normal timer is running display the timer
 //                 {this.state.isRunning ? <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text> : <Text style={styles.timerText}>No Active Session</Text>}
 //                 {/* If the normal timer is running display the timer  */}
