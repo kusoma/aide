@@ -1,0 +1,9 @@
+{
+    "env": {
+        "MONGO_USERNAME": "admin",
+        "MONGO_PASSWORD": "password",
+        "MONGO_HOSTNAME": "192.241.130.75",
+        "MONGO_PORT": "27017",
+        "MONGO_DB": "aide"
+    }
+}
