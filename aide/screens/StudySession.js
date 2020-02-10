@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		backgroundColor: `#ffffff`,
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'space-around'
 	},
 	settingsIcon: {
 		color: '#000',
@@ -35,7 +36,8 @@ const styles = StyleSheet.create({
 	},
 	timerIconOn: {
 		tintColor: Constant.COLORS.MAROON,
-		top: screen.height / 4.5
+		alignItems: 'center'
+		//top: screen.height / 4.5
 	},
 	breakHeading: {},
 	timerHeading: {},
@@ -133,18 +135,24 @@ export default class StudySession extends Component {
 					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, color: '#000', fontFamily: 'Comfortaa_Bold' }}>study</Text>
 					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, fontFamily: 'Comfortaa_Bold' }}> session </Text>
 				</Row>
-				{/* Timer Icon */}
-				<Image source={require('../assets/timer.png')} style={styles.timerIconOn} />
-				{/* TOTAL Seconds Text */}
-				<Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text>
-				{/* Break Text */}
-				<Text style={styles.breakHeading}>{breakHeadingText}</Text>
-				{/* BREAK Seconds Text */}
-				<Text style={styles.breakText}>{`${minutesBreak}:${secondsBreak}s`}</Text>
-				{/* Current Technique Text */}
-				<Text style={styles.techniqueHeading}>Current Technique</Text>
-				{/* Technique Text */}
-				<Text style={styles.techniqueText}>pomodoro</Text>
+				<View style={{ alignItems: 'center' }}>
+					{/* Timer Icon */}
+					<Image source={require('../assets/timer.png')} style={styles.timerIconOn} />
+					{/* TOTAL Seconds Text */}
+					<Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text>
+				</View>
+				<View style={{ alignItems: 'center' }}>
+					{/* Break Text */}
+					<Text style={styles.breakHeading}>{breakHeadingText}</Text>
+					{/* BREAK Seconds Text */}
+					<Text style={styles.breakText}>{`${minutesBreak}:${secondsBreak}s`}</Text>
+				</View>
+				<View style={{ alignItems: 'center' }}>
+					{/* Current Technique Text */}
+					<Text style={styles.techniqueHeading}>Current Technique</Text>
+					{/* Technique Text */}
+					<Text style={styles.techniqueText}>pomodoro</Text>
+				</View>
 				{/* End session button */}
 				<TouchableOpacity id='sessionButton' onPress={this.start} style={GlobalStyle.pillButton}>
 					<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
