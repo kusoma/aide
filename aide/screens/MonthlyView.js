@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar } from '../components/Calendar';
 import { GlobalStyle } from '../utils/Variables';
-import PieChart from "react-native-d3-charts";
 
 export default class MonthlyView extends Component {
     render() {
@@ -23,7 +22,6 @@ export default class MonthlyView extends Component {
             </View>
             <Calendar /> 
             <Text style={styles.description}> Growth in Numbers </Text>
-            <PieChart />
           </ScrollView>
         );
     }

@@ -1,0 +1,27 @@
+{
+    "2/9/2020": {
+        "CS460": {
+            "Homework": { "Time": "2", "Zone": "PM" },
+            "Exam": { "Time": "9", "Zone": "PM" },
+        },
+        "UBBL110": {
+            "Homework": { "Time": "2", "Zone": "PM" },
+            "Exam": { "Time": "9", "Zone": "PM" },
+        }
+    },
+    "2/10/2020": {
+        "CS460": {
+            "Homework": { "Time": "2", "Zone": "PM" },
+            "Exam": { "Time": "9", "Zone": "PM" },
+        },
+        "UBBL110": {
+            "Homework": { "Time": "2", "Zone": "PM" },
+            "Exam": { "Time": "9", "Zone": "PM" },
+    },
+    "2/11/2020": {
+
+    },
+    "2/12/2020": {
+
+    }
+}

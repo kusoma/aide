@@ -1,12 +1,15 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
+import WeeklyView from '../screens/WeeklyView';
 import Login from '../screens/Login'
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
-import BottomNavigation from '../router/BottomNavigation';
+import BottomNavigation from './BottomNavigation';
 
 const MainNavigator = createStackNavigator({
+  WeeklyView: {screen: WeeklyView},
   Login: {screen: Login},
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
