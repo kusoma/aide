@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   errorText: {
     width: 300,
     color: 'red',
+    alignContent: 'center',
+    textAlign: 'center',
     fontSize: 16,
-    marginTop: 5,
-    marginBottom: 15,
-    marginHorizontal: 20,
+    top: Constant.MAX_HEIGHT * 0.2
   }
 });
 
@@ -57,13 +57,6 @@ export const TextField = ({ image, imageColor, label, ...props }) => (
       />
     </View>
 
-  </View>
-);
-
-export const Aide = () => (
-  <View style={{ flexDirection: 'row', top: 125, position: 'absolute' }}>
-    <Text style={[GlobalStyle.title, { color: Constant.COLORS.MAROON }]}>AI</Text>
-    <Text style={GlobalStyle.title}>DE</Text>
   </View>
 );
 

@@ -4,20 +4,23 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Login from '../screens/Login'
+import MonthlyView from '../screens/MonthlyView';
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
+import { Constant } from '../utils/Variables';
+
+const ICON_SIZE = 25;
 
 const BottomNavigator = createMaterialBottomTabNavigator({
-  Login: {
-    screen: Login,
+  MonthlyView: {
+    screen: MonthlyView,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={25} name={"calendar"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"calendar"} />
         </View>),
-      tabBarColor: '#8B1D1D',
+      tabBarColor: Constant.COLORS.MAROON,
     }
   },
   ForgotPassword: {
@@ -25,9 +28,9 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={25} name={"tasks"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"tasks"} />
         </View>),
-      tabBarColor: '#8B1D1D',
+      tabBarColor: Constant.COLORS.MAROON,
     }
   },
   SignUp: {
@@ -35,9 +38,9 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={25} name={"lightbulb-o"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"lightbulb-o"} />
         </View>),
-      tabBarColor: '#8B1D1D',
+      tabBarColor: Constant.COLORS.MAROON,
     }
   },
   UserSettings: {
@@ -45,9 +48,9 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={25} name={"user"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"user"} />
         </View>),
-      tabBarColor: '#8B1D1D',
+      tabBarColor: Constant.COLORS.MAROON,
     }
   }
 },
