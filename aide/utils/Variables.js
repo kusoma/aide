@@ -1,4 +1,4 @@
-import { Dimensions , StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const Constant = {
     MAX_WIDTH: Dimensions.get('screen').width,
@@ -38,10 +38,18 @@ export const GlobalStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    cancelPillButton: {
+        backgroundColor: "grey",
+        borderRadius: 50,
+        width: Constant.MAX_WIDTH / 2,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     pillButtonText: {
-		color: "#fff",
-		fontFamily: 'Comfortaa',
-		fontSize: 24
+        color: "#fff",
+        fontFamily: 'Comfortaa',
+        fontSize: 24
     },
     pillButtonSide: {
         backgroundColor: Constant.COLORS.MAROON,
@@ -75,7 +83,7 @@ export const GlobalStyle = StyleSheet.create({
         marginBottom: 5,
         fontSize: 16,
         fontFamily: 'Comfortaa',
-    },  
+    },
     title: {
         fontSize: 72,
         fontFamily: 'Comfortaa_Bold',
@@ -85,7 +93,7 @@ export const GlobalStyle = StyleSheet.create({
         fontSize: 36,
         fontWeight: "bold",
         fontFamily: 'Comfortaa',
-        color: Constant.COLORS.MAROON  
+        color: Constant.COLORS.MAROON
     }
 });
 

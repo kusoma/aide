@@ -8,6 +8,7 @@ import Login from '../screens/Login'
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
+import ClassSettings from '../screens/ClassSettings';
 
 const BottomNavigator = createMaterialBottomTabNavigator({
   Login: {
@@ -40,8 +41,8 @@ const BottomNavigator = createMaterialBottomTabNavigator({
       tabBarColor: '#8B1D1D',
     }
   },
-  UserSettings: {
-    screen: UserSettings,
+  ClassSettings: {
+    screen: ClassSettings,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>

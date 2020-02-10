@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
@@ -45,14 +45,20 @@ export default class Login extends Component {
             autoCapitalize="none"
           />
         </View>
-        
+
+        <View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("ClassSettings")}>
+            <Text style={{ color: Constant.COLORS.MAROON }}> Class Settings </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={{ margin: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
-          <WideButton label="Connect Canvas" image="google" imageColor="#000"/>
+          <WideButton label="Connect Canvas" image="google" imageColor="#000" />
           <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
         </View>
-        
+
         <View>
           <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
           <WideButton label="Log Out " buttonStyle={{ backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D' }} textStyle={{ color: '#fff' }} image="share" imageColor="#fff" />
