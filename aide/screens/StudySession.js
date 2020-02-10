@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		backgroundColor: `#ffffff`,
 		alignItems: 'center',
-		justifyContent: 'space-around'
+		justifyContent: 'space-evenly'
 	},
 	settingsIcon: {
 		color: '#000',
@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
 		top: 60
 	},
 	mainHeading: {
-		alignItems: 'stretch',
-		top: 100
+		paddingTop: 50
 	},
 	timerIconOff: {
 		tintColor: '#000',
@@ -35,17 +34,16 @@ const styles = StyleSheet.create({
 		tintColor: '#25BA0C',
 		top: screen.height / 4.5
 	},
-	timerIconOn: {
+	timerIcon: {
 		tintColor: Constant.COLORS.MAROON,
 		alignItems: 'center'
-		//top: screen.height / 4.5
 	},
 	breakHeading: {
 		fontFamily: 'Comfortaa',
 		fontSize: 20
 	},
 	breakText: {
-		fontFamily: 'Comfortaa',
+		fontFamily: 'Comfortaa_Bold',
 		fontSize: 24
 	},
 	timerText: {
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
 		fontSize: 20
 	},
 	techniqueText: {
-		fontFamily: 'Comfortaa',
+		fontFamily: 'Comfortaa_Bold',
 		fontSize: 24
 	}
 });
@@ -67,8 +65,8 @@ const styles = StyleSheet.create({
 const AVALIABLE_MINUTES = 12;
 const AVALIABLE_SECONDS = 10;
 
-const START_TIME = new Date('2020-02-10T13:00:00.167Z');
-const END_TIME = new Date('2020-02-10T14:00:00.167Z');
+const START_TIME = new Date('2020-02-11T13:00:00.167Z');
+const END_TIME = new Date('2020-02-11T14:00:00.167Z');
 
 const getRemaining = time => {
 	const minutes = Math.floor(time / 60);
@@ -79,11 +77,11 @@ const getRemaining = time => {
 
 const activeStatus = (totalTimeLeft, breakTimeLeft) => {
 	if (breakTimeLeft > 0) {
-		return { breakHeadingText: 'Break ends in', activeStateColor: '#25BA0C' };
+		return { breakHeadingText: 'Break ends in', activeStatusColor: '#25BA0C' };
 	} else if (totalTimeLeft > 0 && breakTimeLeft === 0) {
-		return { breakHeadingText: 'Next break in', activeState: '#B10101' };
+		return { breakHeadingText: 'Next break in', activeStatusColor: '#B10101' };
 	} else {
-		return { breakHeadingText: 'Breaks are every ', activeState: '#000' };
+		return { breakHeadingText: 'Breaks are every ', activeStatusColor: '#000' };
 	}
 };
 
@@ -103,10 +101,9 @@ export default class StudySession extends Component {
 		isRunningTimer: false,
 		remainingSecondsBreak: 0, // Set default techniques
 		remainingSecondsTimer: 0, // Set default techniques
-		setSecondsBreak: '0',
-		selectedMinutesTimer: '0',
-		selectedSecondsTimer: '0',
-		activeStatus: 0, // 0: not active, 1: Study Active, 2: Break Active
+		setSecondsBreak: 0,
+		selectedMinutesTimer: 0,
+		selectedSecondsTimer: 0,
 		currentIteration: 0 // Helps track what break are people on
 		// Set this to the most recent used technique
 	};
@@ -132,6 +129,12 @@ export default class StudySession extends Component {
 	};
 
 	render() {
+		// ******TODO CHANGE TO API START ******
+		const sessionTechnique = 'pomodoro';
+
+		const defaultTechnique = 'pomodoro';
+		// ******TODO CHANGE TO API  END ******
+
 		const { hours, minutes, seconds } = getRemaining(this.state.remainingSeconds);
 
 		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSeconds, this.state.breakRemainingSeconds);
@@ -147,34 +150,37 @@ export default class StudySession extends Component {
 				<Ionicons name='ios-settings' size={32} style={styles.settingsIcon} />
 
 				{/* Heading */}
-				<Row>
-					<Text
-						style={{
-							...GlobalStyle.heading,
-							...styles.mainHeading,
-							color: '#000',
-							fontFamily: 'Comfortaa_Bold'
-						}}
-					>
-						study
-					</Text>
-					<Text
-						style={{
-							...GlobalStyle.heading,
-							...styles.mainHeading,
-							fontFamily: 'Comfortaa_Bold',
-							color: activeStatusColor
-						}}
-					>
-						session
-					</Text>
-				</Row>
+				<View>
+					<Row>
+						<Text
+							style={{
+								...GlobalStyle.heading,
+								...styles.mainHeading,
+								color: '#000',
+								fontFamily: 'Comfortaa_Bold'
+							}}
+						>
+							study
+						</Text>
+						<Text
+							style={{
+								...GlobalStyle.heading,
+								...styles.mainHeading,
+								fontFamily: 'Comfortaa_Bold',
+								color: activeStatusColor
+							}}
+						>
+							{' '}
+							session
+						</Text>
+					</Row>
+				</View>
 
 				<View style={{ alignItems: 'center' }}>
 					{/* Timer Icon */}
-					<Image source={require('../assets/timer.png')} style={{ ...styles.timerIconOn, color: activeStatusColor }} />
+					<Image source={require('../assets/timer.png')} style={{ ...styles.timerIcon, tintColor: activeStatusColor }} />
 					{/* TOTAL Seconds Text */}
-					<Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text>
+					{this.state.isRunningTimer ? <Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text> : <Text style={{ ...styles.timerText, fontSize: 24, fontFamily: 'Comfortaa_Bold', paddingTop: 20 }}>no active session</Text>}
 				</View>
 
 				<View style={{ alignItems: 'center' }}>
@@ -195,16 +201,34 @@ export default class StudySession extends Component {
 					{/* Current Technique Text */}
 					<Text style={styles.techniqueHeading}>Current Technique</Text>
 					{/* Technique Text */}
-					<Text style={{ ...styles.techniqueText, color: activeStatusColor }}>pomodoro</Text>
+					{this.state.isRunningTime ? (
+						<Text
+							style={{
+								...styles.techniqueText,
+								color: activeStatusColor
+							}}
+						>
+							{sessionTechnique}
+						</Text>
+					) : (
+						<Text
+							style={{
+								...styles.techniqueText,
+								color: activeStatusColor
+							}}
+						>
+							{defaultTechnique}
+						</Text>
+					)}
 				</View>
 
 				{/* End session button */}
 				{this.state.isRunningTimer ? (
-					<TouchableOpacity id='sessionButton' onPress={this.stop} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
+					<TouchableOpacity id='sessionButton' onPress={this.stop} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor, fontFamily: 'Comfortaa_Bold' }}>
 						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>End Session</Text>
 					</TouchableOpacity>
 				) : (
-					<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
+					<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor, fontFamily: 'Comfortaa_Bold' }}>
 						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
 					</TouchableOpacity>
 				)}
@@ -212,12 +236,3 @@ export default class StudySession extends Component {
 		);
 	}
 }
-
-//prettier-ignore-start
-// If the normal timer is running display the timer
-//                 {this.state.isRunning ? <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text> : <Text style={styles.timerText}>No Active Session</Text>}
-//                 {/* If the normal timer is running display the timer  */}
-//                 {this.state.isRunning ? <Text style={styles.timerText}>{`${minutesBreak}:${secondsBreak}`}</Text> : <Text style={styles.timerText}>{`${minutesToBreak}:${secondsToBreak}`}</Text>}
-//                 {/* */}
-//                 {this.state.isRunning ? <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text> : <Text style={styles.timerText}>No Active Session</Text>}
-//                 {/* */}
