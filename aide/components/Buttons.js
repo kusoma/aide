@@ -27,10 +27,12 @@ export const WideButton = ({
   imageColor,
   buttonStyle,
   textStyle,
-  onPress
+  navigation,
+  screenName
 }) => (
   <View>
     <TouchableOpacity
+      onPress={() => navigation.navigate(screenName)}
       style={[styles.wideButtons, GlobalStyle.shadow, buttonStyle]}
     >
       <IsValidImage image={image} imageColor={imageColor} />

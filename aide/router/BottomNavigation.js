@@ -43,8 +43,8 @@ const BottomNavigator = createMaterialBottomTabNavigator(
         )
       }
     },
-    StudyPreferences: {
-      screen: StudyPreferences,
+    UserSettings: {
+      screen: UserSettings,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View>

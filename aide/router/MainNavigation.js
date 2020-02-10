@@ -8,10 +8,10 @@ import StudyPreferences from "../screens/StudyPreferences";
 
 const MainNavigator = createStackNavigator(
   {
-    //  Login: { screen: Login },
-    //  ForgotPassword: { screen: ForgotPassword },
-    //  Signup: { screen: Signup },
-    //  UserSettings: { screen: UserSettings },
+    Login: { screen: Login },
+    ForgotPassword: { screen: ForgotPassword },
+    Signup: { screen: Signup },
+    UserSettings: { screen: UserSettings },
     StudyPreferences: { screen: StudyPreferences }
   },
   {

@@ -81,6 +81,9 @@ export default class Login extends Component {
           />
         </View>
         <WideButton
+          // onPress={this.props.navigation.navigate("Login")}
+          navigation={this.props.navigation}
+          screenName="StudyPreferences"
           label="Study Preferences"
           image="lightbulb-o"
           imageColor="#000"
