@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 	},
 	mainHeading: {
 		alignItems: 'stretch',
-		top: 110
+		top: 100
 	},
 	timerIconOff: {
 		tintColor: '#000',
@@ -39,9 +39,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 		//top: screen.height / 4.5
 	},
-	breakHeading: {},
-	timerHeading: {},
-	breakText: {},
+	breakHeading: {
+		fontFamily: 'Comfortaa'
+	},
+	timerHeading: {
+		fontFamily: 'Comfortaa'
+	},
+	breakText: {
+		fontFamily: 'Comfortaa'
+	},
 	timerText: {
 		fontFamily: 'Comfortaa',
 		fontSize: 40,
@@ -50,9 +56,16 @@ const styles = StyleSheet.create({
 	buttonStart: {},
 	buttonStop: {},
 	buttonBreak: {},
-	techniqueHeading: {},
-	techniqueText: {}
+	techniqueHeading: {
+		fontFamily: 'Comfortaa'
+	},
+	techniqueText: {
+		fontFamily: 'Comfortaa'
+	}
 });
+
+const AVALIABLE_MINUTES = 12;
+const AVALIABLE_SECONDS = 10;
 
 const getRemaining = time => {
 	const minutes = Math.floor(time / 60);
@@ -61,18 +74,15 @@ const getRemaining = time => {
 	return { hours: formatNumber(hours), minutes: formatNumber(minutes), seconds: formatNumber(seconds) };
 };
 
-const getBreakHeading = (totalTimeLeft, breakTimeLeft) => {
+const activeStatus = (totalTimeLeft, breakTimeLeft) => {
 	if (breakTimeLeft > 0) {
-		return { breakHeadingText: 'Break ends in' };
+		return { breakHeadingText: 'Break ends in', activeStateColor: '#25BA0C' };
 	} else if (totalTimeLeft > 0 && breakTimeLeft === 0) {
-		return { breakHeadingText: 'Next break in' };
+		return { breakHeadingText: 'Next break in', activeState: '#B10101' };
 	} else {
-		return { breakHeadingText: 'Breaks are every ' };
+		return { breakHeadingText: 'Breaks are every ', activeState: '#000' };
 	}
 };
-
-const AVALIABLE_MINUTES = 12;
-const AVALIABLE_SECONDS = 10;
 
 const formatNumber = number => `0${number}`.slice(-2);
 
@@ -81,31 +91,32 @@ export default class StudySession extends Component {
 		super(props);
 	}
 
+	interval = null;
+
 	state = {
 		isRunningBreak: false,
-		isRunningTimer: true,
+		isRunningTimer: false,
 		breakRemainingSeconds: 0, // Set default techniques
 		remainingSecondsTimers: 0, // Set default techniques
 		setMinutesBreak: '0',
 		setSecondsBreak: '0',
 		selectedMinutesTimer: '0',
-		selectedSecondsTimer: '0'
+		selectedSecondsTimer: '0',
+		activeStatus: 0 // 0: not active, 1: Study Active, 2: Break Active
 		// Set this to the most recent used technique
 	};
-
-	interval = null;
 
 	componentDidUpdate(prevProp, prevState) {
 		if (this.state.remainingSeconds === 0 && prevState.remainingSeconds !== 0) {
 			this.stop();
 		}
 	}
-	// UNSAFE_componentWillUnmount() {
-	// 	if (this.interval) {
-	// 		clearInterval(this.interval);
-	// 	}
-	// }
 
+	componentWillUnmount() {
+		if (this.interval) {
+			clearInterval(this.interval);
+		}
+	}
 	startTimer = () => {
 		this.setState(state => ({
 			remainingSecondsTimer: parseInt(state.selectedMinutes) * 60 + parseInt(state.selectedSeconds, 10),
@@ -115,12 +126,10 @@ export default class StudySession extends Component {
 		}));
 	};
 
-	render;
-
 	render() {
 		const { hours, minutes, seconds } = getRemaining(this.state.remainingSeconds);
 
-		const { breakHeadingText } = getBreakHeading(this.state.remainingSeconds, this.state.breakRemainingSeconds);
+		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSeconds, this.state.breakRemainingSeconds);
 
 		const { hoursBreak, minutesBreak, secondsBreak } = getRemaining(this.state.remainingSeconds);
 
@@ -133,7 +142,7 @@ export default class StudySession extends Component {
 				{/* Heading */}
 				<Row>
 					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, color: '#000', fontFamily: 'Comfortaa_Bold' }}>study</Text>
-					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, fontFamily: 'Comfortaa_Bold' }}> session </Text>
+					<Text style={{ ...GlobalStyle.heading, ...styles.mainHeading, fontFamily: 'Comfortaa_Bold', color: activeStatusColor }}> session </Text>
 				</Row>
 				<View style={{ alignItems: 'center' }}>
 					{/* Timer Icon */}
@@ -145,16 +154,16 @@ export default class StudySession extends Component {
 					{/* Break Text */}
 					<Text style={styles.breakHeading}>{breakHeadingText}</Text>
 					{/* BREAK Seconds Text */}
-					<Text style={styles.breakText}>{`${minutesBreak}:${secondsBreak}s`}</Text>
+					<Text style={{ ...styles.breakText, color: activeStatusColor }}>{`${minutesBreak}:${secondsBreak}s`}</Text>
 				</View>
 				<View style={{ alignItems: 'center' }}>
 					{/* Current Technique Text */}
 					<Text style={styles.techniqueHeading}>Current Technique</Text>
 					{/* Technique Text */}
-					<Text style={styles.techniqueText}>pomodoro</Text>
+					<Text style={{ ...styles.techniqueText, color: activeStatusColor }}>pomodoro</Text>
 				</View>
 				{/* End session button */}
-				<TouchableOpacity id='sessionButton' onPress={this.start} style={GlobalStyle.pillButton}>
+				<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
 					<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
 				</TouchableOpacity>
 			</View>
