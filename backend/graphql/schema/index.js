@@ -39,12 +39,14 @@ type Session {
     _id: ID!
     startTime: Date!
     endTime: Date!
+    technique: String!
     owner: User!
 }
 
 input SessionInput {
     startTime: Date!
     endTime: Date!
+    technique: String!
     owner: User!
 }
 

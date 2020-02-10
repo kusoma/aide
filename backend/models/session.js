@@ -10,6 +10,10 @@ const sessionSchema = new Schema({
 		type: Date,
 		required: true
 	},
+	technique: {
+		type: String,
+		required: true
+	},
 	owner: {
 		type: Schema.Types.ObjectId,
 		required: true
