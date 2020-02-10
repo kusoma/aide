@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
 const AVALIABLE_MINUTES = 12;
 const AVALIABLE_SECONDS = 10;
 
+const START_TIME = new Date('2020-02-10T13:00:00.167Z');
+const END_TIME = new Date('2020-02-10T14:00:00.167Z');
+
 const getRemaining = time => {
 	const minutes = Math.floor(time / 60);
 	const seconds = time - minutes * 60;
@@ -84,25 +87,27 @@ const activeStatus = (totalTimeLeft, breakTimeLeft) => {
 	}
 };
 
+const getTotalSessionTime = (startTime, endTime) => {
+	let difference = startTime.getTime() - endTime.getTime();
+	let secondsDifference = Math.floor(difference / 1000);
+	return secondsDifference;
+};
+
 const formatNumber = number => `0${number}`.slice(-2);
 
 export default class StudySession extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	interval = null;
 
 	state = {
 		isRunningBreak: false,
 		isRunningTimer: false,
-		breakRemainingSeconds: 0, // Set default techniques
-		remainingSecondsTimers: 0, // Set default techniques
-		setMinutesBreak: '0',
+		remainingSecondsBreak: 0, // Set default techniques
+		remainingSecondsTimer: 0, // Set default techniques
 		setSecondsBreak: '0',
 		selectedMinutesTimer: '0',
 		selectedSecondsTimer: '0',
-		activeStatus: 0 // 0: not active, 1: Study Active, 2: Break Active
+		activeStatus: 0, // 0: not active, 1: Study Active, 2: Break Active
+		currentIteration: 0 // Helps track what break are people on
 		// Set this to the most recent used technique
 	};
 
@@ -119,10 +124,10 @@ export default class StudySession extends Component {
 	}
 	startTimer = () => {
 		this.setState(state => ({
-			remainingSecondsTimer: parseInt(state.selectedMinutes) * 60 + parseInt(state.selectedSeconds, 10),
+			remainingSecondsTimer: parseInt(getTotalSessionTime(START_TIME, END_TIME), 10),
 			isRunningTimer: true,
-			remainingSecondsBreak: parseInt(state.selectedMinutes) * 60 + parseInt(state.selectedSeconds, 10),
-			isRunningBreak: true
+			remainingSecondsBreak: parseInt(getTotalSessionTime(START_TIME, END_TIME), 10),
+			isRunningBreak: false
 		}));
 	};
 
@@ -137,8 +142,10 @@ export default class StudySession extends Component {
 			<View style={styles.container}>
 				{/* Make the bar dark */}
 				<StatusBar barStyle='dark-content' />
+
 				{/* Settings Icon on the right side */}
 				<Ionicons name='ios-settings' size={32} style={styles.settingsIcon} />
+
 				{/* Heading */}
 				<Row>
 					<Text
@@ -162,12 +169,14 @@ export default class StudySession extends Component {
 						session
 					</Text>
 				</Row>
+
 				<View style={{ alignItems: 'center' }}>
 					{/* Timer Icon */}
 					<Image source={require('../assets/timer.png')} style={{ ...styles.timerIconOn, color: activeStatusColor }} />
 					{/* TOTAL Seconds Text */}
 					<Text style={styles.timerText}>{`${hours}:${minutes}:${seconds}s`}</Text>
 				</View>
+
 				<View style={{ alignItems: 'center' }}>
 					{/* Break Text */}
 					<Text style={styles.breakHeading}>{breakHeadingText}</Text>
@@ -181,12 +190,14 @@ export default class StudySession extends Component {
 						{`${minutesBreak}:${secondsBreak}s`}
 					</Text>
 				</View>
+
 				<View style={{ alignItems: 'center' }}>
 					{/* Current Technique Text */}
 					<Text style={styles.techniqueHeading}>Current Technique</Text>
 					{/* Technique Text */}
 					<Text style={{ ...styles.techniqueText, color: activeStatusColor }}>pomodoro</Text>
 				</View>
+
 				{/* End session button */}
 				{this.state.isRunningTimer ? (
 					<TouchableOpacity id='sessionButton' onPress={this.stop} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor }}>
