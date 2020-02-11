@@ -5,16 +5,12 @@ import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import MonthlyView from '../screens/MonthlyView';
+import WeeklyView from '../screens/WeeklyView';
 import SignUp from '../screens/SignUp';
-import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
-<<<<<<< HEAD
-import ClassSettings from '../screens/ClassSettings';
-=======
 import { Constant } from '../utils/Variables';
 
 const ICON_SIZE = 25;
->>>>>>> test
 
 const BottomNavigator = createMaterialBottomTabNavigator({
   MonthlyView: {
@@ -27,8 +23,8 @@ const BottomNavigator = createMaterialBottomTabNavigator({
       tabBarColor: Constant.COLORS.MAROON,
     }
   },
-  ForgotPassword: {
-    screen: ForgotPassword,
+  WeeklyView: {
+    screen: WeeklyView,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
@@ -47,8 +43,8 @@ const BottomNavigator = createMaterialBottomTabNavigator({
       tabBarColor: Constant.COLORS.MAROON,
     }
   },
-  ClassSettings: {
-    screen: ClassSettings,
+  UserSettings: {
+    screen: UserSettings,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
