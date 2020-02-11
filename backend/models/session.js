@@ -14,6 +14,10 @@ const sessionSchema = new Schema({
 		type: String,
 		required: true
 	},
+	waitTime: {
+		type: Number,
+		required: 'Please make the number for seconds past that should trigger a new break '
+	},
 	owner: {
 		type: Schema.Types.ObjectId,
 		required: true
