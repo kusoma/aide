@@ -26,7 +26,7 @@ export default class Login extends Component {
             placeholder="First Name"
             onChangeText={firstName => this.setState({ firstName })}
             value={this.state.firstName}
-            autoCapitalize="words"
+            editable={false}
           />
           <TextField
             image="user"
@@ -34,7 +34,7 @@ export default class Login extends Component {
             placeholder="Last Name"
             onChangeText={lastName => this.setState({ lastName })}
             value={this.state.lastName}
-            autoCapitalize="words"
+            editable={false}
           />
           <TextField
             image="envelope"
@@ -42,7 +42,7 @@ export default class Login extends Component {
             placeholder="Email"
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
-            autoCapitalize="none"
+            editable={false}
           />
         </View>
 
