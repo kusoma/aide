@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import MonthlyView from '../screens/MonthlyView';
 import SignUp from '../screens/SignUp';
-import ForgotPassword from '../screens/ForgotPassword';
+import WeeklyVIew from '../screens/WeeklyView';
 import UserSettings from '../screens/UserSettings';
 import { Constant } from '../utils/Variables';
 
@@ -18,17 +18,17 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"calendar"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name="calendar" />
         </View>),
       tabBarColor: Constant.COLORS.MAROON,
     }
   },
-  ForgotPassword: {
-    screen: ForgotPassword,
+  WeeklyVIew: {
+    screen: WeeklyVIew,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"tasks"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name="tasks" />
         </View>),
       tabBarColor: Constant.COLORS.MAROON,
     }
@@ -38,7 +38,7 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"lightbulb-o"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name="lightbulb-o" />
         </View>),
       tabBarColor: Constant.COLORS.MAROON,
     }
@@ -48,7 +48,7 @@ const BottomNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <View>
-          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"user"} />
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name="user" />
         </View>),
       tabBarColor: Constant.COLORS.MAROON,
     }
