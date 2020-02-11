@@ -30,28 +30,28 @@ export default class ClassSettings extends Component {
                     <TextField
                         label="Automate Only"
                         placeholder="Exams and Quizzes"
-                        //onChangeText={firstName => this.setState({ firstName })}
+                        onChangeText={automate => this.setState({ automate })}
                         value={this.state.automate}
                         autoCapitalize="words"
                     />
                     <TextField
                         label="Study Session Time Default for Quiz"
                         placeholder="1 hours."
-                        //onChangeText={firstName => this.setState({ firstName })}
+                        onChangeText={quizTime => this.setState({ quizTime })}
                         value={this.state.quizTime}
                         autoCapitalize="words"
                     />
                     <TextField
                         label="Study Session Time Default for Exams"
                         placeholder="3 hours."
-                        //onChangeText={firstName => this.setState({ firstName })}
+                        onChangeText={examTime => this.setState({ examTime })}
                         value={this.state.examTime}
                         autoCapitalize="words"
                     />
                     <TextField
                         label="Days Sessions Can Occur"
                         placeholder="Mon., Wed., Fri."
-                        //onChangeText={firstName => this.setState({ firstName })}
+                        onChangeText={days => this.setState({ days })}
                         value={this.state.days}
                         autoCapitalize="words"
                     />
