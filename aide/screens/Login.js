@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField, ErrorText, Aide } from '../components/Form';
+import { TextField, ErrorText } from '../components/Form';
+import  { Title } from '../components/Title';
 import { callGraphql } from '../utils/API';
 
 export default class Login extends Component {
@@ -12,10 +13,14 @@ export default class Login extends Component {
 			password: "",
 			showPassword: true,
 			isError: false,
+			isErrorText: ''
 		}
 	}
 
-	loginHandler(email, password) {
+	loginHandler() {
+		const email = this.state.email;
+		const password = this.state.password;
+
 		let request = {
 			query: `
 			  query {
@@ -30,14 +35,15 @@ export default class Login extends Component {
 	
 		callGraphql(request, (json) => {
 			if (json.errors) {
-				this.state.isError = true
+				this.setState({ isError: true })
+				this.setState({ isErrorText: json.errors[0].message })
 			} else {
 				let user = {
 					firstName: json.data.login.firstName,
 					lastName: json.data.login.lastName,
 					email: json.data.login.email
 				}
-				this.props.navigation.navigate('UserSettings', user);
+				this.props.navigation.navigate('BottomNavigation', user);
 			}
 		})
 	}
@@ -45,7 +51,7 @@ export default class Login extends Component {
 	render() {
 		return (
 			<ScrollView contentContainerStyle={GlobalStyle.container}>
-				<Aide/>
+				<Title first="AI" second="DE" />
 				<View style={[GlobalStyle.form, GlobalStyle.shadow]}>
 					<TextField
 						image="envelope"
@@ -65,23 +71,18 @@ export default class Login extends Component {
 						autoCapitalize="none"
 					/>
 				</View>
-
 				<TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-					<Text style={GlobalStyle.text}> Forgot password or username? </Text>
-				</TouchableOpacity>
-				
+					<Text style={GlobalStyle.text}> Forgot password? </Text>
+				</TouchableOpacity>		
 				<TouchableOpacity
 					style={[GlobalStyle.pillButtonSide, GlobalStyle.shadow, { top: 30 }]}
 					onPress={() => this.loginHandler(this.state.email, this.state.password)}>
 					<Text style={GlobalStyle.pillButtonSideText} > Sign In </Text>
 				</TouchableOpacity>
-
-				<TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
-					<Text style={[GlobalStyle.text, { top: Constant.MAX_HEIGHT / 4 }]}> Create an Account </Text>
+				{this.state.isError ? <ErrorText text={this.state.isErrorText} /> : <ErrorText text={""} />}
+				<TouchableOpacity style={{top: Constant.MAX_HEIGHT * 0.3}} onPress={() => this.props.navigation.navigate('SignUp')}>
+					<Text style={[GlobalStyle.text]}> Create an Account</Text>
 				</TouchableOpacity>
-
-				{/* TODO: Double check on error message */}
-				{this.state.isError ? <ErrorText text="Incorrect Email or Password" /> : <React.Fragment />}
 			</ScrollView>
 		);
 	}

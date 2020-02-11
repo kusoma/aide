@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import MainNavigation from "./router/MainNavigation";
-import BottomNavigation from "./router/BottomNavigation";
 import Fonts from "./utils/Fonts"
 
 const getFont = () => 
@@ -15,7 +14,7 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
  if(fontLoaded) {
-   return ( <BottomNavigation />);
+   return ( <MainNavigation />);
  }  
    return (
      <AppLoading

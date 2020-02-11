@@ -1,22 +1,47 @@
 import React, { Component } from 'react';
-import { ScrollView, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField, Aide } from '../components/Form';
+import { ScrollView,
+   TouchableOpacity,
+   Text,
+   View,
+   PanResponder,
+   Animated } from 'react-native';
+import { GlobalStyle } from '../utils/Variables';
+import { TextField } from '../components/Form';
+import  { Title } from '../components/Title';
+
 
 export default class app extends Component {
   constructor() {
     super();
+
+    const position = new Animated.ValueXY();
+
+    const panResponder = PanResponder.create({
+      onPanResponderRelease: () => {position.setValue({ x: 0, y: 0})},
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gesture) => {
+         
+          
+          position.setValue({ x: gesture.dx, y: 0 });
+      }
+   });
+
     this.state = {
-      email: ""
+      email: "",
+      position,
+      panResponder
     }
+
   }
   
   render() {
+
+    const handles = this.state.panResponder.panHandlers;
+
     return (
       <ScrollView contentContainerStyle={GlobalStyle.container}>
-        <Aide/>
-        {/* TODO: Get this matching width of login */}
-        <View style={styles.forms}>
+        <Title first="AI" second="DE" />
+        <View style={[GlobalStyle.form, GlobalStyle.shadow]}>
           <TextField
             image="envelope"
             style={GlobalStyle.formIcon}
@@ -33,18 +58,3 @@ export default class app extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  forms: {
-    backgroundColor: '#fff',
-    width: Constant.MAX_WIDTH / 1.25,
-    height: Constant.MAX_HEIGHT / 9,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignContent: 'center',
-    shadowColor: Constant.COLORS.SHADOW_COLOR,
-    shadowOffset: { width: 3, height: 8 },
-    shadowOpacity: 0.8,
-    shadowRadius: 12,
-  },
-});

@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from "moment";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { Constant } from '../utils/Variables'
 
@@ -18,7 +17,7 @@ const DAYSINWEEK =
 export const Calendar = ({ data }) => (
   <View style={styles.background}>
     <PopulateDaysInAWeek />
-    <GetDates />
+    <PopulateDates data={data} />
   </View>
 )
 
@@ -27,7 +26,7 @@ const PopulateDaysInAWeek = () => (
     data={DAYSINWEEK}
     contentContainerStyle={styles.List}
     renderItem={({item}) => 
-      <View>
+      <View style={styles.box}>
         <Text style={styles.Text}> 
           {item.label}
         </Text>
@@ -43,8 +42,7 @@ const GetDates = () => {
 
     if(date.getDay() !== 0)
     {
-        const difference = 6 - date.getDay();
-        for(let i = 0; i < difference; i++)
+        for(let i = 0; i < date.getDay() ; i++)
         {
             result.push({ Day: DAYSINWEEK[i].props, Date: ""})
         }
@@ -58,22 +56,77 @@ const GetDates = () => {
          date.setDate(date.getDate() + 1);
     }
 
-    return null;
+    if(result[result.length - 1].Day !== DAYSINWEEK[6].value)
+    {
+      let currentDate = 0;
+      for(let i = 0; i < DAYSINWEEK.length; i++)
+      {
+        if(result[result.length - 1].Day === DAYSINWEEK[i].props)
+          currentDate = DAYSINWEEK[i].value;
+      }
+
+      for(let i = currentDate; i < DAYSINWEEK[6].value; i++)
+        result.push({ Day: DAYSINWEEK[i].props, Date: ""})
+      
+    }
+    
+    return result;
 }
 
-// const PopulateDates = () => (
-
-// //   <FlatList
-// //     data={getDates()}
-// //     contentContainerStyle={styles.List}
-// //     renderItem={({item}) => 
-// //       <TouchableOpacity>
-// //         <Text style={styles.Text}> 
-// //           {item.Date}
-// //         </Text>
-// //       </TouchableOpacity>}
-// //   />
-// )
+const PopulateDates = (data) => (
+  <View>
+    <FlatList
+      data={GetDates().slice(0,7)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+          <Text style={styles.Text}> 
+            {item.Date}
+          </Text>
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(7,14)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+          <Text style={styles.Text}> 
+            {item.Date}
+          </Text>
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(14,21)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+          <Text style={styles.Text}> 
+            {item.Date}
+          </Text>
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(21,28)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+          <Text style={styles.Text}> 
+            {item.Date}
+          </Text>
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(28)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+          <Text style={styles.Text}> 
+            {item.Date}
+          </Text>
+        </TouchableOpacity>}
+    />
+  </View>
+)
 
 const styles = StyleSheet.create({ 
     background: {
@@ -90,5 +143,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Comfortaa',
         fontSize: 15,
         fontWeight: 'bold'
-    }
+    },
+    box: {
+      width: Constant.MAX_WIDTH * 0.8 / 7,
+      height: Constant.MAX_HEIGHT * 0.3 / 6,
+      backgroundColor: '#EBEBEB',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 12,
+    },
 });
