@@ -18,8 +18,8 @@ export default class ClassSettings extends Component {
         return (
             <ScrollView contentContainerStyle={GlobalStyle.container}>
                 <StatusBar barStyle="dark-content" />
-                <View style={{ top: 125, position: 'absolute', marginBottom: 10 }}>
-                    <Text style={[GlobalStyle.title, { fontSize: 25, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Class Settings</Text>
+                <View style={{ top: 125, position: 'absolute', marginBottom: 15 }}>
+                    <Text style={[GlobalStyle.title, { fontSize: 35, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Class Settings</Text>
                 </View>
                 <View style={{ marginBottom: 60 }}>
                     <View style={{ marginBottom: 15 }}>
