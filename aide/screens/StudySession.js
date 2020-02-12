@@ -62,11 +62,14 @@ const styles = StyleSheet.create({
 	}
 });
 
-const PRESET_SECONDS = 300;
-const PRESET_BREAK_LENGTH = 60; // SECONDS
-
+// ******TODO CHANGE TO API START ******
+const sessionTechnique = 'pomodoro';
+const defaultTechnique = 'pomodoro';
+const SECONDS_TIL_BREAK = 300;
+const BREAK_LENGTH = 60; // SECONDS
 const START_TIME = new Date('2020-02-11T13:00:00.167Z');
 const END_TIME = new Date('2020-02-11T14:00:00.167Z');
+// ******TODO CHANGE TO API  END ******
 
 const getRemaining = time => {
 	const minutes = Math.floor(time / 60);
@@ -91,20 +94,17 @@ const getTotalSessionTime = (startTime, endTime) => {
 	return secondsDifference;
 };
 
-
-
 const formatNumber = number => `0${number}`.slice(-2);
 
 export default class StudySession extends Component {
 	interval = null;
 
 	state = {
-		isRunningBreak: false,
 		isRunningTimer: false,
 		remainingSecondsBreak: 0, // Set default techniques
 		remainingSecondsTimer: 0, // Set default techniques
-		secondsToBreak: 0,
-		currentIteration: 0 // Helps track what break are people on
+		secondsToBreak: SECONDS_TIL_BREAK,
+		numBreaks: 0 // Helps track what break are people on
 		// Set this to the most recent used technique
 	};
 
@@ -112,8 +112,6 @@ export default class StudySession extends Component {
 		if (this.state.remainingSeconds === 0 && prevState.remainingSeconds !== 0) {
 			this.stop();
 		}
-		// DO LOGIC FOR WHEN BREAK REACHS ZERO HERE
-		if(this.state.secondsToBreak === 0 && prevState.remainingSeconds !== 0)
 	}
 
 	componentWillUnmount() {
@@ -125,19 +123,48 @@ export default class StudySession extends Component {
 		this.setState(state => ({
 			remainingSecondsTimer: parseInt(getTotalSessionTime(START_TIME, END_TIME), 10),
 			isRunningTimer: true,
-			remainingSecondsBreak: parseInt(getTotalSessionTime(START_TIME, END_TIME), 10),
-			isRunningBreak: false,
-			secondsToBreak: parseInt(waitTime, 10),
+			secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10)
 		}));
+		// Start the count down. Every second subtract from the remaining seconds in the the state.
+		this.interval = setInterval(() => {
+			this.setState(state => ({
+				remainingSecondsTimer: state.remainingTimer - 1
+			}));
+
+			if (this.secondsToBreak >= 0) {
+				this.setState(state => ({
+					secondsToBreak: state.secondsToBreak - 1
+				}));
+			} else if (this.secondsToBreak === 0) {
+				this.setState(state => ({
+					remainingSecondsBreak: parseInt(BREAK_LENGTH, 10)
+				}));
+			} else if (this.remainingSecondsBreak >= 0) {
+				this.setState(state => ({
+					remainingSecondsBreak: remainingSecondsBreak - 1
+				}));
+			} else if (this.remainingSecondsBreak === 0) {
+				this.setState(state => ({
+					numBreaks: numBreaks++,
+					secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10)
+				}));
+			}
+		}, 1000);
+	};
+
+	stop = () => {
+		clearInterval(this.interval); // Clears interval to clear memory
+		this.interval = null; // Make sure the inteval is null
+		this.setState({
+			isRunningTimer: false,
+			remainingSecondsBreak: 0, // Set default techniques
+			remainingSecondsTimer: 0, // Set default techniques
+			secondsToBreak: SECONDS_TIL_BREAK,
+			numBreaks: 0
+		});
 	};
 
 	render() {
-		// ******TODO CHANGE TO API START ******
-		const sessionTechnique = 'pomodoro';
-
-		const defaultTechnique = 'pomodoro';
-		// ******TODO CHANGE TO API  END ******
-
 		const { hours, minutes, seconds } = getRemaining(this.state.remainingSeconds);
 
 		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSeconds, this.state.breakRemainingSeconds);
