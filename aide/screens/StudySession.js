@@ -1,8 +1,7 @@
 //prettier-ignore-start
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Text, View, StatusBar, Dimensions, Picker, Platform, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { Constant, GlobalStyle } from '../utils/Variables';
-import { WideButton } from '../components/Buttons';
 import { Ionicons } from '@expo/vector-icons';
 
 import Row from '../components/Row';
@@ -165,11 +164,13 @@ export default class StudySession extends Component {
 	};
 
 	render() {
-		const { hours, minutes, seconds } = getRemaining(this.state.remainingSeconds);
+		const { hours, minutes, seconds } = getRemaining(this.state.remainingSecondsTimer);
 
-		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSeconds, this.state.breakRemainingSeconds);
+		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSecondsBreak, this.state.breakRemainingSeconds);
 
-		const { hoursBreak, minutesBreak, secondsBreak } = getRemaining(this.state.remainingSeconds);
+		const { hoursBreak, minutesBreak, secondsBreak } = getRemaining(this.state.remainingSecondsBreak);
+
+		const { hoursToBreak, minutesToBreak, secondsToBreak } = getRemaining(this.state.secondsToBreak);
 
 		return (
 			<View style={styles.container}>
@@ -223,7 +224,7 @@ export default class StudySession extends Component {
 							color: activeStatusColor
 						}}
 					>
-						{`${minutesBreak}:${secondsBreak}s`}
+						{this.state.remainingSecondsBreak ? `${minutesBreak}:${secondsBreak}s` : `${minutesToBreak}:${secondsToBreak}s`}
 					</Text>
 				</View>
 
@@ -258,7 +259,7 @@ export default class StudySession extends Component {
 						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>End Session</Text>
 					</TouchableOpacity>
 				) : (
-					<TouchableOpacity id='sessionButton' onPress={this.start} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor, fontFamily: 'Comfortaa_Bold' }}>
+					<TouchableOpacity id='sessionButton' onPress={this.startTimer} style={{ ...GlobalStyle.pillButton, backgroundColor: activeStatusColor, fontFamily: 'Comfortaa_Bold' }}>
 						<Text style={{ ...GlobalStyle.pillButtonText, ...styles.buttonStart }}>Start Session</Text>
 					</TouchableOpacity>
 				)}
