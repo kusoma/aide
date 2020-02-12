@@ -25,6 +25,17 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "splash": {
+        "mdpi": "./assets/android/mdpi_splash.png",
+        "hdpi": "./assets/android/hdpi_splash.png",
+        "xhdpi": "./assets/android/xhdpi_splash.png",
+        "xxhdpi": "./assets/android/xxhdpi_splash.png",
+        "xxxhdpi": "./assets/android/xxxhdpi_splash.png",
+        "resizeMode": "native",
+        "backgroundColor": "#ffffff"
+      }
     }
   }
 }

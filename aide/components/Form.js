@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, View, TextInput, StyleSheet, Image } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { Constant } from "../utils/Variables";
-import Fonts from "../utils/Fonts";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Constant, GlobalStyle } from '../utils/Variables';
 
 const styles = StyleSheet.create({
   row: {
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 7
   },
-  textfield: {
+  textField: {
     fontSize: 20,
     fontWeight: "400",
     color: "#828282",
@@ -26,11 +25,11 @@ const styles = StyleSheet.create({
   },
   errorText: {
     width: 300,
-    color: "red",
+    color: 'red',
+    alignContent: 'center',
+    textAlign: 'center',
     fontSize: 16,
-    marginTop: 5,
-    marginBottom: 15,
-    marginHorizontal: 20
+    top: Constant.MAX_HEIGHT * 0.2
   }
 });
 
@@ -49,11 +48,11 @@ const IsValidImage = ({ image, imageColor }) => {
 export const TextField = ({ image, imageColor, label, ...props }) => (
   <View style={styles.row}>
     <Text style={styles.label}>{label}</Text>
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: 'row' }}>
       <IsValidImage image={image} imageColor={imageColor} />
       <TextInput
-        style={styles.textfield}
-        placeholderTextColor="black"
+        style={styles.textField}
+        placeholderTextColor="#808080"
         {...props}
       />
     </View>

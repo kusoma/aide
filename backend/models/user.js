@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
 
 const userSchema = new Schema({
     firstName: {
         type: String,
         required: true
-        
+
     },
     lastName: {
         type: String,
@@ -28,6 +26,10 @@ const userSchema = new Schema({
     googleToken: {
         type: String,
         required: false
+    },
+    studyPreference: {
+        type: Schema.Types.ObjectId,
+        ref: 'StudyPreference'
     }
 })
 

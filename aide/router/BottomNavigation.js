@@ -1,66 +1,65 @@
-import React from "react";
-import { View, Image } from "react-native";
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
-import { createAppContainer } from "react-navigation";
+import React from 'react';
+import { View } from 'react-native';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Login from "../screens/Login";
-import Signup from "../screens/Signup";
-import ForgotPassword from "../screens/Forgotpassword";
-import UserSettings from "../screens/UserSettings";
-import StudyPreferences from "../screens/StudyPreferences";
+import MonthlyView from '../screens/MonthlyView';
+import WeeklyView from '../screens/WeeklyView';
+import SignUp from '../screens/SignUp';
+import UserSettings from '../screens/UserSettings';
+import { Constant } from '../utils/Variables';
 
-import Icons from "../utils/Icons";
+const ICON_SIZE = 25;
 
-const BottomNavigator = createMaterialBottomTabNavigator(
-  {
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Image style={{ width: 30, height: 30 }} source={Icons.calendar} />
-          </View>
-        )
-      }
-    },
-    ForgotPassword: {
-      screen: ForgotPassword,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Image style={{ width: 30, height: 30 }} source={Icons.canvas} />
-          </View>
-        )
-      }
-    },
-    Signup: {
-      screen: Signup,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Image style={{ width: 20, height: 30 }} source={Icons.lightBlub} />
-          </View>
-        )
-      }
-    },
-    UserSettings: {
-      screen: UserSettings,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Image style={{ width: 20, height: 30 }} source={Icons.person} />
-          </View>
-        )
-      }
+const BottomNavigator = createMaterialBottomTabNavigator({
+  MonthlyView: {
+    screen: MonthlyView,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"calendar"} />
+        </View>),
+      tabBarColor: Constant.COLORS.MAROON,
     }
   },
+  WeeklyView: {
+    screen: WeeklyView,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"tasks"} />
+        </View>),
+      tabBarColor: Constant.COLORS.MAROON,
+    }
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"lightbulb-o"} />
+        </View>),
+      tabBarColor: Constant.COLORS.MAROON,
+    }
+  },
+  UserSettings: {
+    screen: UserSettings,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <View>
+          <Icon style={[{ color: tintColor }]} size={ICON_SIZE} name={"user"} />
+        </View>),
+      tabBarColor: Constant.COLORS.MAROON,
+    }
+  }
+},
   {
     labeled: false,
-    activeColor: "#000",
-    inactiveColor: "#000",
-    barStyle: { backgroundColor: "#EAEAEA" }
-  }
-);
+    activeColor: '#FFF',
+    inactiveColor: '#C0C0C0',
+  })
+
 
 const App = createAppContainer(BottomNavigator);
 
