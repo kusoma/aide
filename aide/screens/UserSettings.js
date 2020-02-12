@@ -47,8 +47,8 @@ export default class Login extends Component {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("ClassSettings")}>
-            <Text style={{ color: Constant.COLORS.MAROON }}> Class Settings </Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('ClassSettings')}>
+            <Text style={GlobalStyle.text}> Class Settings </Text>
           </TouchableOpacity>
         </View>
 

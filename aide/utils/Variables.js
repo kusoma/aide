@@ -86,6 +86,11 @@ export const GlobalStyle = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Comfortaa',
     },
+    title: {
+        fontSize: 72,
+        fontFamily: 'Comfortaa_Bold',
+        letterSpacing: 10,
+    },
     heading: {
         fontSize: 36,
         fontWeight: "bold",
