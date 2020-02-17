@@ -7,6 +7,8 @@ const schema = require('./graphql/schema/index');
 const graphqlResolvers = require('./graphql/resolvers/index');
 const app = express();
 
+const getCanvasAssignments = require('./canvas/utils');
+
 app.use(bodyParser.json());
 
 app.use(
@@ -24,6 +26,18 @@ app.use(
 
     }
 )
+
+app.get(
+    '/canvas',
+    (req, res) => {
+        const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
+
+        getCanvasAssignments(token).then(data => {
+            res.send(data);
+        });
+    }
+)
+
 
 mongoose.connect(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
