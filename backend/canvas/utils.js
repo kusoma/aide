@@ -1,4 +1,5 @@
-exports.getCanvasAssignments = async (token) => {
+const fetch = require('node-fetch');
+module.exports = async function getCanvasAssignments(token) {
     let url = 'https://canvas.apu.edu/api/v1/users/self/upcoming_events'
     let data = await fetch(url, {
         method: 'GET',
@@ -8,7 +9,6 @@ exports.getCanvasAssignments = async (token) => {
             'Accept': '*/*',
         }
     }).then(res => {
-        console.log(res);
         if (res.status !== 200 && res.status !== 201) {
             throw new Error('Failed!');
         }

@@ -7,6 +7,8 @@ const schema = require('./graphql/schema/index');
 const graphqlResolvers = require('./graphql/resolvers/index');
 const app = express();
 
+const getCanvasAssignments = require('./canvas/utils');
+
 app.use(bodyParser.json());
 
 app.use(
