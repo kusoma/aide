@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const mongoose = require('mongoose');
-const request = require('request');
 
 const schema = require('./graphql/schema/index');
 const graphqlResolvers = require('./graphql/resolvers/index');
@@ -22,23 +21,16 @@ app.use(
 app.get(
     '/canvas',
     (req, res) => {
-        //const canvasToken = req.param('canvasToken');
-        const canvasToken = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
-        const headers = {
-            'Authorization': `Bearer ${canvasToken}`
-        };
+        const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
 
-        const options = {
-            url: 'https://canvas.apu.edu/api/v1/users/self/upcoming_events',
-            headers: headers
-        };
-
-        request.get(options).pipe(res);
+        getCanvasAssignments(token).then(data => {
+            res.send(data);
+        });
     }
 )
 
 // TODO: connect to mongodb server instead of local
-mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false`)
+mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false`, { useUnifiedTopology: true, useNewUrlParser: true })
 .then(() => {
     app.listen(3000);
 })
