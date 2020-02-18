@@ -23,15 +23,13 @@ app.use(
 app.use(
     '/google',
     (err, res, next) => {
-
     }
 )
 
 app.get(
     '/canvas',
     (req, res) => {
-        const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
-
+        const token = '2948~R9eqNMW0iz93twhYKO8jPw7BwStGbB5Vb9yGhy3cmPkjloIzAwuGdTOi3R8gtvBL';
         getCanvasAssignments(token).then(data => {
             res.send(data);
         });

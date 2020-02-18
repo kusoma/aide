@@ -15,7 +15,9 @@ export const GlobalStyle = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         justifyContent: 'center',
-        paddingVertical: 20
+        paddingVertical: 20,
+        overflow: 'hidden',
+        borderRadius: 30,
     },
     form: {
         backgroundColor: '#fff',
@@ -24,7 +26,7 @@ export const GlobalStyle = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         padding: 10,
-        margin: 10
+        margin: 10,
     },
     formIcon: {
         width: 300,
