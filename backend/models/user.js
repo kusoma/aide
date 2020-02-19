@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
 
 const userSchema = new Schema({
     firstName: {
@@ -22,10 +20,6 @@ const userSchema = new Schema({
         required: true
     },
     canvasToken: {
-        type: String,
-        required: false
-    },
-    googleToken: {
         type: String,
         required: false
     }

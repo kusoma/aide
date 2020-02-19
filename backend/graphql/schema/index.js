@@ -8,7 +8,6 @@ type User {
     email: String!
     password: String
     canvasToken: String
-    googleToken: String
 }
 
 input UserInput {
@@ -17,7 +16,6 @@ input UserInput {
     email: String!
     password: String!
     canvasToken: String
-    googleToken: String
 }
 
 type RootQuery {
@@ -26,7 +24,6 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    addGoogleToken(userID: ID!, googleToken:String): User
     addCanvasToken(userID: ID!, canvasToken:String): User
 }
 
