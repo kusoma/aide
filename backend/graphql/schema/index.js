@@ -8,7 +8,6 @@ type User {
     email: String!
     password: String
     canvasToken: String
-    googleToken: String
     defaultStudyLength: Int
     defaultBreakLength: Int
     defaultTechnique: String
@@ -20,7 +19,6 @@ input UserInput {
     email: String!
     password: String!
     canvasToken: String
-    googleToken: String
     defaultStudyLength: Int
     defaultBreakLength: Int
     defaultTechnique: String
@@ -32,7 +30,6 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    setGoogleToken(userID: ID!, googleToken: String): User
     setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, defaultStudyLength: Int, defaultBreakLength: Int, defaultTechnique: String): User
 }
