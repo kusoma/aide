@@ -1,28 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
-const StudyPreference = require('../../models/studyPreference');
-
 module.exports = {
-    setGoogleToken: async ({ userID, googleToken }) => {
-        try {
-            const user = await User.findById({ _id: userID })
-            if (!user) {
-                throw new Error('User does not exist!');
-            }
-            const hashedToken = await bcrypt.hash(googleToken, 12);
-            const result = await User.findByIdAndUpdate(
-                { '_id': userID },
-                { 'googleToken': hashedToken },
-                { new: true })
-                .catch(err => {
-                    throw err;
-                });
-
-            return { ...result._doc, googleToken: null, canvasToken: null, password: null }
-        } catch (err) {
-            throw err;
-        }
-    },
     setCanvasToken: async ({ userID, canvasToken }) => {
         try {
             const user = await User.findById({ _id: userID })
@@ -38,12 +16,12 @@ module.exports = {
                     throw err;
                 });
 
-            return { ...result._doc, googleToken: null, canvasToken: null, password: null }
+            return { ...result._doc, canvasToken: null, password: null }
         } catch (err) {
             throw err;
         }
     },
-    setStudyPreference: async ({ userID, studyPreferenceInput }) => {
+    setStudyPreference: async ({ userID, defaultStudyLength, defaultBreakLength, defaultTechnique  }) => {
         try {
             const user = await User.findById({ _id: userID })
             if (!user) {
@@ -51,13 +29,19 @@ module.exports = {
             }
 
             // TODO: There is probably a better way
-            user.studyPreference.studyLength = studyPreferenceInput.studyLength
-            user.studyPreference.breakLength = studyPreferenceInput.breakLength
-            user.studyPreference.technique = studyPreferenceInput.technique
+            const result = await User.findByIdAndUpdate(
+                { '_id': userID },
+                { 
+                    'defaultStudyLength': defaultStudyLength,
+                    'defaultBreakLength': defaultBreakLength,
+                    'defaultTechnique': defaultTechnique 
+                },
+                { new: true })
+                .catch(err => {
+                    throw err;
+                });
 
-            const result = await user.save();
-
-            return { ...result.studyPreference }
+            return { ...result._doc, password: null}
         } catch (err) {
             throw err;
         }
