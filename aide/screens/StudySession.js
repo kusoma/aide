@@ -66,14 +66,14 @@ const sessionTechnique = 'pomodoro';
 const defaultTechnique = 'pomodoro';
 const SECONDS_TIL_BREAK = 300;
 const BREAK_LENGTH = 60; // SECONDS
-const START_TIME = new Date('2020-02-11T13:00:00.167Z');
-const END_TIME = new Date('2020-02-11T14:00:00.167Z');
+const START_TIME = new Date('2020-02-17T13:00:00.167Z');
+const END_TIME = new Date('2020-02-17T14:00:00.167Z');
 // ******TODO CHANGE TO API  END ******
 
 const getRemaining = time => {
-	const minutes = Math.floor(time / 60);
+	const hours = Math.floor(time / 3600);
+	const minutes = Math.floor((time - hours * 3600) / 60);
 	const seconds = time - minutes * 60;
-	const hours = Math.floor(minutes / 60);
 	return { hours: formatNumber(hours), minutes: formatNumber(minutes), seconds: formatNumber(seconds) };
 };
 
@@ -88,8 +88,9 @@ const activeStatus = (totalTimeLeft, breakTimeLeft) => {
 };
 
 const getTotalSessionTime = (startTime, endTime) => {
-	let difference = startTime.getTime() - endTime.getTime();
+	let difference = endTime.getTime() - startTime.getTime();
 	let secondsDifference = Math.floor(difference / 1000);
+	console.log(secondsDifference);
 	return secondsDifference;
 };
 
@@ -127,7 +128,7 @@ export default class StudySession extends Component {
 		// Start the count down. Every second subtract from the remaining seconds in the the state.
 		this.interval = setInterval(() => {
 			this.setState(state => ({
-				remainingSecondsTimer: state.remainingTimer - 1
+				remainingSecondsTimer: state.remainingSecondsTimer - 1
 			}));
 
 			if (this.secondsToBreak >= 0) {
@@ -135,18 +136,18 @@ export default class StudySession extends Component {
 					secondsToBreak: state.secondsToBreak - 1
 				}));
 			} else if (this.secondsToBreak === 0) {
-				this.setState(state => ({
+				this.setState({
 					remainingSecondsBreak: parseInt(BREAK_LENGTH, 10)
-				}));
+				});
 			} else if (this.remainingSecondsBreak >= 0) {
-				this.setState(state => ({
+				this.setState({
 					remainingSecondsBreak: remainingSecondsBreak - 1
-				}));
+				});
 			} else if (this.remainingSecondsBreak === 0) {
-				this.setState(state => ({
+				this.setState({
 					numBreaks: numBreaks++,
 					secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10)
-				}));
+				});
 			}
 		}, 1000);
 	};
@@ -166,7 +167,7 @@ export default class StudySession extends Component {
 	render() {
 		const { hours, minutes, seconds } = getRemaining(this.state.remainingSecondsTimer);
 
-		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.remainingSecondsBreak, this.state.breakRemainingSeconds);
+		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.secondsToBreak, this.state.remainingSecondsBreak);
 
 		const { hoursBreak, minutesBreak, secondsBreak } = getRemaining(this.state.remainingSecondsBreak);
 
