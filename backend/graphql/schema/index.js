@@ -26,12 +26,14 @@ type StudyPreference {
     _id: ID!
     studyLength: Int!
     breakLength: Int!
+    timeBetweenBreaks: Int!
     technique: String!
 }
 
 input StudyPreferenceInput {
     studyLength: Int!
     breakLength: Int!
+    timeBetweenBreaks: Int!
     technique: String!
 }
 
