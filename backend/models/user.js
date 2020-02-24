@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-<<<<<<< HEAD
 	firstName: {
 		type: String,
 		required: true,
@@ -36,29 +35,5 @@ const userSchema = new Schema({
 		ref: 'StudyPreference',
 	},
 });
-=======
-    firstName: {
-        type: String,
-        required: true
-
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    canvasToken: {
-        type: String,
-        required: false
-    }
-})
->>>>>>> feature/015-google-backend
 
 module.exports = mongoose.model('User', userSchema);

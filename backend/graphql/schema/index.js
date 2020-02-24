@@ -20,12 +20,11 @@ input UserInput {
 
 type RootQuery {
     login(email: String!, password: String!): User
-    session(time: Date!, owner: User!): Session
+    
 }
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    createSession(sessionInput: SessionInput): Session
     setStudyPreference(userID: ID!, defaultStudyLength: Int, defaultBreakLength: Int, defaultTechnique: String): User
     addCanvasToken(userID: ID!, canvasToken:String): User
 }
