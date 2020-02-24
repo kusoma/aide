@@ -27,9 +27,17 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    studyPreference: {
-        type: Schema.Types.ObjectId,
-        ref: 'StudyPreference'
+    defaultStudyLength: {
+        type: Number,
+        required: false
+    },
+    defaultBreakLength: {
+        type: Number,
+        required: false
+    },
+    defaultTechnique: {
+        type: String,
+        required: false
     }
 })
 
