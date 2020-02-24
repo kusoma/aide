@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-aide/node_modules
-backend/node_modules
-=======
 /aide/node_modules
 /backend/node_modules
->>>>>>> origin/feature/008-canvas-backend
