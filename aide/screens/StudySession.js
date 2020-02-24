@@ -78,13 +78,11 @@ const getRemaining = time => {
 };
 
 const activeStatus = (totalTimeLeft, breakTimeLeft, primaryTimerActive, breakActive) => {
-	console.log(`TOTALtimeLEFT: ${totalTimeLeft}; breakTimeLeft: ${breakTimeLeft}`);
 	if (breakTimeLeft >= 1 && primaryTimerActive && breakActive) {
 		return { breakHeadingText: 'Break ends in', activeStatusColor: '#25BA0C' };
 	} else if (totalTimeLeft >= 0 && !breakActive && primaryTimerActive) {
 		return { breakHeadingText: 'Next break in', activeStatusColor: '#B10101' };
 	} else {
-		console.log('DARKRED');
 		return { breakHeadingText: 'Breaks are every ', activeStatusColor: '#7A4242' };
 	}
 };
@@ -92,7 +90,6 @@ const activeStatus = (totalTimeLeft, breakTimeLeft, primaryTimerActive, breakAct
 const getTotalSessionTime = (startTime, endTime) => {
 	let difference = endTime.getTime() - startTime.getTime();
 	let secondsDifference = Math.floor(difference / 1000);
-	console.log(secondsDifference);
 	return secondsDifference;
 };
 
@@ -111,7 +108,6 @@ export default class StudySession extends Component {
 	};
 
 	componentDidUpdate (prevProp, prevState) {
-		//console.log(`--------------------------${this.state.remainingSeconds}`);
 		if (this.state.remainingSecondsTimer === 0 && prevState.remainingSecondsTimer !== 0) {
 			this.stop();
 		}
@@ -136,14 +132,11 @@ export default class StudySession extends Component {
 			}));
 
 			if (this.state.breakIsActive && this.state.isRunningTimer) {
-				console.log('ACTIVE');
 				if (this.state.remainingSecondsBreak > 1) {
-					console.log('remainingSecondsBreak >= 0');
 					this.setState(state => ({
 						remainingSecondsBreak: state.remainingSecondsBreak - 1,
 					}));
 				} else {
-					console.log('remainingSecondsBreak === 0');
 					this.setState(state => ({
 						numBreaks: state.numBreaks++,
 						secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10),
@@ -151,14 +144,11 @@ export default class StudySession extends Component {
 					}));
 				}
 			} else if (this.state.isRunningTimer) {
-				console.log('not ACTIVE');
 				if (this.state.secondsToBreak > 1) {
-					console.log(`secondsToBreak >= 0 ${this.state.secondsToBreak}`);
 					this.setState(state => ({
 						secondsToBreak: state.secondsToBreak - 1,
 					}));
 				} else {
-					console.log('secondsToBreak === 0');
 					this.setState({
 						remainingSecondsBreak: parseInt(BREAK_LENGTH, 10),
 						breakIsActive: true,
@@ -190,9 +180,6 @@ export default class StudySession extends Component {
 
 		const minutesToBreak = getRemaining(this.state.secondsToBreak).minutes;
 		const secondsToBreak = getRemaining(this.state.secondsToBreak).seconds;
-
-		console.log(`Break: ${minutesBreak}:${secondsBreak}s`);
-		console.log(`toBreak: ${minutesToBreak}:${secondsToBreak}s`);
 
 		return (
 			<View style={styles.container}>
