@@ -36,43 +36,4 @@ const userSchema = new Schema({
 	},
 });
 
-<<<<<<< HEAD
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    canvasToken: {
-        type: String,
-        required: false
-    },
-    googleToken: {
-        type: String,
-        required: false
-    },
-    defaultStudyLength: {
-        type: Number,
-        required: false
-    },
-    defaultBreakLength: {
-        type: Number,
-        required: false
-    },
-    defaultTechnique: {
-        type: String,
-        required: false
-    }
-})
-
 module.exports = mongoose.model('User', userSchema);
-=======
-module.exports = mongoose.model('User', userSchema);
->>>>>>> origin/feature/020-study-session-frontend

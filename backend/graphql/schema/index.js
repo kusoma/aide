@@ -21,11 +21,6 @@ input UserInput {
     password: String!
     canvasToken: String
     googleToken: String
-<<<<<<< HEAD
-    defaultStudyLength: Int
-    defaultBreakLength: Int
-    defaultTechnique: String
-=======
     studyPreference: StudyPreferenceInput!
 }
 
@@ -42,7 +37,6 @@ input StudyPreferenceInput {
     breakLength: Int!
     timeBetweenBreaks: Int!
     technique: String!
->>>>>>> origin/feature/020-study-session-frontend
 }
 
 type Session {
