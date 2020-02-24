@@ -7,6 +7,8 @@ const schema = require('./graphql/schema/index');
 const graphqlResolvers = require('./graphql/resolvers/index');
 const app = express();
 
+const getCanvasAssignments = require('./canvas/utils');
+
 app.use(bodyParser.json());
 
 app.use(
@@ -18,6 +20,7 @@ app.use(
     })
 );
 
+<<<<<<< HEAD
 app.use(
     '/google',
     (err, res, next) => {
@@ -26,6 +29,21 @@ app.use(
 )
 
 mongoose.connect(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`, {useNewUrlParser: true, useUnifiedTopology: true})
+=======
+app.get(
+    '/canvas',
+    (req, res) => {
+        const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
+
+        getCanvasAssignments(token).then(data => {
+            res.send(data);
+        });
+    }
+)
+
+// TODO: connect to mongodb server instead of local
+mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false`, { useUnifiedTopology: true, useNewUrlParser: true })
+>>>>>>> origin/feature/008-canvas-backend
 .then(() => {
     app.listen(3000);
 })
