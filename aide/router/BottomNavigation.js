@@ -9,6 +9,8 @@ import SignUp from '../screens/SignUp';
 import StudySession from '../screens/StudySession';
 import ForgotPassword from '../screens/ForgotPassword';
 import UserSettings from '../screens/UserSettings';
+import ClassSettings from '../screens/ClassSettings';
+import CustomStudySession from '../screens/CustomStudySession';
 
 const BottomNavigator = createMaterialBottomTabNavigator(
 	{
@@ -17,18 +19,18 @@ const BottomNavigator = createMaterialBottomTabNavigator(
 			navigationOptions: {
 				tabBarIcon: ({ tintColor }) => (
 					<View>
-						<Icon style={[ { color: tintColor } ]} size={25} name={'calendar'} />
+						<Icon style={[{ color: tintColor }]} size={25} name={'calendar'} />
 					</View>
 				),
 				tabBarColor: '#8B1D1D'
 			}
 		},
-		ForgotPassword: {
-			screen: ForgotPassword,
+		ClassSettings: {
+			screen: ClassSettings,
 			navigationOptions: {
 				tabBarIcon: ({ tintColor }) => (
 					<View>
-						<Icon style={[ { color: tintColor } ]} size={25} name={'tasks'} />
+						<Icon style={[{ color: tintColor }]} size={25} name={'tasks'} />
 					</View>
 				),
 				tabBarColor: '#8B1D1D'
@@ -49,18 +51,18 @@ const BottomNavigator = createMaterialBottomTabNavigator(
 			navigationOptions: {
 				tabBarIcon: ({ tintColor }) => (
 					<View>
-						<Icon style={[ { color: tintColor } ]} size={25} name={'lightbulb-o'} />
+						<Icon style={[{ color: tintColor }]} size={25} name={'lightbulb-o'} />
 					</View>
 				),
 				tabBarColor: '#8B1D1D'
 			}
 		},
-		UserSettings: {
-			screen: UserSettings,
+		CustomStudySession: {
+			screen: CustomStudySession,
 			navigationOptions: {
 				tabBarIcon: ({ tintColor }) => (
 					<View>
-						<Icon style={[ { color: tintColor } ]} size={25} name={'user'} />
+						<Icon style={[{ color: tintColor }]} size={25} name={'user'} />
 					</View>
 				),
 				tabBarColor: '#8B1D1D'

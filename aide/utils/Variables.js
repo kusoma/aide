@@ -38,6 +38,14 @@ export const GlobalStyle = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
+	cancelPillButton: {
+		backgroundColor: "grey",
+		borderRadius: 50,
+		width: Constant.MAX_WIDTH / 2,
+		height: 60,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	pillButtonText: {
 		color: '#fff',
 		fontFamily: 'Comfortaa',
