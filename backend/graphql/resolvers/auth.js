@@ -15,6 +15,9 @@ module.exports = {
                 lastName: args.userInput.lastName,
                 email: args.userInput.email,
                 password: hashedPassword,
+                defaultStudyLength: args.userInput.defaultStudyLength,
+                defaultBreakLength: args.userInput.defaultBreakLength,
+                defaultTechnique: args.userInput.defaultTechnique
             });
             const result = await user.save();
 
