@@ -8,10 +8,6 @@ type User {
     email: String!
     password: String
     canvasToken: String
-    googleToken: String
-    defaultStudyLength: Int
-    defaultBreakLength: Int
-    defaultTechnique: String
 }
 
 input UserInput {
@@ -20,38 +16,6 @@ input UserInput {
     email: String!
     password: String!
     canvasToken: String
-    googleToken: String
-    studyPreference: StudyPreferenceInput!
-}
-
-type StudyPreference {
-    _id: ID!
-    studyLength: Int!
-    breakLength: Int!
-    timeBetweenBreaks: Int!
-    technique: String!
-}
-
-input StudyPreferenceInput {
-    studyLength: Int!
-    breakLength: Int!
-    timeBetweenBreaks: Int!
-    technique: String!
-}
-
-type Session {
-    _id: ID!
-    startTime: Date!
-    endTime: Date!
-    technique: String!
-    owner: User!
-}
-
-input SessionInput {
-    startTime: Date!
-    endTime: Date!
-    technique: String!
-    owner: User!
 }
 
 type RootQuery {
@@ -62,9 +26,8 @@ type RootQuery {
 type RootMutation {
     createUser(userInput: UserInput): User
     createSession(sessionInput: SessionInput): Session
-    setGoogleToken(userID: ID!, googleToken: String): User
-    setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, defaultStudyLength: Int, defaultBreakLength: Int, defaultTechnique: String): User
+    addCanvasToken(userID: ID!, canvasToken:String): User
 }
 
 schema {
