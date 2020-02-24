@@ -14,57 +14,57 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		backgroundColor: `#ffffff`,
 		alignItems: 'center',
-		justifyContent: 'space-evenly'
+		justifyContent: 'space-evenly',
 	},
 	settingsIcon: {
 		color: '#000',
 		position: 'absolute',
 		right: 25,
-		top: 60
+		top: 60,
 	},
 	mainHeading: {
-		paddingTop: 50
+		paddingTop: 50,
 	},
 	timerIconOff: {
 		tintColor: '#000',
-		top: screen.height / 4.5
+		top: screen.height / 4.5,
 	},
 	timerIconBreak: {
 		tintColor: '#25BA0C',
-		top: screen.height / 4.5
+		top: screen.height / 4.5,
 	},
 	timerIcon: {
 		tintColor: Constant.COLORS.MAROON,
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	breakHeading: {
 		fontFamily: 'Comfortaa',
-		fontSize: 20
+		fontSize: 20,
 	},
 	breakText: {
 		fontFamily: 'Comfortaa_Bold',
-		fontSize: 24
+		fontSize: 24,
 	},
 	timerText: {
 		fontFamily: 'Comfortaa',
 		fontSize: 40,
-		color: '#000'
+		color: '#000',
 	},
 	button: {},
 	techniqueHeading: {
 		fontFamily: 'Comfortaa',
-		fontSize: 20
+		fontSize: 20,
 	},
 	techniqueText: {
 		fontFamily: 'Comfortaa_Bold',
-		fontSize: 24
-	}
+		fontSize: 24,
+	},
 });
 
 // ******TODO CHANGE TO API START ******
 const sessionTechnique = 'pomodoro';
 const defaultTechnique = 'pomodoro';
-const SECONDS_TIL_BREAK = 300;
+const SECONDS_TIL_BREAK = 10;
 const BREAK_LENGTH = 60; // SECONDS
 const START_TIME = new Date('2020-02-17T13:00:00.167Z');
 const END_TIME = new Date('2020-02-17T14:00:00.167Z');
@@ -104,17 +104,17 @@ export default class StudySession extends Component {
 		remainingSecondsBreak: 0, // Set default techniques
 		remainingSecondsTimer: 0, // Set default techniques
 		secondsToBreak: SECONDS_TIL_BREAK,
-		numBreaks: 0 // Helps track what break are people on
+		numBreaks: 0, // Helps track what break are people on
 		// Set this to the most recent used technique
 	};
 
-	componentDidUpdate(prevProp, prevState) {
+	componentDidUpdate (prevProp, prevState) {
 		if (this.state.remainingSeconds === 0 && prevState.remainingSeconds !== 0) {
 			this.stop();
 		}
 	}
 
-	componentWillUnmount() {
+	componentWillUnmount () {
 		if (this.interval) {
 			clearInterval(this.interval);
 		}
@@ -123,31 +123,37 @@ export default class StudySession extends Component {
 		this.setState(state => ({
 			remainingSecondsTimer: parseInt(getTotalSessionTime(START_TIME, END_TIME), 10),
 			isRunningTimer: true,
-			secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10)
+			secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10),
 		}));
 		// Start the count down. Every second subtract from the remaining seconds in the the state.
 		this.interval = setInterval(() => {
 			this.setState(state => ({
-				remainingSecondsTimer: state.remainingSecondsTimer - 1
+				remainingSecondsTimer: state.remainingSecondsTimer - 1,
 			}));
 
-			if (this.secondsToBreak >= 0) {
+			if (this.state.secondsToBreak >= 0) {
+				//console.log(`secondsToBreak >= 0 ${this.state.secondsToBreak}`);
 				this.setState(state => ({
-					secondsToBreak: state.secondsToBreak - 1
+					secondsToBreak: state.secondsToBreak - 1,
 				}));
-			} else if (this.secondsToBreak === 0) {
+			} else if (this.state.secondsToBreak === 0) {
+				//console.log('secondsToBreak === 0');
 				this.setState({
-					remainingSecondsBreak: parseInt(BREAK_LENGTH, 10)
+					remainingSecondsBreak: parseInt(BREAK_LENGTH, 10),
 				});
-			} else if (this.remainingSecondsBreak >= 0) {
-				this.setState({
-					remainingSecondsBreak: remainingSecondsBreak - 1
-				});
-			} else if (this.remainingSecondsBreak === 0) {
+			} else if (this.state.remainingSecondsBreak >= 0) {
+				//console.log('remainingSecondsBreak >= 0');
+				this.setState(state => ({
+					remainingSecondsBreak: state.remainingSecondsBreak - 1,
+				}));
+			} else if (this.state.remainingSecondsBreak === 0) {
+				//console.log('remainingSecondsBreak === 0');
 				this.setState({
 					numBreaks: numBreaks++,
-					secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10)
+					secondsToBreak: parseInt(SECONDS_TIL_BREAK, 10),
 				});
+			} else {
+				console.log('NOT WORKING BREAK TIMER');
 			}
 		}, 1000);
 	};
@@ -160,18 +166,23 @@ export default class StudySession extends Component {
 			remainingSecondsBreak: 0, // Set default techniques
 			remainingSecondsTimer: 0, // Set default techniques
 			secondsToBreak: SECONDS_TIL_BREAK,
-			numBreaks: 0
+			numBreaks: 0,
 		});
 	};
 
-	render() {
+	render () {
 		const { hours, minutes, seconds } = getRemaining(this.state.remainingSecondsTimer);
 
 		const { breakHeadingText, activeStatusColor } = activeStatus(this.state.secondsToBreak, this.state.remainingSecondsBreak);
 
-		const { hoursBreak, minutesBreak, secondsBreak } = getRemaining(this.state.remainingSecondsBreak);
+		const minutesBreak = getRemaining(this.state.remainingSecondsBreak).minutes;
+		const secondsBreak = getRemaining(this.state.remainingSecondsBreak).seconds;
 
-		const { hoursToBreak, minutesToBreak, secondsToBreak } = getRemaining(this.state.secondsToBreak);
+		const minutesToBreak = getRemaining(this.state.secondsToBreak).minutes;
+		const secondsToBreak = getRemaining(this.state.secondsToBreak).seconds;
+
+		console.log(`Break: ${minutesBreak}:${secondsBreak}s`);
+		console.log(`toBreak: ${minutesToBreak}:${secondsToBreak}s`);
 
 		return (
 			<View style={styles.container}>
@@ -189,7 +200,7 @@ export default class StudySession extends Component {
 								...GlobalStyle.heading,
 								...styles.mainHeading,
 								color: '#000',
-								fontFamily: 'Comfortaa_Bold'
+								fontFamily: 'Comfortaa_Bold',
 							}}
 						>
 							study
@@ -199,7 +210,7 @@ export default class StudySession extends Component {
 								...GlobalStyle.heading,
 								...styles.mainHeading,
 								fontFamily: 'Comfortaa_Bold',
-								color: activeStatusColor
+								color: activeStatusColor,
 							}}
 						>
 							{' '}
@@ -222,10 +233,10 @@ export default class StudySession extends Component {
 					<Text
 						style={{
 							...styles.breakText,
-							color: activeStatusColor
+							color: activeStatusColor,
 						}}
 					>
-						{this.state.remainingSecondsBreak ? `${minutesBreak}:${secondsBreak}s` : `${minutesToBreak}:${secondsToBreak}s`}
+						{this.state.remainingSecondsBreak > 0 ? `${minutesBreak}:${secondsBreak}s` : `${minutesToBreak}:${secondsToBreak}s`}
 					</Text>
 				</View>
 
@@ -237,7 +248,7 @@ export default class StudySession extends Component {
 						<Text
 							style={{
 								...styles.techniqueText,
-								color: activeStatusColor
+								color: activeStatusColor,
 							}}
 						>
 							{sessionTechnique}
@@ -246,7 +257,7 @@ export default class StudySession extends Component {
 						<Text
 							style={{
 								...styles.techniqueText,
-								color: activeStatusColor
+								color: activeStatusColor,
 							}}
 						>
 							{defaultTechnique}
