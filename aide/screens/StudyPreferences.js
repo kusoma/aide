@@ -4,15 +4,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Picker,
   TouchableOpacity
 } from "react-native";
 
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
-import ModalSelector from "react-native-modal-selector";
-import DropdownMenu from "react-native-dropdown-menu";
 
 export default class Login extends Component {
   constructor() {
@@ -21,9 +18,7 @@ export default class Login extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      userName: "",
-      textInputValue: "",
-      text: ""
+      userName: ""
     };
   }
 
@@ -127,7 +122,7 @@ export default class Login extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={[
-              GlobalStyle.pillButtonWhite,
+              GlobalStyle.cancelPillButton,
               GlobalStyle.shadow,
               {
                 width: Constant.MAX_WIDTH / 4.5,

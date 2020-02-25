@@ -23,13 +23,17 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    googleToken: {
-        type: String,
+    defaultStudyLength: {
+        type: Number,
         required: false
     },
-    studyPreference: {
-        type: Schema.Types.ObjectId,
-        ref: 'StudyPreference'
+    defaultBreakLength: {
+        type: Number,
+        required: false
+    },
+    defaultTechnique: {
+        type: String,
+        required: false
     }
 })
 
