@@ -14,18 +14,7 @@ module.exports = async function getCanvasAssignments(token) {
         }
         return res.json();
     }).then(data => {
-        const results = [];
-        data.map(i => {
-            (results.push({ 
-                // courseName: i.assignment.course_id, 
-                //title: i.title,
-                //isQuiz: i.assignment.is_quiz_assignment,
-                //description: i.assignment.description, 
-                start: i.start_at, 
-                end: i.end_at
-            }))
-        });
-        return results;
+        return data;
     }).catch(err => {
         return err;
     })
