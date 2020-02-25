@@ -12,6 +12,8 @@ export default class Login extends Component {
       email: navigation.getParam("email"),
       firstName: navigation.getParam("firstName"),
       lastName: navigation.getParam("lastName"),
+      defaultStudyLength: navigation.getParam("defaultStudyLength"),
+      defaultBreakLength: navigation.getParam("defaultBreakLength")
     };
   }
 
@@ -47,7 +49,9 @@ export default class Login extends Component {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('ClassSettings')}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("ClassSettings")}
+          >
             <Text style={GlobalStyle.text}> Class Settings </Text>
           </TouchableOpacity>
         </View>
@@ -56,12 +60,29 @@ export default class Login extends Component {
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
           <WideButton label="Connect Canvas" image="google" imageColor="#000" />
-          <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
+          <WideButton
+            label="Connect Device Calendar"
+            image="calendar-o"
+            imageColor="#000"
+          />
         </View>
 
         <View>
-          <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
-          <WideButton label="Log Out " buttonStyle={{ backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D' }} textStyle={{ color: '#fff' }} image="share" imageColor="#fff" />
+          <WideButton
+            label="Study Preferences"
+            image="lightbulb-o"
+            imageColor="#000"
+          />
+          <WideButton
+            label="Log Out "
+            buttonStyle={{
+              backgroundColor: Constant.COLORS.MAROON,
+              borderColor: "#8B1D1D"
+            }}
+            textStyle={{ color: "#fff" }}
+            image="share"
+            imageColor="#fff"
+          />
         </View>
       </ScrollView>
     );

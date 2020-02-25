@@ -12,13 +12,16 @@ import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
 
 export default class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { navigation } = this.props;
     this.state = {
-      email: "",
-      firstName: "",
-      lastName: "",
-      userName: ""
+      // email: navigation.getParam("email"),
+      // firstName: navigation.getParam("firstName"),
+      // lastName: navigation.getParam("lastName"),
+      defaultStudyLength: navigation.getParam("defaultStudyLength"),
+      defaultBreakLength: navigation.getParam("defaultBreakLength"),
+      defaultTechnique: navigation.getParam("defaultTechnique")
     };
   }
 
@@ -36,10 +39,13 @@ export default class Login extends Component {
             fontSize: 16,
             fontFamily: "Comfortaa"
           }}
-          placeholder="30 mins"
-          onChangeText={firstName => this.setState({ firstName })}
-          value={this.state.firstName}
+          placeholder=""
+          onChangeText={defaultStudyLength =>
+            this.setState({ defaultStudyLength })
+          }
+          value={`${this.state.defaultStudyLength} Mins`}
           autoCapitalize="words"
+          editable={false}
         />
 
         <Text style={styles.Text}>Break Length</Text>
@@ -50,13 +56,16 @@ export default class Login extends Component {
             fontSize: 16,
             fontFamily: "Comfortaa"
           }}
-          placeholder="5 mins"
-          onChangeText={lastName => this.setState({ lastName })}
-          value={this.state.lastName}
+          placeholder=""
+          onChangeText={defaultBreakLength =>
+            this.setState({ defaultBreakLength })
+          }
+          value={`${this.state.defaultBreakLength} Mins`}
           autoCapitalize="words"
+          editable={false}
         />
 
-        <Text style={styles.Text}>Technique</Text>
+        <Text style={styles.Text}>defaultTechnique</Text>
 
         <TextField
           style={{
@@ -65,10 +74,11 @@ export default class Login extends Component {
             fontSize: 16,
             fontFamily: "Comfortaa"
           }}
-          placeholder="Pomodoro"
-          onChangeText={userName => this.setState({ userName })}
-          value={this.state.userName}
+          placeholder=""
+          onChangeText={defaultTechnique => this.setState({ defaultTechnique })}
+          value={this.state.defaultTechnique}
           autoCapitalize="none"
+          editable={false}
         />
 
         <Text style={styles.Text}>Rest After Each Session</Text>
