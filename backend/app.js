@@ -29,8 +29,8 @@ app.use(
 app.get(
     '/canvas',
     (req, res) => {
-        const token = '2948~R9eqNMW0iz93twhYKO8jPw7BwStGbB5Vb9yGhy3cmPkjloIzAwuGdTOi3R8gtvBL';
-        getCanvasAssignments(token).then(data => {
+        const token = '2948~lAYRABCVzi7Sm1DJf0knwM9cif2nCzBRiNVEPyJ6AuRQkdlLwTSPCYQV9UlzNMq0';
+        getCanvasAssignments(token).then(data => { 
             res.send(data);
         });
     }
