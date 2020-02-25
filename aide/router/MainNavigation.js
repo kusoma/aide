@@ -17,7 +17,7 @@ const MainNavigator = createStackNavigator({
   SignUp: {screen: SignUp},
   UserSettings: { screen: UserSettings },
   ClassSettings: { screen: ClassSettings },
-  BottomNavigation: { screen: BottomNavigation},
+  BottomNavigation: { screen: BottomNavigation },
 }, {
   headerMode: 'none',
   navigationOptions: {
