@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-<<<<<<< HEAD
 	firstName: {
 		type: String,
 		required: true,
@@ -19,7 +18,7 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	date_added: {
+	dateAdded: {
 		type: Date,
 		default: Date.now,
 	},
@@ -27,38 +26,19 @@ const userSchema = new Schema({
 		type: String,
 		required: false,
 	},
-	googleToken: {
-		type: String,
-		required: false,
-	},
-	studyPreference: {
-		type: Schema.Types.ObjectId,
-		ref: 'StudyPreference',
-	},
-});
-=======
-    firstName: {
-        type: String,
-        required: true
-
+    defaultStudyLength: {
+        type: Number,
+        required: false
     },
-    lastName: {
-        type: String,
-        required: true
+    defaultBreakLength: {
+        type: Number,
+        required: false
     },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    canvasToken: {
+    defaultTechnique: {
         type: String,
         required: false
     }
-})
->>>>>>> feature/015-google-backend
+});
+
 
 module.exports = mongoose.model('User', userSchema);
