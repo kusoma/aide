@@ -10,6 +10,7 @@ import SignUp from "../screens/SignUp";
 import UserSettings from "../screens/UserSettings";
 import { Constant } from "../utils/Variables";
 import StudyPreferences from "../screens/StudyPreferences";
+import StudySession from "../screens/StudySession"
 
 const ICON_SIZE = 25;
 
@@ -45,8 +46,8 @@ const BottomNavigator = createMaterialBottomTabNavigator(
         tabBarColor: Constant.COLORS.MAROON
       }
     },
-    StudyPreferences: {
-      screen: StudyPreferences,
+    StudySession: {
+      screen: StudySession,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View>
@@ -62,6 +63,21 @@ const BottomNavigator = createMaterialBottomTabNavigator(
     },
     UserSettings: {
       screen: UserSettings,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <View>
+            <Icon
+              style={[{ color: tintColor }]}
+              size={ICON_SIZE}
+              name={"user"}
+            />
+          </View>
+        ),
+        tabBarColor: Constant.COLORS.MAROON
+      }
+    },
+    StudyPreferences: {
+      screen: StudyPreferences,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View>

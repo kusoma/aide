@@ -16,6 +16,7 @@ const MainNavigator = createStackNavigator({
   Login: {screen: Login},
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
+  StudySession: {screen: StudySession},
   UserSettings: { screen: UserSettings },
   ClassSettings: { screen: ClassSettings },
   BottomNavigation: { screen: BottomNavigation },
