@@ -23,10 +23,6 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    googleToken: {
-        type: String,
-        required: false
-    },
     defaultStudyLength: {
         type: Number,
         required: false
