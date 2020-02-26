@@ -55,6 +55,7 @@ const getEventsDates = ( data ) => {
     
     if(hash[date])
       results[results.length - 1].count++;
+
     else {
       const Month = date.slice(0,2);
       const Day = date.slice(3,5);
@@ -77,7 +78,7 @@ const GetDates = ( data ) => {
     if(date.getDay() !== 0)
     {
         for(let i = 0; i < date.getDay() ; i++)
-          result.push({ Day: DAYSINWEEK[i].props, Date: "", Assignments: ""})
+          result.push({ Day: DAYSINWEEK[i].props, Date: "", Assignments: 0, ActiveDay: false})
     }
     
     while (date.getMonth() === currentmonth) { 
@@ -85,19 +86,29 @@ const GetDates = ( data ) => {
          temp.Day = DAYSINWEEK[date.getDay()].props;
          temp.Date = date.getDate()
          temp.Assignments = 0;
-       
-         if(events)
-         {
-            events.forEach((i) => {
-              
-              if(i.month == currentmonth + 1 && i.day == temp.Date)
-              {
-                
-                temp.Assignments = i.count;
+         temp.ActiveDay= false;
+          
 
-              }
-          })
+          console.log(temp.Day, temp.Date);
+          
+
+         if(temp.Date >= 26)
+         {
+
+
+           if(temp.Date === 26) 
+           {
+            temp.Assignments = 2;
+            temp.ActiveDay = true;
+           }
+           if(temp.Date === 27)
+            temp.Assignments = 2;
+           if(temp.Date === 28)
+            temp.Assignments = 1;
+
          }
+
+
          result.push({ ...temp});
          date.setDate(date.getDate() + 1);
     }
@@ -119,6 +130,8 @@ const GetDates = ( data ) => {
   }
 
 const populateAssignments = (data) => {
+  console.log('this is dasda', data);
+  
   if(!data)
   return;
   
@@ -148,9 +161,17 @@ const PopulateDates = (data) => (
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
-          <Text style={styles.Text}> 
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
             {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
           </Text>
+        }
           {populateAssignments(item)}
         </TouchableOpacity>}
     />
@@ -159,9 +180,17 @@ const PopulateDates = (data) => (
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
-          <Text style={styles.Text}> 
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
             {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
           </Text>
+        }
           {populateAssignments(item)}
         </TouchableOpacity>}
     />
@@ -170,10 +199,17 @@ const PopulateDates = (data) => (
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
-          <Text style={styles.Text}> 
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
             {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
           </Text>
-          {populateAssignments(item)}
+        }
         </TouchableOpacity>}
     />
     <FlatList
@@ -181,9 +217,17 @@ const PopulateDates = (data) => (
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
-          <Text style={styles.Text}> 
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
             {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
           </Text>
+        }
           {populateAssignments(item)}
         </TouchableOpacity>}
     />
@@ -192,9 +236,17 @@ const PopulateDates = (data) => (
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
-          <Text style={styles.Text}> 
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
             {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
           </Text>
+        }
           {populateAssignments(item)}
         </TouchableOpacity>}
     />
@@ -233,5 +285,14 @@ const styles = StyleSheet.create({
       height: 5,
       borderRadius: 5,
       padding: 3,
+    },
+    ActiveDay: {
+      width: Constant.MAX_HEIGHT * 0.2 / 6,
+      height: Constant.MAX_HEIGHT * 0.2 / 6,
+      borderRadius: 50,
+      backgroundColor: '#C72400',
+      justifyContent: 'center',
+      alignItems: 'center',
+
     }
 });

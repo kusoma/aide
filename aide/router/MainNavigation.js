@@ -8,11 +8,11 @@ import UserSettings from '../screens/UserSettings';
 import ClassSettings from '../screens/ClassSettings';
 import BottomNavigation from './BottomNavigation';
 import Week from '../screens/WeeklyView';
+import Monthly from '../screens/MonthlyView';
 
 
 const MainNavigator = createStackNavigator({
   Login: {screen: Login},
-  Week: {screen: Week},
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
   UserSettings: { screen: UserSettings },

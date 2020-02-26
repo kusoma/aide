@@ -27,19 +27,12 @@ export default class MonthlyView extends Component {
     }
 
     
-    render() {
-      if(!this.state.isLoading)
-      {
-        console.log('-----------------------------------------');
-        
-        console.log(this.state.data);
-      }
-
-        
+    render() {       
+      console.disableYellowBox = true;
         return (
           <ScrollView contentContainerStyle={GlobalStyle.container}> 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              <Text style={styles.description}> Overview </Text>
+              <Text style={[styles.description]}> Overview </Text>
               <TouchableOpacity>
                 <Icon
                   name="plus"
@@ -49,11 +42,9 @@ export default class MonthlyView extends Component {
                   />
               </TouchableOpacity>
             </View>
-            {!this.state.isLoading ?
-                        <Calendar 
-                        data={this.state.data}
-                        /> 
-            : null}
+              <Calendar 
+                data={this.state.data}
+              /> 
 
             <Text style={styles.description}> Growth in Numbers </Text>
           </ScrollView>
