@@ -18,14 +18,16 @@ export default class CustomStudySession extends Component {
         return (
             <ScrollView contentContainerStyle={GlobalStyle.container}>
                 <StatusBar barStyle="dark-content" />
-                <View style={{ top: 125, position: 'absolute', marginBottom: 15 }}>
-                    <Text style={[GlobalStyle.title, { fontSize: 35, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Custom Study Session</Text>
+                <View style={{ top: 125, position: 'absolute', marginBottom: 35 }}>
+                    <Text style={[GlobalStyle.title, { fontSize: 30, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Custom Study Session</Text>
                 </View>
                 <View style={{ marginBottom: 120 }}>
+                    <View style={{ marginBottom: 75 }}>
+                    </View>
                     <TextField
                         label="Study Session Length"
                         placeholder="2 hours"
-                        onChangeText={stuydSessionLength => this.setState({ studySessionLength })}
+                        onChangeText={studySessionLength => this.setState({ studySessionLength })}
                         value={this.state.studySessionLength}
                         autoCapitalize="words"
                     />
@@ -46,7 +48,7 @@ export default class CustomStudySession extends Component {
                     <TextField
                         label="Current Technique"
                         placeholder="Pomodoro"
-                        onChangeText={currentTechniquefirstName => this.setState({ currentTechnique })}
+                        onChangeText={currentTechnique => this.setState({ currentTechnique })}
                         value={this.state.currentTechnique}
                         autoCapitalize="words"
                     />
