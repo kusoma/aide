@@ -15,7 +15,7 @@ async function callGraphql (request, callback) {
 			return res.json();
 		})
 		.then(data => {
-			callback(data)
+			return callback(data)
 		})
 		.catch(err => {
 			return err;
@@ -33,7 +33,6 @@ async function callCanvas (callback) {
 			return res.json();
 		})
 		.then(data => {
-			//console.log('this is data ', data);
 			callback(data);
 		})
 		.catch(err => {

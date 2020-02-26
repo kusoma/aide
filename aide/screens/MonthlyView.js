@@ -16,18 +16,26 @@ export default class MonthlyView extends Component {
     }
 
 
-    componentDidMount() {
-      callCanvas((data) => {
-        if (data.errors || !data) {
+     componentDidMount() {
+       callCanvas((json) => {
+        if (json.errors || !json) {
           return;
         }
-        this.setState({ data });
+        this.state.data = json;
         this.setState({ isLoading: false });
       })
     }
 
     
     render() {
+      if(!this.state.isLoading)
+      {
+        console.log('-----------------------------------------');
+        
+        console.log(this.state.data);
+      }
+
+        
         return (
           <ScrollView contentContainerStyle={GlobalStyle.container}> 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -41,11 +49,12 @@ export default class MonthlyView extends Component {
                   />
               </TouchableOpacity>
             </View>
-            { !this.state.isLoading ?
-            <Calendar 
-             data={this.state.data}
-             /> 
-             : null }
+            {!this.state.isLoading ?
+                        <Calendar 
+                        data={this.state.data}
+                        /> 
+            : null}
+
             <Text style={styles.description}> Growth in Numbers </Text>
           </ScrollView>
         );

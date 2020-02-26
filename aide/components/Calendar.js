@@ -67,8 +67,6 @@ const getEventsDates = ( data ) => {
 }
 
 const GetDates = ( data ) => {
-    console.log('this is data', data);
-    
     const year = new Date().getFullYear();
     const currentmonth = new Date().getMonth();
     const date = new Date(year, currentmonth, 1);
