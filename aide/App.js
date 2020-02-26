@@ -8,6 +8,7 @@ const getFont = () =>
    Font.loadAsync({
     'Comfortaa': Fonts.Comfortaa,
     'Comfortaa_Bold': Fonts.Comfortaa_Bold,
+    'SF_Pro_Bold': Fonts.SF_Pro_Bold,
 });
 
 export default function App() {

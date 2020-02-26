@@ -1,7 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 import { Constant } from '../utils/Variables'
 
+const COLORS = [
+  '#E86F0F',
+  '#39BE50',
+  '#088DF8',
+  '#A41AB0',
+]
 
 const DAYSINWEEK = 
     [
@@ -34,24 +41,63 @@ const PopulateDaysInAWeek = () => (
   />
 )
 
-const GetDates = () => {
+const getEventsDates = ( data ) => {
+  if(!data)
+    return;
+  if(!data.data[0])
+    return;
+
+  const results = [];
+  let hash = {};
+  
+  data.data.forEach(i => {
+    const date = moment(i.end).format('L');
+    
+    if(hash[date])
+      results[results.length - 1].count++;
+    else {
+      const Month = date.slice(0,2);
+      const Day = date.slice(3,5);
+      let count = 1;    
+      hash[date] =  { month: Month, day: Day, count };
+      results.push({ month: Month, day: Day, count })
+    }
+  })
+  return results;
+}
+
+const GetDates = ( data ) => {
     const year = new Date().getFullYear();
     const currentmonth = new Date().getMonth();
-    const result = [];
     const date = new Date(year, currentmonth, 1);
+    const events = getEventsDates(data);
+    
+    const result = [];
 
     if(date.getDay() !== 0)
     {
         for(let i = 0; i < date.getDay() ; i++)
-        {
-            result.push({ Day: DAYSINWEEK[i].props, Date: ""})
-        }
+          result.push({ Day: DAYSINWEEK[i].props, Date: "", Assignments: ""})
     }
     
-    while (date.getMonth() === currentmonth) {
+    while (date.getMonth() === currentmonth) { 
          const temp = {};
          temp.Day = DAYSINWEEK[date.getDay()].props;
          temp.Date = date.getDate()
+         temp.Assignments = 0;
+       
+         if(events)
+         {
+            events.forEach((i) => {
+              
+              if(i.month == currentmonth + 1 && i.day == temp.Date)
+              {
+                
+                temp.Assignments = i.count;
+
+              }
+          })
+         }
          result.push({ ...temp});
          date.setDate(date.getDate() + 1);
     }
@@ -69,20 +115,43 @@ const GetDates = () => {
         result.push({ Day: DAYSINWEEK[i].props, Date: ""})
       
     }
-    
     return result;
+  }
+
+const populateAssignments = (data) => {
+  if(!data)
+  return;
+  
+  if(data.Assignments >= 2)
+  {
+    return (
+      <View style={styles.AssignmentsContainer}>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[2]}]}/>
+      </View>
+    )
+  }
+  if(data.Assignments === 1)
+  {
+    return (
+      <View style={styles.AssignmentsContainer}>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+      </View>
+    )
+  }
 }
 
 const PopulateDates = (data) => (
   <View>
     <FlatList
-      data={GetDates().slice(0,7)}
+      data={GetDates(data).slice(0,7)}
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
           <Text style={styles.Text}> 
             {item.Date}
           </Text>
+          {populateAssignments(item)}
         </TouchableOpacity>}
     />
     <FlatList
@@ -93,6 +162,7 @@ const PopulateDates = (data) => (
           <Text style={styles.Text}> 
             {item.Date}
           </Text>
+          {populateAssignments(item)}
         </TouchableOpacity>}
     />
     <FlatList
@@ -103,6 +173,7 @@ const PopulateDates = (data) => (
           <Text style={styles.Text}> 
             {item.Date}
           </Text>
+          {populateAssignments(item)}
         </TouchableOpacity>}
     />
     <FlatList
@@ -113,6 +184,7 @@ const PopulateDates = (data) => (
           <Text style={styles.Text}> 
             {item.Date}
           </Text>
+          {populateAssignments(item)}
         </TouchableOpacity>}
     />
     <FlatList
@@ -123,6 +195,7 @@ const PopulateDates = (data) => (
           <Text style={styles.Text}> 
             {item.Date}
           </Text>
+          {populateAssignments(item)}
         </TouchableOpacity>}
     />
   </View>
@@ -152,4 +225,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       borderRadius: 12,
     },
+    AssignmentsContainer: {
+      flexDirection: 'row'
+    },
+    Assignments: { 
+      width: 5,
+      height: 5,
+      borderRadius: 5,
+      padding: 3,
+    }
 });

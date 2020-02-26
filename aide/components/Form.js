@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: Constant.COLORS.MAROON,
-    marginBottom: 11,
+    marginBottom: 11
   },
   label: {
     color: "#4A4A4A",
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#828282",
     marginBottom: 5,
-    fontFamily: 'Comfortaa',
+    fontFamily: "Comfortaa"
   },
   errorText: {
     width: 300,
@@ -41,9 +41,9 @@ const IsValidImage = ({ image, imageColor }) => {
       <View style={{ marginRight: 10, marginBottom: 5 }}>
         <Icon name={image} size={30} color={color} />
       </View>
-    )
+    );
   }
-}
+};
 
 export const TextField = ({ image, imageColor, label, ...props }) => (
   <View style={styles.row}>
@@ -56,10 +56,9 @@ export const TextField = ({ image, imageColor, label, ...props }) => (
         {...props}
       />
     </View>
-
   </View>
 );
 
-export const ErrorText = ({ text = '' }) => (
+export const ErrorText = ({ text = "" }) => (
   <Text style={styles.errorText}>{text}</Text>
-)
+);
