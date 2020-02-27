@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
@@ -12,6 +12,8 @@ export default class UserSettings extends Component {
       email: navigation.getParam("email"),
       firstName: navigation.getParam("firstName"),
       lastName: navigation.getParam("lastName"),
+      defaultStudyLength: navigation.getParam("defaultStudyLength"),
+      defaultBreakLength: navigation.getParam("defaultBreakLength")
     };
   }
 
@@ -26,7 +28,7 @@ export default class UserSettings extends Component {
             placeholder="First Name"
             onChangeText={firstName => this.setState({ firstName })}
             value={this.state.firstName}
-            autoCapitalize="words"
+            editable={false}
           />
           <TextField
             image="user"
@@ -34,7 +36,7 @@ export default class UserSettings extends Component {
             placeholder="Last Name"
             onChangeText={lastName => this.setState({ lastName })}
             value={this.state.lastName}
-            autoCapitalize="words"
+            editable={false}
           />
           <TextField
             image="envelope"
@@ -42,20 +44,45 @@ export default class UserSettings extends Component {
             placeholder="Email"
             onChangeText={email => this.setState({ email })}
             value={this.state.email}
-            autoCapitalize="none"
+            editable={false}
           />
         </View>
-        
+
+        <View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("ClassSettings")}
+          >
+            <Text style={GlobalStyle.text}> Class Settings </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={{ margin: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
-          <WideButton label="Connect Canvas" image="google" imageColor="#000"/>
-          <WideButton label="Connect Device Calendar" image="calendar-o" imageColor="#000" />
+          <WideButton label="Connect Canvas" image="google" imageColor="#000" />
+          <WideButton
+            label="Connect Device Calendar"
+            image="calendar-o"
+            imageColor="#000"
+          />
         </View>
-        
+
         <View>
-          <WideButton label="Study Preferences" image="lightbulb-o" imageColor="#000" />
-          <WideButton label="Log Out " buttonStyle={{ backgroundColor: Constant.COLORS.MAROON, borderColor: '#8B1D1D' }} textStyle={{ color: '#fff' }} image="share" imageColor="#fff" />
+          <WideButton
+            label="Study Preferences"
+            image="lightbulb-o"
+            imageColor="#000"
+          />
+          <WideButton
+            label="Log Out "
+            buttonStyle={{
+              backgroundColor: Constant.COLORS.MAROON,
+              borderColor: "#8B1D1D"
+            }}
+            textStyle={{ color: "#fff" }}
+            image="share"
+            imageColor="#fff"
+          />
         </View>
       </ScrollView>
     );

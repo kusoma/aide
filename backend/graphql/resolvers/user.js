@@ -1,45 +1,54 @@
-const bcrypt = require('bcrypt');
-const User = require('../../models/user');
-
+const bcrypt = require("bcrypt");
+const User = require("../../models/user");
 module.exports = {
-    addGoogleToken: async({userID, googleToken}) => {
-        try {
-            const user = await User.findOne({_id: userID})
-            if (!user) {
-                throw new Error('User does not exist.');
-            }
-            const hashedToken = await bcrypt.hash(googleToken, 12);
-            const result = await User.findOneAndUpdate(
-                {_id: userID},
-                {googleToken: hashedToken},
-                {new: true})
-            .catch(err => {
-                throw err;
-            });
-            
-            // return {...result._doc, googleToken: null, canvasToken: null, password: null}
-        } catch (err) {
-            throw err;
-        }
-    },
-    addCanvasToken: async({userID, canvasToken}) => {
-        try {
-            const user = await User.findOne({_id: userID})
-            if (!user) {
-                throw new Error('User does not exist.');
-            }
-            const hashedToken = await bcrypt.hash(canvasToken, 12);
-            const result = await User.findOneAndUpdate(
-                {_id: userID},
-                {canvasToken: hashedToken},
-                {new: true})
-            .catch(err => {
-                throw err;
-            });;
+  setCanvasToken: async ({ userID, canvasToken }) => {
+    try {
+      const user = await User.findById({ _id: userID });
+      if (!user) {
+        throw new Error("User does not exist!");
+      }
+      const hashedToken = await bcrypt.hash(canvasToken, 12);
+      const result = await User.findByIdAndUpdate(
+        { _id: userID },
+        { canvasToken: hashedToken },
+        { new: true }
+      ).catch(err => {
+        throw err;
+      });
 
-            // return {...result._doc, googleToken: null,  canvasToken: null, password: null}
-        } catch (err) {
-            throw err;
-        }
+      return { ...result._doc, canvasToken: null, password: null };
+    } catch (err) {
+      throw err;
     }
-}
+  },
+  setStudyPreference: async ({
+    userID,
+    defaultStudyLength,
+    defaultBreakLength,
+    defaultTechnique
+  }) => {
+    try {
+      const user = await User.findById({ _id: userID });
+      if (!user) {
+        throw new Error("User does not exist!");
+      }
+
+      // TODO: There is probably a better way
+      const result = await User.findByIdAndUpdate(
+        { _id: userID },
+        {
+          defaultStudyLength: defaultStudyLength,
+          defaultBreakLength: defaultBreakLength,
+          defaultTechnique: defaultTechnique
+        },
+        { new: true }
+      ).catch(err => {
+        throw err;
+      });
+
+      return { ...result._doc, password: null };
+    } catch (err) {
+      throw err;
+    }
+  }
+};

@@ -1,4 +1,4 @@
-const { buildSchema } = require('graphql');
+const { buildSchema } = require("graphql");
 
 module.exports = buildSchema(`
 type User {
@@ -6,9 +6,11 @@ type User {
     firstName: String!
     lastName: String!
     email: String!
-    password: String
+    password: String!
     canvasToken: String
-    googleToken: String
+    defaultStudyLength: Int
+    defaultBreakLength: Int
+    defaultTechnique: String
 }
 
 input UserInput {
@@ -17,17 +19,20 @@ input UserInput {
     email: String!
     password: String!
     canvasToken: String
-    googleToken: String
+    defaultStudyLength: Int
+    defaultBreakLength: Int
+    defaultTechnique: String
 }
 
 type RootQuery {
     login(email: String!, password: String!): User
+    
 }
 
 type RootMutation {
     createUser(userInput: UserInput): User
-    addGoogleToken(userID: ID!, googleToken:String): User
-    addCanvasToken(userID: ID!, canvasToken:String): User
+    setCanvasToken(userID: ID!, canvasToken: String): User
+   
 }
 
 schema {
