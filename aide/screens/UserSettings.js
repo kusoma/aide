@@ -4,7 +4,7 @@ import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
 
-export default class Login extends Component {
+export default class UserSettings extends Component {
   constructor(props) {
     super(props);
     const { navigation } = this.props;
