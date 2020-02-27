@@ -1,8 +1,14 @@
 import React from 'react';
-import moment from "moment";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 import { Constant } from '../utils/Variables'
 
+const COLORS = [
+  '#E86F0F',
+  '#39BE50',
+  '#088DF8',
+  '#A41AB0',
+]
 
 const DAYSINWEEK = 
     [
@@ -18,7 +24,7 @@ const DAYSINWEEK =
 export const Calendar = ({ data }) => (
   <View style={styles.background}>
     <PopulateDaysInAWeek />
-    <GetDates />
+    <PopulateDates data={data} />
   </View>
 )
 
@@ -27,7 +33,7 @@ const PopulateDaysInAWeek = () => (
     data={DAYSINWEEK}
     contentContainerStyle={styles.List}
     renderItem={({item}) => 
-      <View>
+      <View style={styles.box}>
         <Text style={styles.Text}> 
           {item.label}
         </Text>
@@ -35,45 +41,217 @@ const PopulateDaysInAWeek = () => (
   />
 )
 
-const GetDates = () => {
+const getEventsDates = ( data ) => {
+  if(!data)
+    return;
+  if(!data.data[0])
+    return;
+
+  const results = [];
+  let hash = {};
+  
+  data.data.forEach(i => {
+    const date = moment(i.end).format('L');
+    
+    if(hash[date])
+      results[results.length - 1].count++;
+
+    else {
+      const Month = date.slice(0,2);
+      const Day = date.slice(3,5);
+      let count = 1;    
+      hash[date] =  { month: Month, day: Day, count };
+      results.push({ month: Month, day: Day, count })
+    }
+  })
+  return results;
+}
+
+const GetDates = ( data ) => {
     const year = new Date().getFullYear();
     const currentmonth = new Date().getMonth();
-    const result = [];
     const date = new Date(year, currentmonth, 1);
+    const events = getEventsDates(data);
+    
+    const result = [];
 
     if(date.getDay() !== 0)
     {
-        const difference = 6 - date.getDay();
-        for(let i = 0; i < difference; i++)
-        {
-            result.push({ Day: DAYSINWEEK[i].props, Date: ""})
-        }
+        for(let i = 0; i < date.getDay() ; i++)
+          result.push({ Day: DAYSINWEEK[i].props, Date: "", Assignments: 0, ActiveDay: false})
     }
     
-    while (date.getMonth() === currentmonth) {
+    while (date.getMonth() === currentmonth) { 
          const temp = {};
          temp.Day = DAYSINWEEK[date.getDay()].props;
          temp.Date = date.getDate()
+         temp.Assignments = 0;
+         temp.ActiveDay= false;
+          
+
+          console.log(temp.Day, temp.Date);
+          
+
+         if(temp.Date >= 26)
+         {
+
+
+           if(temp.Date === 26) 
+           {
+            temp.Assignments = 2;
+            temp.ActiveDay = true;
+           }
+           if(temp.Date === 27)
+            temp.Assignments = 2;
+           if(temp.Date === 28)
+            temp.Assignments = 1;
+
+         }
+
+
          result.push({ ...temp});
          date.setDate(date.getDate() + 1);
     }
 
-    return null;
+    if(result[result.length - 1].Day !== DAYSINWEEK[6].value)
+    {
+      let currentDate = 0;
+      for(let i = 0; i < DAYSINWEEK.length; i++)
+      {
+        if(result[result.length - 1].Day === DAYSINWEEK[i].props)
+          currentDate = DAYSINWEEK[i].value;
+      }
+
+      for(let i = currentDate; i < DAYSINWEEK[6].value; i++)
+        result.push({ Day: DAYSINWEEK[i].props, Date: ""})
+      
+    }
+    return result;
+  }
+
+const populateAssignments = (data) => {
+  console.log('this is dasda', data);
+  
+  if(!data)
+  return;
+  
+  if(data.Assignments >= 2)
+  {
+    return (
+      <View style={styles.AssignmentsContainer}>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[2]}]}/>
+      </View>
+    )
+  }
+  if(data.Assignments === 1)
+  {
+    return (
+      <View style={styles.AssignmentsContainer}>
+        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+      </View>
+    )
+  }
 }
 
-// const PopulateDates = () => (
-
-// //   <FlatList
-// //     data={getDates()}
-// //     contentContainerStyle={styles.List}
-// //     renderItem={({item}) => 
-// //       <TouchableOpacity>
-// //         <Text style={styles.Text}> 
-// //           {item.Date}
-// //         </Text>
-// //       </TouchableOpacity>}
-// //   />
-// )
+const PopulateDates = (data) => (
+  <View>
+    <FlatList
+      data={GetDates(data).slice(0,7)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
+            {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
+          </Text>
+        }
+          {populateAssignments(item)}
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(7,14)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
+            {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
+          </Text>
+        }
+          {populateAssignments(item)}
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(14,21)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
+            {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
+          </Text>
+        }
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(21,28)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
+            {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
+          </Text>
+        }
+          {populateAssignments(item)}
+        </TouchableOpacity>}
+    />
+    <FlatList
+      data={GetDates().slice(28)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <TouchableOpacity style={styles.box}>
+        {item.ActiveDay?
+          <View style={styles.ActiveDay}>
+            <Text style={styles.Text}> 
+            {item.Date}
+            </Text>
+          </View>
+          :
+          <Text style={styles.Text}> 
+          {item.Date}
+          </Text>
+        }
+          {populateAssignments(item)}
+        </TouchableOpacity>}
+    />
+  </View>
+)
 
 const styles = StyleSheet.create({ 
     background: {
@@ -90,5 +268,31 @@ const styles = StyleSheet.create({
         fontFamily: 'Comfortaa',
         fontSize: 15,
         fontWeight: 'bold'
+    },
+    box: {
+      width: Constant.MAX_WIDTH * 0.8 / 7,
+      height: Constant.MAX_HEIGHT * 0.3 / 6,
+      backgroundColor: '#EBEBEB',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 12,
+    },
+    AssignmentsContainer: {
+      flexDirection: 'row'
+    },
+    Assignments: { 
+      width: 5,
+      height: 5,
+      borderRadius: 5,
+      padding: 3,
+    },
+    ActiveDay: {
+      width: Constant.MAX_HEIGHT * 0.2 / 6,
+      height: Constant.MAX_HEIGHT * 0.2 / 6,
+      borderRadius: 50,
+      backgroundColor: '#C72400',
+      justifyContent: 'center',
+      alignItems: 'center',
+
     }
 });
