@@ -65,9 +65,12 @@ app.use("/google", (err, res, next) => {
 
     googleCalendar.getEvents(calendar).then(data => {
       let schedule = APS.createSchedule();
-      
+      let events = [{}, {}];
       APS.fillSchedule(schedule, data);
-      res.send(data);
+      let scheduledEvents = APS.scheduleEvents(schedule, events);
+      // console.log(scheduledEvents)
+      console.log(data)
+      res.send(schedule);
     }).catch(err => {
       throw err;
     })

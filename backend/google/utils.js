@@ -25,7 +25,8 @@ module.exports = {
     }
   },
   getEvents: async calendar => {
-    const today = new Date()
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     const weekFromToday = new Date(today)
     weekFromToday.setDate(today.getDate() + 7)
     try {

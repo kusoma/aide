@@ -1,7 +1,7 @@
 module.exports = {
     createSchedule: () => {
-        let [r, c] = [8, 24]; 
-        let schedule = Array(r).fill().map(()=>Array(c).fill(0));
+        let [r, c] = [8, 24];
+        let schedule = Array(r).fill().map(() => Array(c).fill(0));
 
         return schedule;
     },
@@ -21,12 +21,10 @@ module.exports = {
 
             if (endDateISO.getMinutes() > 30) endTimeHours += 1;
 
-            for (let index = startTimeHours; index <= endTimeHours; index++ ) {
+            for (let index = startTimeHours; index <= endTimeHours; index++) {
                 schedule[day][index] = 1;
             }
-            
         }
-        console.log(schedule);
     },
 
     dayDifference: eventDate => {
@@ -37,6 +35,42 @@ module.exports = {
     },
 
     scheduleEvents: (schedule, events) => {
+        let scheduledEvents = [];
+        for (event of events) {
+            let isScheduled = false
+            for (day in schedule) {
+                if (isScheduled) continue;
+                for (interval in schedule[day]) {
+                    // Do something with default study length
+                    // let next = interval + 1
+                    if (isScheduled) continue;
+                    if (!schedule[day][interval]) {
+                        schedule[day][interval] = 1;
 
+                        let today = new Date()
+                        let startDateTime = new Date(today.getDate() + day)
+                        
+                        let scheduledEvent = {
+                            summary: "Google I/O 2015",
+                            description: "A chance to hear more about Google's developer products.",
+                            start: {
+                                dateTime: startDateTime.toISOString,
+                                timeZone: "America/Los_Angeles"
+                            },
+                            end: {
+                                dateTime: startDateTime.toISOString,
+                                timeZone: "America/Los_Angeles"
+                            }
+                        };
+
+                        scheduledEvents.push(scheduledEvent)
+                        isScheduled = true;
+                    }
+                }
+            }
+        }
+
+        // console.log(scheduledEvents);
+        return scheduledEvents;
     }
 }
