@@ -36,6 +36,8 @@ module.exports = {
 
     scheduleEvents: (schedule, events) => {
         let scheduledEvents = [];
+        let today = new Date()
+        console.log(today)
         for (event of events) {
             let isScheduled = false
             for (day in schedule) {
@@ -46,19 +48,24 @@ module.exports = {
                     if (isScheduled) continue;
                     if (!schedule[day][interval]) {
                         schedule[day][interval] = 1;
-
-                        let today = new Date()
-                        let startDateTime = new Date(today.getDate() + day)
+                        
+                        let hours = 8 + Number(interval)
+                        let minutes = '00'
+                        if (interval % 2 == 1)  {
+                            minutes = '30'
+                            hours -= 1
+                        }
+                        let startDateTime = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}-T${(hours)}:${minutes}:00.000Z`
                         
                         let scheduledEvent = {
-                            summary: "Google I/O 2015",
-                            description: "A chance to hear more about Google's developer products.",
+                            summary: "Aide",
+                            description: "Aide development",
                             start: {
-                                dateTime: startDateTime.toISOString,
+                                dateTime: startDateTime,
                                 timeZone: "America/Los_Angeles"
                             },
                             end: {
-                                dateTime: startDateTime.toISOString,
+                                dateTime: startDateTime,
                                 timeZone: "America/Los_Angeles"
                             }
                         };
