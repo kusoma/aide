@@ -46,16 +46,18 @@ module.exports = {
                     // Do something with default study length
                     // let next = interval + 1
                     if (isScheduled) continue;
-                    if (!schedule[day][interval]) {
+                    if (schedule[day][interval] == 0) {
                         schedule[day][interval] = 1;
                         
                         let hours = 8 + Number(interval)
                         let minutes = '00'
-                        if (interval % 2 == 1)  {
+                        if (interval % 2 == 1) {
                             minutes = '30'
                             hours -= 1
                         }
-                        let startDateTime = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}-T${(hours)}:${minutes}:00.000Z`
+
+                        let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00-08:00`
+                        console.log(startDateTime);
                         
                         let scheduledEvent = {
                             summary: "Aide",

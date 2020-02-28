@@ -65,15 +65,26 @@ app.use("/google", (err, res, next) => {
 
     googleCalendar.getEvents(calendar).then(data => {
       let schedule = APS.createSchedule();
-      let events = [{}, {}, {}];
+      let events = [{}, {}, {}, {}, {}, {}];
       APS.fillSchedule(schedule, data);
       let scheduledEvents = APS.scheduleEvents(schedule, events);
-      // console.log(scheduledEvents)
+      for (event of scheduledEvents) {
+        calendar.events.insert({
+          calendarId: "primary",
+          resource: event
+        },
+          function (err, event) {
+            if (err) console.log(err);
+            // if event
+            // 	store event in user scheduledEvents
+          }
+        );
+      }
 
-      res.send(schedule);
-    }).catch(err => {
-      throw err;
-    })
+        res.send(schedule);
+      }).catch(err => {
+        throw err;
+      })
   });
 });
 
