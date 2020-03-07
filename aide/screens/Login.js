@@ -52,9 +52,9 @@ export default class Login extends Component {
           defaultStudyLength: json.data.login.defaultStudyLength,
           defaultTechnique: json.data.login.defaultTechnique
         };
-        console.log(user.defaultBreakLength);
-        console.log(user.defaultStudyLength);
-        console.log(user.defaultTechnique);
+        // console.log(user.defaultBreakLength);
+        // console.log(user.defaultStudyLength);
+        // console.log(user.defaultTechnique);
 
         this.props.navigation.navigate("BottomNavigation", user);
       }

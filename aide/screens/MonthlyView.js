@@ -11,10 +11,8 @@ export default class MonthlyView extends Component {
       super();
       this.state = {
         data: [],
-        isLoading: true,
       }
     }
-
 
      componentDidMount() {
        callCanvas((json) => {
@@ -22,10 +20,9 @@ export default class MonthlyView extends Component {
           return;
         }
         this.state.data = json;
-        this.setState({ isLoading: false });
+        this.props.navigation.state.params.data = this.state.data;
       })
     }
-
     
     render() {       
       console.disableYellowBox = true;
@@ -39,12 +36,15 @@ export default class MonthlyView extends Component {
                   backgroundColor="#fff"
                   size={30}
                   color="#000"
-                  />
+                />
               </TouchableOpacity>
             </View>
-              <Calendar 
-                data={this.state.data}
-              /> 
+            <Text>
+              {this.state.data.isQuiz}
+            </Text>
+            <Calendar 
+              data={this.state.data}
+            /> 
 
             <Text style={styles.description}> Growth in Numbers </Text>
           </ScrollView>

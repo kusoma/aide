@@ -14,6 +14,7 @@ import Monthly from '../screens/MonthlyView';
 
 const MainNavigator = createStackNavigator({
   Login: {screen: Login},
+  Monthly: {screen: Monthly},
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
   StudySession: {screen: StudySession},

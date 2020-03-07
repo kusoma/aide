@@ -72,8 +72,8 @@ const GetDates = ( data ) => {
     const currentmonth = new Date().getMonth();
     const date = new Date(year, currentmonth, 1);
     const events = getEventsDates(data);
-    
     const result = [];
+    const today = new Date().getDate();
 
     if(date.getDay() !== 0)
     {
@@ -87,27 +87,22 @@ const GetDates = ( data ) => {
          temp.Date = date.getDate()
          temp.Assignments = 0;
          temp.ActiveDay= false;
-          
 
-          console.log(temp.Day, temp.Date);
-          
-
-         if(temp.Date >= 26)
+         if(temp.Date == today)
          {
-
-
-           if(temp.Date === 26) 
-           {
-            temp.Assignments = 2;
-            temp.ActiveDay = true;
-           }
-           if(temp.Date === 27)
-            temp.Assignments = 2;
-           if(temp.Date === 28)
-            temp.Assignments = 1;
-
+           temp.ActiveDay = true;
          }
 
+         if(events) {
+          events.forEach((i) => {
+            
+            if(i.day == temp.Date && i.month == currentmonth + 1)
+            {
+              temp.Assignments = i.count;
+            }
+          })
+         }
+       
 
          result.push({ ...temp});
          date.setDate(date.getDate() + 1);
@@ -130,11 +125,9 @@ const GetDates = ( data ) => {
   }
 
 const populateAssignments = (data) => {
-  console.log('this is dasda', data);
-  
   if(!data)
   return;
-  
+
   if(data.Assignments >= 2)
   {
     return (
@@ -144,7 +137,7 @@ const populateAssignments = (data) => {
       </View>
     )
   }
-  if(data.Assignments === 1)
+  if(data.Assignments == 1)
   {
     return (
       <View style={styles.AssignmentsContainer}>
@@ -176,7 +169,7 @@ const PopulateDates = (data) => (
         </TouchableOpacity>}
     />
     <FlatList
-      data={GetDates().slice(7,14)}
+      data={GetDates(data).slice(7,14)}
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
@@ -195,7 +188,7 @@ const PopulateDates = (data) => (
         </TouchableOpacity>}
     />
     <FlatList
-      data={GetDates().slice(14,21)}
+      data={GetDates(data).slice(14,21)}
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
@@ -213,7 +206,7 @@ const PopulateDates = (data) => (
         </TouchableOpacity>}
     />
     <FlatList
-      data={GetDates().slice(21,28)}
+      data={GetDates(data).slice(21,28)}
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
@@ -232,7 +225,7 @@ const PopulateDates = (data) => (
         </TouchableOpacity>}
     />
     <FlatList
-      data={GetDates().slice(28)}
+      data={GetDates(data).slice(28)}
       contentContainerStyle={styles.List}
       renderItem={({item}) => 
         <TouchableOpacity style={styles.box}>
@@ -287,12 +280,11 @@ const styles = StyleSheet.create({
       padding: 3,
     },
     ActiveDay: {
-      width: Constant.MAX_HEIGHT * 0.2 / 6,
-      height: Constant.MAX_HEIGHT * 0.2 / 6,
+      width: Constant.MAX_HEIGHT * 0.03,
+      height: Constant.MAX_HEIGHT * 0.03,
       borderRadius: 50,
-      backgroundColor: '#C72400',
+      backgroundColor: '#BC0909',
       justifyContent: 'center',
       alignItems: 'center',
-
     }
 });
