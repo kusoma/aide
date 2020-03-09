@@ -15,7 +15,7 @@ module.exports = {
             if (startDateISO.getHours() < 8 || startDateISO.getHours() > 20) continue;
 
             let startTimeHours = startDateISO.getHours() + (startDateISO.getHours() - 16)
-            let endTimeHours = startDateISO.getHours() + (endDateISO.getHours() - 16)
+            let endTimeHours = endDateISO.getHours() + (endDateISO.getHours() - 16)
 
             if (startDateISO.getMinutes() > 30) startTimeHours += 1;
 
@@ -37,7 +37,6 @@ module.exports = {
     scheduleEvents: (schedule, events) => {
         let scheduledEvents = [];
         let today = new Date()
-        console.log(today)
         for (event of events) {
             let isScheduled = false
             for (day in schedule) {
@@ -47,18 +46,17 @@ module.exports = {
                     // let next = interval + 1
                     if (isScheduled) continue;
                     if (schedule[day][interval] == 0) {
-                        schedule[day][interval] = 1;
+                        schedule[day][interval] = 2;
                         
-                        let hours = 8 + Number(interval)
+                        let hours = Math.floor(Number(interval)/2 + 8)
+
                         let minutes = '00'
                         if (interval % 2 == 1) {
                             minutes = '30'
-                            hours -= 1
                         }
 
-                        let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00-08:00`
-                        console.log(startDateTime);
-                        
+                        let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
+                        console.log(startDateTime)
                         let scheduledEvent = {
                             summary: "Aide",
                             description: "Aide development",
