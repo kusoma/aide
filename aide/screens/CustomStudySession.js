@@ -4,55 +4,52 @@ import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
 import { callGraphql } from '../utils/API';
 
-export default class ClassSettings extends Component {
+export default class CustomStudySession extends Component {
     constructor() {
         super();
         this.state = {
-            automate: "",
-            quizTime: "",
-            examTime: "",
-            days: "",
+            studySessionLength: "",
+            studyIntervalLength: "",
+            breakLength: "",
+            currentTechnique: "",
         }
     }
     render() {
         return (
             <ScrollView contentContainerStyle={GlobalStyle.container}>
                 <StatusBar barStyle="dark-content" />
-                <View style={{ top: 125, position: 'absolute', marginBottom: 15 }}>
-                    <Text style={[GlobalStyle.title, { fontSize: 35, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Class Settings</Text>
+                <View style={{ top: 125, position: 'absolute', marginBottom: 35 }}>
+                    <Text style={[GlobalStyle.title, { fontSize: 30, color: "black", letterSpacing: -0.02, fontWeight: "600" }]}>Custom Study Session</Text>
                 </View>
-                <View style={{ marginBottom: 60 }}>
-                    <View style={{ marginBottom: 15 }}>
-                        <Text style={[{ color: "#0082E0", fontSize: 20 }]}>
-                            CS125- Intro to Computer Science
-                    </Text>
+                <View style={{ marginBottom: 120 }}>
+                    <View style={{ marginBottom: 75 }}>
                     </View>
                     <TextField
-                        label="Automate Only"
-                        placeholder="Exams and Quizzes"
-                        //onChangeText={firstName => this.setState({ firstName })}
-                        value={this.state.automate}
+                        label="Study Session Length"
+                        placeholder="2 hours"
+                        onChangeText={studySessionLength => this.setState({ studySessionLength })}
+                        value={this.state.studySessionLength}
                         autoCapitalize="words"
                     />
                     <TextField
-                        label="Study Session Time Default for Quiz"
-                        placeholder="1 hours."
-                        //onChangeText={firstName => this.setState({ firstName })}
-                        value={this.state.quizTime}
+                        label="Study Interval Length"
+                        placeholder="25 mins."
+                        onChangeText={studyIntervalLength => this.setState({ studyIntervalLength })}
+                        value={this.state.studyIntervalLength}
                         autoCapitalize="words"
                     />
                     <TextField
-                        label="Study Session Time Default for Exams"
-                        placeholder="3 hours."
-                        //onChangeText={firstName => this.setState({ firstName })}
-                        value={this.state.examTime}
+                        label="Break Length"
+                        placeholder="5 mins."
+                        onChangeText={breakLength => this.setState({ breakLength })}
+                        value={this.state.breakLength}
                         autoCapitalize="words"
                     />
                     <TextField
-                        label="Days Sessions Can Occur"
-                        placeholder="Mon., Wed., Fri."
-                        //onChangeText={firstName => this.setState({ firstName })}
-                        value={this.state.days}
+                        label="Current Technique"
+                        placeholder="Pomodoro"
+                        onChangeText={currentTechnique => this.setState({ currentTechnique })}
+                        value={this.state.currentTechnique}
                         autoCapitalize="words"
                     />
                 </View>
@@ -68,10 +65,6 @@ export default class ClassSettings extends Component {
                     </View>
                 </View>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/matts-branch
             </ScrollView>
         );
     }

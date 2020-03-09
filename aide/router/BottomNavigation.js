@@ -4,6 +4,7 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import { createAppContainer } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+<<<<<<< HEAD
 import MonthlyView from "../screens/MonthlyView";
 import WeeklyView from "../screens/WeeklyView";
 import SignUp from "../screens/SignUp";
@@ -97,6 +98,78 @@ const BottomNavigator = createMaterialBottomTabNavigator(
     activeColor: "#FFF",
     inactiveColor: "#C0C0C0"
   }
+=======
+import Login from '../screens/Login';
+import SignUp from '../screens/SignUp';
+import StudySession from '../screens/StudySession';
+import ForgotPassword from '../screens/ForgotPassword';
+import UserSettings from '../screens/UserSettings';
+import ClassSettings from '../screens/ClassSettings';
+import CustomStudySession from '../screens/CustomStudySession';
+
+const BottomNavigator = createMaterialBottomTabNavigator(
+	{
+		Login: {
+			screen: Login,
+			navigationOptions: {
+				tabBarIcon: ({ tintColor }) => (
+					<View>
+						<Icon style={[{ color: tintColor }]} size={25} name={'calendar'} />
+					</View>
+				),
+				tabBarColor: '#8B1D1D'
+			}
+		},
+		ClassSettings: {
+			screen: ClassSettings,
+			navigationOptions: {
+				tabBarIcon: ({ tintColor }) => (
+					<View>
+						<Icon style={[{ color: tintColor }]} size={25} name={'tasks'} />
+					</View>
+				),
+				tabBarColor: '#8B1D1D'
+			}
+		},
+		// SignUp: {
+		//   screen: SignUp,
+		//   navigationOptions: {
+		//     tabBarIcon: ({ tintColor }) => (
+		//       <View>
+		//         <Icon style={[{ color: tintColor }]} size={25} name={"lightbulb-o"} />
+		//       </View>),
+		//     tabBarColor: '#8B1D1D',
+		//   }
+		// },
+		StudySession: {
+			screen: StudySession,
+			navigationOptions: {
+				tabBarIcon: ({ tintColor }) => (
+					<View>
+						<Icon style={[{ color: tintColor }]} size={25} name={'lightbulb-o'} />
+					</View>
+				),
+				tabBarColor: '#8B1D1D'
+			}
+		},
+		CustomStudySession: {
+			screen: CustomStudySession,
+			navigationOptions: {
+				tabBarIcon: ({ tintColor }) => (
+					<View>
+						<Icon style={[{ color: tintColor }]} size={25} name={'user'} />
+					</View>
+				),
+				tabBarColor: '#8B1D1D'
+			}
+		}
+	},
+	{
+		labeled: false,
+		activeColor: '#FFF',
+		inactiveColor: '#C0C0C0'
+	}
+>>>>>>> feature/matts-branch
 );
 
 const App = createAppContainer(BottomNavigator);

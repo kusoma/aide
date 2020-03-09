@@ -46,6 +46,12 @@ export default class Login extends Component {
             value={this.state.email}
             editable={false}
           />
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('ClassSettings')}>
+            <Text style={GlobalStyle.text}> Class Settings </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Custom Study Session')}>
+            <Text style={GlobalStyle.text}> Custom Study Session </Text>
+          </TouchableOpacity>
         </View>
 
         <View>
