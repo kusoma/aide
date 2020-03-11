@@ -12,7 +12,7 @@ module.exports = {
             const endDateISO = new Date(event.end.dateTime)
             const day = module.exports.dayDifference(startDateISO)
 
-            if (startDateISO.getHours() < 8 || startDateISO.getHours() > 20) continue;
+            if (startDateISO.getHours() > 20) continue;
 
             let startTimeHours = startDateISO.getHours() + (startDateISO.getHours() - 16)
             let endTimeHours = endDateISO.getHours() + (endDateISO.getHours() - 16)
@@ -42,24 +42,17 @@ module.exports = {
             for (day in schedule) {
                 if (isScheduled) continue;
                 for (interval in schedule[day]) {
-                    // Do something with default study length
-                    // let next = interval + 1
                     if (isScheduled) continue;
                     if (schedule[day][interval] == 0) {
                         schedule[day][interval] = 2;
                         
                         let hours = Math.floor(Number(interval)/2 + 8)
-
-                        let minutes = '00'
-                        if (interval % 2 == 1) {
-                            minutes = '30'
-                        }
-
+                        let minutes = interval % 2 == 1 ? '30' : '00'
                         let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
-                        console.log(startDateTime)
+
                         let scheduledEvent = {
-                            summary: "Aide",
-                            description: "Aide development",
+                            summary: event.title,
+                            description: event.description,
                             start: {
                                 dateTime: startDateTime,
                                 timeZone: "America/Los_Angeles"
@@ -77,7 +70,6 @@ module.exports = {
             }
         }
 
-        // console.log(scheduledEvents);
         return scheduledEvents;
     }
 }
