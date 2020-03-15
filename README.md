@@ -54,3 +54,4 @@ $ git merge feature/###-branch-name
 ```
 
 4. Test that it runs and everything works
+5. Submit pull request
