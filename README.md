@@ -1,69 +1,57 @@
 # aide
 Azusa Pacific University Senior Capstone Project
-## Aide Architecture
-  ```shell
-  App/
-    assets/
-	components/
-	screens/
-	util/
-  index.js
-  ```
-
-## Naming Convention Style Guide
-* camelCase
-* for UI components, start with the general name of the UI component
-  
-  ```shell
-  var btnSignIn
-  var lblCourseName
-  var lblCourseTitle
-  ```
 
 ## Git Guide
-## Creating a branch
+### Testing
+#### Creating your own test branch
+```shell
+$ git checkout develop
+$ git pull
+$ git checkout -b test-name # name should be your name
+```
+##### Do NOT merge into test, merge into your own test branch
+
+#### Make sure the test branch is always up to date
+```shell
+$ git checkout develop
+$ git pull
+$ git checkout test-name
+$ git merge origin/develop
+$ git push
+```
+
+### Creating a branch
   ```shell
   $ git checkout develop
   $ git pull
   $ git checkout -b feature/001-login-screen
   ```
 
-## Testing a branch
+### Testing a branch
   ```shell
-  $ git checkout test
-  $ git pull
-  $ git merge origin/feature/001-login-screen
-  # Begin to test the feature that was merged
+  $ git checkout test-name
+  $ git merge origin/feature/001-login-screen # Begin to test the feature that was merged
   ```
   
-## Merging a branch to production
-  ```shell
-  # Once it passes all the tests
-  $ git checkout develop
-  $ git pull
-  $ git merge origin/feature/001-login-screen
-  $ git checkout master
-  $ git merge origin/develop
-  ```
+### Merging a branch to develop
+#### YOU DON'T
+#### You pull from the develop and test on your own branch
+#### Then submit a pull request
+1. Pull from develop to make sure your branch has the latest code
+```shell
+$ git checkout develop
+$ git pull
+```
+2. Merge develop branch into test branch
+```shell
+$ git checkout test-name
+$ git merge develop
+```
 
-## Git Style Guide
-## Branches
+3. Merge feature into test branch
+```shell 
+$ git merge feature/###-branch-name
+```
 
-* Choose *short* and *descriptive* names:
-
-  ```shell
-  # good
-  $ git checkout -b oauth-migration
-
-  # bad - too vague
-  $ git checkout -b login_fix
-  ```
-
-* Use lowercase in branch names. External ticket identifiers with uppercase
-  letters are a valid exception. Use *hyphens* to separate words.
-
-  ```shell
-  $ git checkout -b new-feature      # good
-  $ git checkout -b T321-new-feature # good (Phabricator task id)
-  $ git checkout -b New_Feature      # bad
-  ```
+4. Test that it runs and everything works
+5. Submit pull request

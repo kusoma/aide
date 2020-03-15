@@ -1,19 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import MainNavigation from "./router/MainNavigation";
+import Fonts from "./utils/Fonts"
+
+const getFont = () => 
+   Font.loadAsync({
+    'Comfortaa': Fonts.Comfortaa,
+    'Comfortaa_Bold': Fonts.Comfortaa_Bold,
+    'SF_Pro_Bold': Fonts.SF_Pro_Bold,
+});
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+ if(fontLoaded) {
+   return ( <MainNavigation />);
+ }  
+   return (
+     <AppLoading
+       startAsync={getFont}
+       onFinish={() => setFontLoaded(true)}
+     />
+    )
+
 }
- 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
