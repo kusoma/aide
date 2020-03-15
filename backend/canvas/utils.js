@@ -26,9 +26,6 @@ module.exports = async function getCanvasAssignments(token) {
                 end: i.end_at,
             })
         })
-
-        console.log('this is results', result);
-        
         
         return result;
     }).catch(err => {
