@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-import moment from 'moment';
+//import moment from 'moment';
+import moment from 'moment-timezone';
 import { Constant } from '../utils/Variables'
 
 const COLORS = [
@@ -41,24 +42,23 @@ const PopulateDaysInAWeek = () => (
   />
 )
 
-const getEventsDates = ( data ) => {
-  if(!data)
-    return;
-  if(!data.data[0])
+const getEventsDates = ({ data }) => {
+  if(!data[0])
     return;
 
   const results = [];
   let hash = {};
   
-  data.data.forEach(i => {
-    const date = moment(i.end).format('L');
+  data.forEach(i => {
+    const date = i.end.slice(0,10);
     
     if(hash[date])
       results[results.length - 1].count++;
 
     else {
-      const Month = date.slice(0,2);
-      const Day = date.slice(3,5);
+      const Month = date.slice(5,7);
+      const Day = date.slice(8,10);
+      
       let count = 1;    
       hash[date] =  { month: Month, day: Day, count };
       results.push({ month: Month, day: Day, count })
@@ -68,6 +68,7 @@ const getEventsDates = ( data ) => {
 }
 
 const GetDates = ( data ) => {
+    
     const year = new Date().getFullYear();
     const currentmonth = new Date().getMonth();
     const date = new Date(year, currentmonth, 1);
@@ -76,10 +77,8 @@ const GetDates = ( data ) => {
     const today = new Date().getDate();
 
     if(date.getDay() !== 0)
-    {
         for(let i = 0; i < date.getDay() ; i++)
           result.push({ Day: DAYSINWEEK[i].props, Date: "", Assignments: 0, ActiveDay: false})
-    }
     
     while (date.getMonth() === currentmonth) { 
          const temp = {};
@@ -89,22 +88,15 @@ const GetDates = ( data ) => {
          temp.ActiveDay= false;
 
          if(temp.Date == today)
-         {
            temp.ActiveDay = true;
-         }
 
          if(events) {
           events.forEach((i) => {
-            
             if(i.day == temp.Date && i.month == currentmonth + 1)
-            {
               temp.Assignments = i.count;
-            }
           })
          }
-       
-
-         result.push({ ...temp});
+         result.push(temp);
          date.setDate(date.getDate() + 1);
     }
 
@@ -112,14 +104,10 @@ const GetDates = ( data ) => {
     {
       let currentDate = 0;
       for(let i = 0; i < DAYSINWEEK.length; i++)
-      {
         if(result[result.length - 1].Day === DAYSINWEEK[i].props)
           currentDate = DAYSINWEEK[i].value;
-      }
-
       for(let i = currentDate; i < DAYSINWEEK[6].value; i++)
         result.push({ Day: DAYSINWEEK[i].props, Date: ""})
-      
     }
     return result;
   }
@@ -128,23 +116,48 @@ const populateAssignments = (data) => {
   if(!data)
   return;
 
-  if(data.Assignments >= 2)
-  {
-    return (
-      <View style={styles.AssignmentsContainer}>
-        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
-        <View style={[styles.Assignments, { backgroundColor: COLORS[2]}]}/>
-      </View>
-    )
-  }
-  if(data.Assignments == 1)
-  {
-    return (
-      <View style={styles.AssignmentsContainer}>
-        <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
-      </View>
-    )
-  }
+    if( data.Day === DAYSINWEEK[1].props
+      || data.Day === DAYSINWEEK[3].props
+      || data.Day === DAYSINWEEK[5].props
+      || data.Day === DAYSINWEEK[0].props) 
+      {
+        if(data.Assignments >= 2) {
+          return (
+            <View style={styles.AssignmentsContainer}>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[2]}]}/>
+            </View>
+          )
+        }
+        if(data.Assignments == 1)
+        {
+          return (
+            <View style={styles.AssignmentsContainer}>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[0]}]}/>
+            </View>
+          )
+        }
+      }
+      else if(data.Day === DAYSINWEEK[2].props
+        || DAYSINWEEK[4].props
+        || DAYSINWEEK[6].props)
+      {
+        if(data.Assignments >= 2) {
+          return (
+            <View style={styles.AssignmentsContainer}>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[1]}]}/>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[3]}]}/>
+            </View>
+          )
+        }
+        if(data.Assignments == 1) {
+          return (
+            <View style={styles.AssignmentsContainer}>
+              <View style={[styles.Assignments, { backgroundColor: COLORS[1]}]}/>
+            </View>
+          )
+        }
+      }
 }
 
 const PopulateDates = (data) => (
@@ -165,7 +178,9 @@ const PopulateDates = (data) => (
           {item.Date}
           </Text>
         }
+        <View style={{position: 'absolute', top: 37}}>
           {populateAssignments(item)}
+        </View>
         </TouchableOpacity>}
     />
     <FlatList
@@ -184,7 +199,9 @@ const PopulateDates = (data) => (
           {item.Date}
           </Text>
         }
+        <View style={{position: 'absolute', top: 37}}>
           {populateAssignments(item)}
+        </View>
         </TouchableOpacity>}
     />
     <FlatList
@@ -203,6 +220,9 @@ const PopulateDates = (data) => (
           {item.Date}
           </Text>
         }
+        <View style={{position: 'absolute', top: 37}}>
+          {populateAssignments(item)}
+        </View>
         </TouchableOpacity>}
     />
     <FlatList
@@ -221,7 +241,9 @@ const PopulateDates = (data) => (
           {item.Date}
           </Text>
         }
+        <View style={{position: 'absolute', top: 37}}>
           {populateAssignments(item)}
+        </View>
         </TouchableOpacity>}
     />
     <FlatList
@@ -240,7 +262,9 @@ const PopulateDates = (data) => (
           {item.Date}
           </Text>
         }
+        <View style={{position: 'absolute', top: 37}}>
           {populateAssignments(item)}
+        </View>
         </TouchableOpacity>}
     />
   </View>
@@ -268,7 +292,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#EBEBEB',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 12,
+      borderRadius: 10,
     },
     AssignmentsContainer: {
       flexDirection: 'row'

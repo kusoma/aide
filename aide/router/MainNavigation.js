@@ -14,13 +14,14 @@ import Monthly from '../screens/MonthlyView';
 
 const MainNavigator = createStackNavigator({
   Login: {screen: Login},
+  BottomNavigation: { screen: BottomNavigation },
+  Week: {screen: Week},
   Monthly: {screen: Monthly},
   ForgotPassword: {screen: ForgotPassword},
   SignUp: {screen: SignUp},
   StudySession: {screen: StudySession},
   UserSettings: { screen: UserSettings },
   ClassSettings: { screen: ClassSettings },
-  BottomNavigation: { screen: BottomNavigation },
 }, {
   headerMode: 'none',
   navigationOptions: {
