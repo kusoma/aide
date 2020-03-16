@@ -1,7 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-//import moment from 'moment';
-import moment from 'moment-timezone';
 import { Constant } from '../utils/Variables'
 
 const COLORS = [
