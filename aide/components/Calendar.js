@@ -117,7 +117,7 @@ const populateAssignments = (data) => {
     if( data.Day === DAYSINWEEK[1].props
       || data.Day === DAYSINWEEK[3].props
       || data.Day === DAYSINWEEK[5].props
-      || data.Day === DAYSINWEEK[0].props) 
+    ) 
       {
         if(data.Assignments >= 2) {
           return (
@@ -138,7 +138,8 @@ const populateAssignments = (data) => {
       }
       else if(data.Day === DAYSINWEEK[2].props
         || DAYSINWEEK[4].props
-        || DAYSINWEEK[6].props)
+        || DAYSINWEEK[6].props
+        || DAYSINWEEK[0].props)
       {
         if(data.Assignments >= 2) {
           return (

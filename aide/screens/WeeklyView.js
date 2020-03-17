@@ -18,8 +18,6 @@ export default class WeeklyView extends Component {
      if (json.errors || !json) {
        return;
      }
-     console.log(json);
-     
      this.setState({ data: json })
      this.props.navigation.state.params.data = this.state.data;
    })

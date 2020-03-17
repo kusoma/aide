@@ -26,12 +26,6 @@ export default class MonthlyView extends Component {
     }
     
     render() {    
-      const data = [
-        { label: "Swim", data: '0.4' },
-        { label: "Running", data: '0.2'},
-        { label: "Sleeping", data: '0.5' }
-      ];
-
       console.disableYellowBox = true;
         return (
           <ScrollView contentContainerStyle={GlobalStyle.container}> 

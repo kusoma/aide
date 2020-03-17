@@ -14,10 +14,7 @@ module.exports = async function sentEmail() {
         }
       });
       
-      let email = require('./email.html')
-      console.log('this is email', email);
-      
-
+      const email = require('./email.html')
 
       let mailOptions = {
         from: process.env.GMAIL,
@@ -29,10 +26,8 @@ module.exports = async function sentEmail() {
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log('Error occurred: ', error);
-          return;
         } else {
           console.log('Email sent: ' + info.response);
-          return;
         }
       });
 }

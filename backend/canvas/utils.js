@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+
 module.exports = async function getCanvasAssignments(token) {
     let url = 'https://canvas.apu.edu/api/v1/users/self/upcoming_events'
     let data = await fetch(url, {
@@ -18,19 +19,16 @@ module.exports = async function getCanvasAssignments(token) {
 
         data.map((i) => {
             result.push({
-                // title: i.title,
-                // course: i.assignment.course_id,
-                //description: i.description,
-                // isQuiz: i.assignment.is_quiz_assignment,
+                title: i.title,
+                course: i.assignment.course_id,
+                description: i.description,
+                isQuiz: i.assignment.is_quiz_assignment,
                 start: i.start_at,
                 end: i.end_at,
             })
         })
-
-        console.log('this is results', result);
-        
-        
         return result;
+        
     }).catch(err => {
         return err;
     })
