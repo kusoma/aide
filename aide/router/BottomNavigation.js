@@ -93,6 +93,7 @@ const BottomNavigator = createMaterialBottomTabNavigator(
     }
   },
   {
+    order: ['MonthlyView', 'WeeklyView', 'StudySession', 'UserSettings'],
     labeled: false,
     activeColor: "#FFF",
     inactiveColor: "#C0C0C0"
