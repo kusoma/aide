@@ -20,8 +20,7 @@ export default class MonthlyView extends Component {
         if (json.errors || !json) {
           return;
         }
-        this.setState({ data: json })
-        this.props.navigation.state.params.data = this.state.data;
+        this.setState({ data: json });
       })
     }
     
