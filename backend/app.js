@@ -12,7 +12,8 @@ const sentEmail = require("./resetPassword/utils");
 
 app.use(bodyParser.json());
 
-const googleCalendar = require("./google/utils.js");
+const googleCalendar = require("./google/utils");
+const APS = require("./aps/utils")
 
 app.use(
   "/api",
@@ -24,52 +25,38 @@ app.use(
 );
 
 app.use("/google", (err, res, next) => {
-  googleCalendar.auth("gmontilla18@apu.edu").then(client => {
-    let calendar = googleCalendar.calendar(client);
+  // const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
+  const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
+  const email = "bspencer16@apu.edu"
 
-    var event = {
-      summary: "Google I/O 2015",
-      location: "800 Howard St., San Francisco, CA 94103",
-      description: "A chance to hear more about Google's developer products.",
-      start: {
-        dateTime: "2020-02-19T09:00:00-07:00",
-        timeZone: "America/Los_Angeles"
-      },
-      end: {
-        dateTime: "2020-02-19T17:00:00-07:00",
-        timeZone: "America/Los_Angeles"
-      },
-      recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
-      attendees: [
-        { email: "lpage@example.com" },
-        { email: "sbrin@example.com" }
-      ],
-      reminders: {
-        useDefault: false,
-        overrides: [
-          { method: "email", minutes: 24 * 60 },
-          { method: "popup", minutes: 10 }
-        ]
-      }
-    };
-    calendar.events.insert(
-      {
-        calendarId: "primary",
-        resource: event
-      },
-      function(err, event) {
-        if (err) throw err;
-        // if event
-        // 	store event in user scheduledEvents
-      }
-    );
-
-    // googleCalendar.getEvents(calendar).then(data => {
-    // 	res.send(data);
-    // }).catch(err => {
-    // 	throw err;
-    // })
+  Canvas.getCanvasAssignments(token).then(assignments => {
+    googleCalendar.auth(email).then(client => {
+      let calendar = googleCalendar.calendar(client);
+  
+      googleCalendar.getEvents(calendar).then(data => {
+        let schedule = APS.createSchedule();
+        APS.fillSchedule(schedule, data);
+        let scheduledEvents = APS.scheduleEvents(schedule, assignments);
+        for (event of scheduledEvents) {
+          calendar.events.insert({
+            calendarId: "primary",
+            resource: event
+          },
+            function (err, event) {
+              if (err) console.log(err);
+              // if event
+              // 	store event in user scheduledEvents
+            }
+          );
+        }
+  
+          res.send(schedule);
+        }).catch(err => {
+          throw err;
+        })
+    });
   });
+  
 });
 
 app.get("/canvas", (req, res) => {

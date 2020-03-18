@@ -28,10 +28,8 @@ module.exports = async function getCanvasAssignments(token) {
             })
         })
         return result;
-        
     }).catch(err => {
         return err;
     })
     return data;
 }
-
