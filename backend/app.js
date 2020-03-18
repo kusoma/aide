@@ -24,9 +24,9 @@ app.use(
 );
 
 app.use("/google", (err, res, next) => {
-  // const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
-  const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
-  const email = "bspencer16@apu.edu"
+  const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
+  // const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
+  const email = "gmontilla18@apu.edu"
 
   Canvas.getCanvasAssignments(token).then(assignments => {
     googleCalendar.auth(email).then(client => {

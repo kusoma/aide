@@ -28,8 +28,6 @@ module.exports = {
                 })
             })
 
-            console.log('this is results', result);
-
             return result;
         }).catch(err => {
             return err;

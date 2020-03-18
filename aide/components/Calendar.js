@@ -87,10 +87,6 @@ const GetDates = ( data ) => {
          temp.Date = date.getDate()
          temp.Assignments = 0;
          temp.ActiveDay= false;
-          
-
-          console.log(temp.Day, temp.Date);
-          
 
          if(temp.Date >= 26)
          {
@@ -130,7 +126,6 @@ const GetDates = ( data ) => {
   }
 
 const populateAssignments = (data) => {
-  console.log('this is dasda', data);
   
   if(!data)
   return;
