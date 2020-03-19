@@ -16,7 +16,8 @@ export default class Login extends Component {
       isErrorText: "",
       defaultStudyLength: 25,
       defaultBreakLength: 5,
-      defaultTechnique: "Pomodoro"
+      defaultTechnique: "Pomodoro",
+      _id: ""
     };
   }
 
@@ -28,7 +29,8 @@ export default class Login extends Component {
       query: `
 			  query {
 				login(email: "${email}", password: "${password}") {
-				  firstName
+          _id
+          firstName
 				  lastName
           email
           defaultStudyLength
@@ -45,6 +47,7 @@ export default class Login extends Component {
         this.setState({ isErrorText: json.errors[0].message });
       } else {
         let user = {
+          _id: json.data.login._id,
           firstName: json.data.login.firstName,
           lastName: json.data.login.lastName,
           email: json.data.login.email,
@@ -52,9 +55,8 @@ export default class Login extends Component {
           defaultStudyLength: json.data.login.defaultStudyLength,
           defaultTechnique: json.data.login.defaultTechnique
         };
-        console.log(user.defaultBreakLength);
-        console.log(user.defaultStudyLength);
-        console.log(user.defaultTechnique);
+        console.log(user)
+        
 
         this.props.navigation.navigate("BottomNavigation", user);
       }

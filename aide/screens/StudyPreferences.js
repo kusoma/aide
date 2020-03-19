@@ -24,20 +24,22 @@ export default class Login extends Component {
       defaultStudyLength: navigation.getParam("defaultStudyLength"),
       defaultBreakLength: navigation.getParam("defaultBreakLength"),
       defaultTechnique: navigation.getParam("defaultTechnique"),
+      _id: navigation.getParam("_id")
     };
   }
 
   StudyPreferenceHandler() {
     
-    defaultStudyLength = 10;
-    defaultBreakLength = 10;
-    defaultTechnique = "testing";
-
-		const request = {
+    defaultStudyLength = this.state.defaultStudyLength;
+    defaultBreakLength = this.state.defaultBreakLength;
+    defaultTechnique = this.state.defaultTechnique;
+    _id = this.state._id
+    
+    const request = {
 			query: `
 			mutation {
 				setStudyPreference(
-          userID: "5e548417c21bc52924ba0b42",
+          userID: "${_id}",
 					defaultStudyLength: ${defaultStudyLength},
 					defaultBreakLength: ${defaultBreakLength},
 					defaultTechnique: "${defaultTechnique}"
