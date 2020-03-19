@@ -32,7 +32,7 @@ type RootQuery {
 type RootMutation {
     createUser(userInput: UserInput): User
     setCanvasToken(userID: ID!, canvasToken: String): User
-   
+    setStudyPreference(userID: ID!, defaultStudyLength: Int, defaultBreakLength: Int, defaultTechnique: String): User
 }
 
 schema {
