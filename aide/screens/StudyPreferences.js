@@ -10,6 +10,8 @@ import {
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
+import { callGraphql } from "../utils/API";
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,9 +23,56 @@ export default class Login extends Component {
       // lastName: navigation.getParam("lastName"),
       defaultStudyLength: navigation.getParam("defaultStudyLength"),
       defaultBreakLength: navigation.getParam("defaultBreakLength"),
-      defaultTechnique: navigation.getParam("defaultTechnique")
+      defaultTechnique: navigation.getParam("defaultTechnique"),
     };
   }
+
+  StudyPreferenceHandler() {
+    
+    defaultStudyLength = 10;
+    defaultBreakLength = 10;
+    defaultTechnique = "testing";
+
+		const request = {
+			query: `
+			mutation {
+				setStudyPreference(
+          userID: "5e548417c21bc52924ba0b42",
+					defaultStudyLength: ${defaultStudyLength},
+					defaultBreakLength: ${defaultBreakLength},
+					defaultTechnique: "${defaultTechnique}"
+
+				)  {
+         		 defaultStudyLength
+          	 defaultBreakLength
+         		 defaultTechnique
+				}
+      }
+      `
+    };
+
+		// MAYBE: Essentially same function as login handler, maybe we coould combine them
+		callGraphql(request, json => {
+      console.log(json)
+
+			if (json.errors) {
+				this.setState({ isError: true }); 
+        this.setState({ isErrorText: json.errors[0].message });
+
+			} else {
+				const user = {
+          defaultBreakLength: json.data.setStudyPreference.defaultBreakLength,
+          defaultStudyLength: json.data.setStudyPreference.defaultStudyLength,
+          defaultTechnique: json.data.setStudyPreference.defaultTechnique
+        
+        };
+        this.props.navigation.navigate('StudyPreferences', user);
+			}
+		});
+	}
+
+
+
 
   render() {
     return (
@@ -43,9 +92,9 @@ export default class Login extends Component {
           onChangeText={defaultStudyLength =>
             this.setState({ defaultStudyLength })
           }
-          value={`${this.state.defaultStudyLength} Mins`}
+          value={`${this.state.defaultStudyLength}`}
           autoCapitalize="words"
-          editable={false}
+          editable={true}
         />
 
         <Text style={styles.Text}>Break Length</Text>
@@ -60,9 +109,9 @@ export default class Login extends Component {
           onChangeText={defaultBreakLength =>
             this.setState({ defaultBreakLength })
           }
-          value={`${this.state.defaultBreakLength} Mins`}
+          value={`${this.state.defaultBreakLength}`}
           autoCapitalize="words"
-          editable={false}
+          editable={true}
         />
 
         <Text style={styles.Text}>defaultTechnique</Text>
@@ -78,7 +127,7 @@ export default class Login extends Component {
           onChangeText={defaultTechnique => this.setState({ defaultTechnique })}
           value={this.state.defaultTechnique}
           autoCapitalize="none"
-          editable={false}
+          editable={true}
         />
 
         <Text style={styles.Text}>Rest After Each Session</Text>
@@ -113,6 +162,7 @@ export default class Login extends Component {
                 height: Constant.MAX_HEIGHT / 22
               }
             ]}
+            onPress={() => this.StudyPreferenceHandler(this.state.defaultBreakLength, this.state.defaultStudyLength, this.state.defaultTechnique)}
           >
             <Text style={styles.textplus}> + </Text>
           </TouchableOpacity>

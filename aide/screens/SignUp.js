@@ -76,10 +76,10 @@ export default class SignUp extends Component {
 				})  {
 					firstName
 					lastName
-          email    
-          defaultStudyLength
-          defaultBreakLength
-          defaultTechnique
+         			 email    
+         			 defaultStudyLength
+          			 defaultBreakLength
+         			 defaultTechnique
 				}
 			}`
     };

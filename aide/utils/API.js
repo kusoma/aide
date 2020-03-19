@@ -1,6 +1,6 @@
-const GRAPHQL = 'http://localhost:3000/api?';
-const CANVAS = 'http://localhost:3000/canvas?';
-const GOOGLE = 'http://localhost:3000/google?';
+const GRAPHQL = 'http://192.168.1.24:3000/api?';
+const CANVAS = 'http://192.168.1.24:3000/canvas?';
+const GOOGLE = 'http://192.168.1.24:3000/google?';
 
 async function callGraphql (request, callback) {
 	fetch(GRAPHQL, {
