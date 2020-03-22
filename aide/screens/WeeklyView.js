@@ -1,41 +1,33 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { GlobalStyle } from '../utils/Variables';
 import { WeeklyViewList } from '../components/List';
-
-const DEMODATA = [
-  { date: '2/26/2020',
-   class: 'CS101',
-   timeLabel: '2pm',
-   studyLabel: 'Exam - Study Session'
-  },
-  {
-   date: '2/26/2020',
-   class: 'UBBL200',
-   timeLabel: '8pm',
-   studyLabel: 'Exam - Study Session'
-  },
-  { date: '2/27/2020',
-  class: 'CS101',
-  timeLabel: '2pm',
-  studyLabel: 'Quiz - Study Session'
-  },
-  { date: '2/28/2020',
-  class: 'CS102',
-  timeLabel: '10pm',
-  studyLabel: 'Quiz - Study Session'
-  },
-
-]
+import { callCanvas } from '../utils/API';
 
 
 export default class WeeklyView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+    }
+  }
+
+  componentDidMount() {
+    callCanvas((json) => {
+     if (json.errors || !json) {
+       return;
+     }
+     this.setState({ data: json })
+     this.props.navigation.state.params.data = this.state.data;
+   })
+ }
+
     render() {
         return (
           <ScrollView contentContainerStyle={[ GlobalStyle.container]}>
             <Text style={[{ marginTop: 50, marginBottom: 30}, styles.textStyle ]}> Daily Planner </Text>
-            
-            <WeeklyViewList data={DEMODATA} />
+            <WeeklyViewList />
           </ScrollView>
 
         );

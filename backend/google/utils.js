@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-//const privatekey = require('/Users/greg/Documents/Projects/aide/backend/google/apu-calendar-cca4c98d0afb.json'); // This was downloaded when you created your Service Account Key
+const privatekey = require('/Users/greg/Documents/Projects/aide/backend/google/apu-calendar-cca4c98d0afb.json'); // This was downloaded when you created your Service Account Key
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
 module.exports = {
@@ -25,10 +25,15 @@ module.exports = {
     }
   },
   getEvents: async calendar => {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const weekFromToday = new Date(today)
+    weekFromToday.setDate(today.getDate() + 7)
     try {
       let events = await calendar.events.list({
         calendarId: "primary",
-        timeMin: new Date().toISOString(),
+        timeMin: today.toISOString(),
+        timeMax: weekFromToday.toISOString(),
         singleEvents: true,
         orderBy: "startTime"
       });
@@ -46,7 +51,7 @@ module.exports = {
         },
         function(err, success) {
           if (err) throw err;
-          return success.htmlink;
+          return success.htmllink;
         }
       );
       return res;
