@@ -72,6 +72,7 @@ export default class UserSettings extends Component {
             label="Study Preferences"
             image="lightbulb-o"
             imageColor="#000"
+            onPress={() => this.props.navigation.navigate('StudyPreference')}
           />
           <WideButton
             label="Log Out "
@@ -82,6 +83,7 @@ export default class UserSettings extends Component {
             textStyle={{ color: "#fff" }}
             image="share"
             imageColor="#fff"
+            onPress={() => this.props.navigation.navigate('Login')}
           />
         </View>
       </ScrollView>
