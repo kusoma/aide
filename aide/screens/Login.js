@@ -24,13 +24,8 @@ export default class Login extends Component {
   loginHandler() {
     const email = this.state.email;
     const password = this.state.password;
-<<<<<<< HEAD
-   
-    let request = {
-=======
 
     const request = {
->>>>>>> 0463143c9c7c5c40fc65f1f81fe52c40f4c44453
       query: `
 			  query {
 				login(email: "${email}", password: "${password}") {
@@ -45,18 +40,14 @@ export default class Login extends Component {
 			  }
 			`
     };
+    
 
     callGraphql(request, json => {
       if (json.errors) {
         this.setState({ isError: true });
         this.setState({ isErrorText: json.errors[0].message });
       } else {
-<<<<<<< HEAD
-        let user = {
-          _id: json.data.login._id,
-=======
         const user = {
->>>>>>> 0463143c9c7c5c40fc65f1f81fe52c40f4c44453
           firstName: json.data.login.firstName,
           lastName: json.data.login.lastName,
           email: json.data.login.email,
@@ -64,12 +55,7 @@ export default class Login extends Component {
           defaultStudyLength: json.data.login.defaultStudyLength,
           defaultTechnique: json.data.login.defaultTechnique
         };
-<<<<<<< HEAD
-        console.log(user)
         
-=======
->>>>>>> 0463143c9c7c5c40fc65f1f81fe52c40f4c44453
-
         this.props.navigation.navigate("BottomNavigation", user);
       }
     });
@@ -106,7 +92,7 @@ export default class Login extends Component {
         <TouchableOpacity
           style={[GlobalStyle.pillButtonSide, GlobalStyle.shadow, { top: 30 }]}
           onPress={() =>
-            this.loginHandler(this.state.email, this.state.password)}
+            this.loginHandler()}
         >
           <Text style={GlobalStyle.pillButtonSideText}> Sign In </Text>
         </TouchableOpacity>
