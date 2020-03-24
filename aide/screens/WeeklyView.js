@@ -19,15 +19,15 @@ export default class WeeklyView extends Component {
        return;
      }
      this.setState({ data: json })
-     this.props.navigation.state.params.data = this.state.data;
    })
  }
 
     render() {
+      console.disableYellowBox = true;
         return (
           <ScrollView contentContainerStyle={[ GlobalStyle.container]}>
             <Text style={[{ marginTop: 50, marginBottom: 30}, styles.textStyle ]}> Daily Planner </Text>
-            <WeeklyViewList />
+            <WeeklyViewList data={this.state.data}/>
           </ScrollView>
 
         );
