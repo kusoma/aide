@@ -24,6 +24,13 @@ input UserInput {
     defaultTechnique: String
 }
 
+type Session {
+    startTime: String!
+    endTime: String!
+    breakTime: Int!
+    timeToBreak:
+}
+
 type RootQuery {
     login(email: String!, password: String!): User
     
