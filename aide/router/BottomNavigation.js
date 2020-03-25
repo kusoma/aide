@@ -6,10 +6,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import MonthlyView from "../screens/MonthlyView";
 import WeeklyView from "../screens/WeeklyView";
-import SignUp from "../screens/SignUp";
 import UserSettings from "../screens/UserSettings";
 import { Constant } from "../utils/Variables";
-import StudyPreferences from "../screens/StudyPreferences";
 import StudySession from "../screens/StudySession"
 
 const ICON_SIZE = 25;
@@ -24,7 +22,7 @@ const BottomNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={ICON_SIZE}
-              name={"calendar"}
+              name="calendar"
             />
           </View>
         ),
@@ -39,7 +37,7 @@ const BottomNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={ICON_SIZE}
-              name={"tasks"}
+              name="tasks"
             />
           </View>
         ),
@@ -54,7 +52,7 @@ const BottomNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={ICON_SIZE}
-              name={"lightbulb-o"}
+              name="lightbulb-o"
             />
           </View>
         ),
@@ -69,7 +67,7 @@ const BottomNavigator = createMaterialBottomTabNavigator(
             <Icon
               style={[{ color: tintColor }]}
               size={ICON_SIZE}
-              name={"user"}
+              name="user"
             />
           </View>
         ),
