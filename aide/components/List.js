@@ -9,7 +9,7 @@ const MONTHNAME = ["January", "February", "March", "April", "May", "June",
 ];
 const YEAR = new Date().getFullYear();
 const MONTH = new Date().getMonth() + 1;
-const DAY = new Date().getDay();
+const DAY = new Date().getDate();
 const HOUR = new Date().getHours();
 
 
@@ -23,7 +23,7 @@ const CreateList = ({data, count}) => (
         <WeeklyButton 
           timeLabel={getTimeLabel(item.time)}
           classLabel={item.course}
-          studyLabel={getAssignementType(data)}
+          titleLabel={item.title}
           color={COLORS[count++]}
         />
       </View>
@@ -31,18 +31,10 @@ const CreateList = ({data, count}) => (
     />
 )
 
-const getAssignementType = (data) => {
-  if(data.isQuiz) {
-    return "Quiz - Study Session";
-  }
-  else 
-    return "Exam - Study Session";
-}
-
 const getTimeLabel = (data) => {
-  const year = data.slice(0,4);
-  const month = data.slice(5,7);
-  const day = data.slice(8);
+  const year = Number(data.slice(0,4));
+  const month = Number(data.slice(5,7));
+  const day = Number(data.slice(8));
   const hour = Number(data.slice(11,13));
 
   if(YEAR === year && MONTH === month && DAY === day){
@@ -87,18 +79,18 @@ const getDataSet = (data) => {
 }
 
 const getDate = (data) => {
-  const year = data.date.slice(0,4);
-  const month = data.date.slice(5,7);
-  const day = data.date.slice(8);
+  const year = Number(data.date.slice(0,4));
+  const month = Number(data.date.slice(5,7));
+  const day = Number(data.date.slice(8));
 
   if(YEAR === year  && MONTH === month && DAY === day)
     return "Today";
-  if(YEAR === year  && MONTH === month && (DAY + 1) === day)
-    return `Tomorrow, ${MONTHNAME[month.slice(1) - 1]} ${day}`;
-  if(YEAR === year  && MONTH === month && (DAY - 1) === day)
-    return `Yesturday, ${MONTHNAME[month.slice(1) - 1]} ${day}`;
+  if(YEAR === year  && MONTH == month && (DAY + 1) === day)
+    return `Tomorrow, ${MONTHNAME[month - 1]} ${day}`;
+  if(YEAR === year  && MONTH == month && (DAY - 1) === day)
+    return `Yesturday, ${MONTHNAME[month - 1]} ${day}`;
   else
-    return `${MONTHNAME[month.slice(1) - 1]} ${day}`;
+    return `${MONTHNAME[month - 1]} ${day}`;
 }
 
 
