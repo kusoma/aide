@@ -1,25 +1,31 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import Login from '../screens/Login'
-import SignUp from '../screens/SignUp';
-import StudySession from '../screens/StudySession';
-import ForgotPassword from '../screens/ForgotPassword';
-import UserSettings from '../screens/UserSettings';
-import ClassSettings from '../screens/ClassSettings';
 import BottomNavigation from './BottomNavigation';
-import Week from '../screens/WeeklyView';
+import ClassSettings from '../screens/ClassSettings';
+import EventDetail from '../screens/EventDetails';
+import ForgotPassword from '../screens/ForgotPassword';
+import Login from '../screens/Login'
 import Monthly from '../screens/MonthlyView';
+import SignUp from '../screens/SignUp';
+import StudyPreference from '../screens/StudyPreferences';
+import StudySession from '../screens/StudySession';
+import UserSettings from '../screens/UserSettings';
+import Week from '../screens/WeeklyView';
 
 
 const MainNavigator = createStackNavigator({
-  Login: {screen: Login},
-  ForgotPassword: {screen: ForgotPassword},
-  SignUp: {screen: SignUp},
+  Login: { screen: Login},
+  SignUp: { screen: SignUp},
+  ForgotPassword: { screen: ForgotPassword},
+  BottomNavigation: { screen: BottomNavigation },
+  Monthly: { screen: Monthly},
+  Week: { screen: Week},
   StudySession: {screen: StudySession},
   UserSettings: { screen: UserSettings },
   ClassSettings: { screen: ClassSettings },
-  BottomNavigation: { screen: BottomNavigation },
+  StudyPreference: { screen: StudyPreference},
+  EventDetail: { screen: EventDetail },
 }, {
   headerMode: 'none',
   navigationOptions: {

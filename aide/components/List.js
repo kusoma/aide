@@ -3,94 +3,122 @@ import { StyleSheet, FlatList, Text, View, ScrollView } from 'react-native';
 import { WeeklyButton } from "./Buttons";
 import { Constant } from "../utils/Variables";
 
-const COLORS = ['#C72400','#E3640D', '#5B9E05']
+const COLORS = ['#C72400','#E3640D', '#5B9E05'];
+const MONTHNAME = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+const YEAR = new Date().getFullYear();
+const MONTH = new Date().getMonth() + 1;
+const DAY = new Date().getDay();
+const HOUR = new Date().getHours();
+
+
+
+const CreateList = ({data, count}) => (
+  <FlatList
+    data={data}
+    renderItem={({item}) => 
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.grayBar} />
+        <WeeklyButton 
+          timeLabel={getTimeLabel(item.time)}
+          classLabel={item.course}
+          studyLabel={getAssignementType(data)}
+          color={COLORS[count++]}
+        />
+      </View>
+    }
+    />
+)
+
+const getAssignementType = (data) => {
+  if(data.isQuiz) {
+    return "Quiz - Study Session";
+  }
+  else 
+    return "Exam - Study Session";
+}
+
+const getTimeLabel = (data) => {
+  const year = data.slice(0,4);
+  const month = data.slice(5,7);
+  const day = data.slice(8);
+  const hour = Number(data.slice(11,13));
+
+  if(YEAR === year && MONTH === month && DAY === day){
+    if(hour === HOUR)
+      return "in less than hour"
+    if(hour + 1 === HOUR)
+      return "in an Hour"
+    if(hour + 2 === HOUR)
+      return "in 2 Hour"
+  }
+  else if(hour < 12) 
+    return `${hour}AM`;
+  else
+    return `${hour - 12}PM`;
+}
+const getDataSet = (data) => {
+  let dates = [];
+  let results = [];
+  data.forEach(({end}) => {
+    dates.push(end.slice(0,10))
+  });
+  
+  dates = new Set(dates);
+  dates.forEach((i) => {
+    results.push({
+      date: i, 
+      data: []
+    })
+  })
+  
+  for(let x = 0; x < results.length; x++) {
+    data.forEach((i) => {
+      if(i.end.slice(0,10) === results[x].date) {
+          results[x].data = [
+            ...results[x].data,
+            { course: i.course, title: i.title, time: i.end, isQuiz: i.isQuiz}
+          ]
+      }
+    });
+  }
+  return(results);
+}
+
+const getDate = (data) => {
+  const year = data.date.slice(0,4);
+  const month = data.date.slice(5,7);
+  const day = data.date.slice(8);
+
+  if(YEAR === year  && MONTH === month && DAY === day)
+    return "Today";
+  if(YEAR === year  && MONTH === month && (DAY + 1) === day)
+    return `Tomorrow, ${MONTHNAME[month.slice(1) - 1]} ${day}`;
+  if(YEAR === year  && MONTH === month && (DAY - 1) === day)
+    return `Yesturday, ${MONTHNAME[month.slice(1) - 1]} ${day}`;
+  else
+    return `${MONTHNAME[month.slice(1) - 1]} ${day}`;
+}
+
 
 export const WeeklyViewList = ({data}) => (
-  <ScrollView contentContainerStyle={{width: Constant.MAX_WIDTH, justifyContent: 'center', alignItems: 'center'}}>
-    <View style={{ marginTop: 2, marginBottom: 10 }}>
-    <View style={{flexDirection: 'row'}}>
-      <View style={styles.redCircle} />
-      <Text style={[ {marginTop: 10, marginLeft: 20}, styles.textStyle]}> Today </Text>
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="in 45 Mins"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[0]}
-      />
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="in 1hr"
-        classLabel="UBBL 200"
-        studyLabel="Quiz - Study Session"
-        color={COLORS[1]}
-      />
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="10PM"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[2]}
-      />
-    </View>
-    </View>
-    <View style={{ marginTop: 2, marginBottom: 10 }}>
-    <View style={{flexDirection: 'row'}}>
-      <View style={styles.redCircle} />
-      <Text style={[ {marginTop: 10, marginLeft: 20}, styles.textStyle]}> Tomorrow, Feburary 27 </Text>
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="2PM"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[0]}
-      />
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="3PM"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[1]}
-      />
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="4PM"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[2]}
-      />
-    </View>
-    </View>
-    <View style={{ marginTop: 2, marginBottom: 10 }}>
-    <View style={{flexDirection: 'row'}}>
-      <View style={styles.redCircle} />
-      <Text style={[ {marginTop: 10, marginLeft: 20}, styles.textStyle]}> Feburary 28 </Text>
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <View style={styles.grayBar} />
-      <WeeklyButton 
-        timeLabel="4PM"
-        classLabel="CS101"
-        studyLabel="Exam - Study Session"
-        color={COLORS[0]}
-      />
-    </View>
-    </View>
+  <ScrollView>
+    <FlatList
+      data={getDataSet(data)}
+      contentContainerStyle={styles.List}
+      renderItem={({item}) => 
+        <View style={{ marginBottom: 6 }}>
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.redCircle} />
+            <Text style={[ {marginTop: 10, marginLeft: 20}, styles.textStyle]}> {getDate(item)} </Text>
+          </View>
+          {item.data? <CreateList data={item.data} count={0}/> : <React.Fragment/> }
+
+        </View>
+      }
+    />
   </ScrollView>
-
-
 )
 
 const styles = StyleSheet.create({ 
@@ -114,5 +142,11 @@ const styles = StyleSheet.create({
     width: Constant.MAX_WIDTH * 0.08,
     height: Constant.MAX_WIDTH * 0.08,
     backgroundColor: '#B21B1B',
-  }
+  },
+  List: {
+    flexDirection: 'column',
+    width: Constant.MAX_WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center'
+},
 });
