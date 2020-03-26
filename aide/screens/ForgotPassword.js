@@ -5,9 +5,11 @@ import {
    View,
    PanResponder,
    Animated } from 'react-native';
-import { Constant, GlobalStyle } from '../utils/Variables';
-import { TextField } from '../components/Form';
-import  { Title } from '../components/Title';
+   import { TextField } from '../components/Form';
+   import  { Title } from '../components/Title';
+   import { WebModal } from '../components/Modal';
+   import { Constant, GlobalStyle } from '../utils/Variables';
+import { callResetPassword } from '../utils/API';
 
 
 export default class app extends Component {
@@ -35,6 +37,11 @@ export default class app extends Component {
       }
    });
 
+   handleResetPassword = () => {
+      callResetPassword(this.state.email, {
+        
+      })
+   }
 
     this.state = {
       email: "",
@@ -44,6 +51,7 @@ export default class app extends Component {
     }
   }
   
+  
   render() {
     const handles = this.state.panResponder.panHandlers;
     return (
@@ -51,6 +59,7 @@ export default class app extends Component {
         {...handles} 
         style={[GlobalStyle.container, this.state.position.getLayout()]}
       >
+        <WebModal visible={true} url="www.google.com" />
         <Title first="AI" second="DE" />
         <View style={[GlobalStyle.form, GlobalStyle.shadow]}>
           <TextField
@@ -62,7 +71,7 @@ export default class app extends Component {
             autoCapitalize="none"
           />
         </View>
-        <TouchableOpacity style={[GlobalStyle.pillButtonSide, { top: 30 }]} onPress={() => this.props.navigation.navigate('Login')}>
+        <TouchableOpacity style={[GlobalStyle.pillButtonSide, { top: 30 }]} onPress={() => handleResetPassword()}>
           <Text style={GlobalStyle.pillButtonSideText}>Reset</Text>
         </TouchableOpacity>
       </Animated.View>

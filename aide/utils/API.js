@@ -1,6 +1,7 @@
 const GRAPHQL = 'http://localhost:3000/api?';
 const CANVAS = 'http://localhost:3000/canvas?';
 const GOOGLE = 'http://localhost:3000/google?';
+const RESTPASSWORD  = 'http://localhost:3000/resetPassword';
 
 async function callGraphql (request, callback) {
 	fetch(GRAPHQL, {
@@ -56,6 +57,25 @@ async function callGoogle (request, callback) {
 		})
 }
 
-module.exports.callCanvas = callCanvas;
-module.exports.callGoogle = callGoogle;
-module.exports.callGraphql = callGraphql;
+async function callResetPassword (request, callback) {
+	await fetch(RESTPASSWORD, {
+		method: 'GET',
+		body: JSON.stringify(request),
+		headers: { 'Content-Type': 'application/json' }
+	})
+		.then(res => {
+			if(res.status !== 200 || res.status !== 201 )
+				throw new Error('Error');
+			return res.json();
+		})
+		.catch(err => {
+			return err;
+		})
+}
+
+module.exports = {
+	callCanvas,
+	callGoogle,
+	callGraphql,
+	callResetPassword,
+}
