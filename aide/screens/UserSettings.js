@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Modal } from "react-native";
 import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
+import { EmbeddedCanvas } from "../components/EmbeddedCanvas";
+import { EmbeddedGoogle } from "../components/EmbeddedGoogle";
 
 export default class UserSettings extends Component {
   constructor(props) {
@@ -13,8 +15,18 @@ export default class UserSettings extends Component {
       firstName: navigation.getParam("firstName"),
       lastName: navigation.getParam("lastName"),
       defaultStudyLength: navigation.getParam("defaultStudyLength"),
-      defaultBreakLength: navigation.getParam("defaultBreakLength")
+      defaultBreakLength: navigation.getParam("defaultBreakLength"),
+      canvasModalVisible: false,
+      googleModalVisible: false,
     };
+  }
+
+  setCanvasModalVisible(visible) {
+    this.setState({ canvasModalVisible: visible })
+  }
+
+  setGoogleModalVisible(visible) {
+    this.setState({ googleModalVisible: visible })
   }
 
   render() {
@@ -61,6 +73,70 @@ export default class UserSettings extends Component {
             <Text style={GlobalStyle.text}> Class Settings </Text>
           </TouchableOpacity>
         </View>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.canvasModalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <SafeAreaView style={{ marginTop: 22 }}>
+            <SafeAreaView>
+              <EmbeddedCanvas
+                source={{
+                  uri:
+                    'https://canvas.apu.edu/login/saml',
+                }} />
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setCanvasModalVisible(!this.state.canvasModalVisible);
+                }}>
+                <Text>Close Modal</Text>
+              </TouchableHighlight>
+            </SafeAreaView>
+          </SafeAreaView>
+        </Modal>
+
+        <TouchableOpacity
+          onPress={() => {
+            this.setCanvasModalVisible(true);
+          }}>
+          <Text style={GlobalStyle.text}>Connect to Canvas</Text>
+        </TouchableOpacity>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.googleModalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <SafeAreaView style={{ marginTop: 22 }}>
+            <SafeAreaView>
+              <EmbeddedGoogle
+                source={{
+                  uri:
+                    'https://accounts.google.com/servicelogin',
+                }} />
+
+              <TouchableOpacity
+                onPress={() => {
+                  this.setGoogleModalVisible(!this.state.googleModalVisible);
+                }}>
+                <Text>Close Modal</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </SafeAreaView>
+        </Modal>
+
+        <TouchableOpacity
+          onPress={() => {
+            this.setGoogleModalVisible(true);
+          }}>
+          <Text style={GlobalStyle.text}>Connect to Google</Text>
+        </TouchableOpacity>
 
         <View style={{ margin: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
