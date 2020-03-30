@@ -76,7 +76,24 @@ const BottomNavigator = createMaterialBottomTabNavigator(
         tabBarColor: Constant.COLORS.MAROON
       }
     },
+    StudyPreferences: {
+      screen: StudyPreferences,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <View>
+            <Icon
+              style={[{ color: tintColor }]}
+              size={ICON_SIZE}
+              name={"user"}
+            />
+          </View>
+        ),
+        tabBarColor: Constant.COLORS.MAROON
+      }
+    },
+    
   },
+  
   {
     labeled: false,
     activeColor: "#FFF",
