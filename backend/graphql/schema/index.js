@@ -11,6 +11,7 @@ type User {
     defaultStudyLength: Int
     defaultBreakLength: Int
     defaultTechnique: String
+    createdEvents: [Event!]
 }
 
 input UserInput {

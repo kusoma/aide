@@ -17,7 +17,11 @@ const eventSchema = new Schema({
     isQuiz: {
         type: Boolean,
         required: true
-    }
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model("Events", eventSchema);
