@@ -50,10 +50,8 @@ module.exports = {
                         let minutes = interval % 2 == 1 ? '30' : '00'
                         let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
                         let endMinutes = (parseInt(minutes) + 30 ) % 60;
-                        let endHours = ((parseInt(minutes) + 30 / 60) > 0) ? (hours + 1) : hours  
-                        let endDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(endHours).padStart(2, '0')}:${endMinutes}:00`
-
-                        console.log(startDateTime, endDateTime)
+                        let endHours = (((parseInt(minutes) + 30) / 60) == 1) ? (hours + 1) : hours  
+                        let endDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:00`
 
                         let scheduledEvent = {
                             summary: event.title,
