@@ -16,7 +16,8 @@ export default class Login extends Component {
       isErrorText: "",
       defaultStudyLength: 25,
       defaultBreakLength: 5,
-      defaultTechnique: "Pomodoro"
+      defaultTechnique: "Pomodoro",
+      _id: ""
     };
   }
 
@@ -24,11 +25,12 @@ export default class Login extends Component {
     const email = this.state.email;
     const password = this.state.password;
 
-    let request = {
+    const request = {
       query: `
 			  query {
 				login(email: "${email}", password: "${password}") {
-				  firstName
+          _id
+          firstName
 				  lastName
           email
           defaultStudyLength
@@ -38,13 +40,14 @@ export default class Login extends Component {
 			  }
 			`
     };
+    
 
     callGraphql(request, json => {
       if (json.errors) {
         this.setState({ isError: true });
         this.setState({ isErrorText: json.errors[0].message });
       } else {
-        let user = {
+        const user = {
           firstName: json.data.login.firstName,
           lastName: json.data.login.lastName,
           email: json.data.login.email,
@@ -52,7 +55,7 @@ export default class Login extends Component {
           defaultStudyLength: json.data.login.defaultStudyLength,
           defaultTechnique: json.data.login.defaultTechnique
         };
-
+        
         this.props.navigation.navigate("BottomNavigation", user);
       }
     });
@@ -82,22 +85,21 @@ export default class Login extends Component {
           />
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("SignUp")}
+          onPress={() => this.props.navigation.navigate("ForgotPassword")}
         >
           <Text style={GlobalStyle.text}> Forgot password? </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[GlobalStyle.pillButtonSide, GlobalStyle.shadow, { top: 30 }]}
           onPress={() =>
-            this.loginHandler(this.state.email, this.state.password)
-          }
+            this.loginHandler()}
         >
           <Text style={GlobalStyle.pillButtonSideText}> Sign In </Text>
         </TouchableOpacity>
         {this.state.isError ? (
           <ErrorText text={this.state.isErrorText} />
         ) : (
-          <ErrorText text={""} />
+          <ErrorText text="" />
         )}
         <TouchableOpacity
           style={{ top: Constant.MAX_HEIGHT * 0.3 }}

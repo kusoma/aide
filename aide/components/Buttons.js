@@ -15,9 +15,9 @@ const IsValidImage = ({ image, imageColor }) => {
   }
 }
 
-export const WideButton = ({ label, image, imageColor, buttonStyle, textStyle }) => (
+export const WideButton = ({ label, image, imageColor, buttonStyle, textStyle, onPress }) => (
   <TouchableOpacity
-    onPress={() => navigation.navigate(screenName)}
+    onPress={onPress}
     style={[styles.wideButtons, GlobalStyle.shadow, buttonStyle]}
   >
     <IsValidImage image={image} imageColor={imageColor} />
@@ -27,7 +27,7 @@ export const WideButton = ({ label, image, imageColor, buttonStyle, textStyle })
   </TouchableOpacity>
 )
 
-export const WeeklyButton = ({timeLabel, classLabel, studyLabel, color}) => (
+export const WeeklyButton = ({timeLabel, classLabel, titleLabel, color}) => (
   <TouchableOpacity style={[styles.WeeklyButtons, GlobalStyle.shadow]}>
     <View style={styles.WeeklyButtonTime}>
       <Text style={[styles.WeeklyButtonsText]}> 
@@ -38,8 +38,8 @@ export const WeeklyButton = ({timeLabel, classLabel, studyLabel, color}) => (
       <Text style={[ styles.WeeklyButtonTextClass ,styles.WeeklyButtonsText]}> 
         {classLabel}
       </Text>
-      <Text style={[ styles.WeeklyButtonTextClass ,styles.WeeklyButtonsText]}> 
-        {studyLabel}
+      <Text style={[ styles.WeeklyButtonTextClass ,styles.WeeklyButtonsText]} numberOfLines={1}> 
+        {titleLabel}
       </Text>
     </View>
   </TouchableOpacity>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   WeeklyButtonTextClass: {
     color: '#fff',
     marginTop: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    width: (Constant.MAX_WIDTH * 0.5)
   },
 });

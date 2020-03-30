@@ -6,46 +6,44 @@ import { Calendar } from '../components/Calendar';
 import { GlobalStyle } from '../utils/Variables';
 import { callCanvas } from '../utils/API';
 
+
 export default class MonthlyView extends Component {
     constructor() {
       super();
       this.state = {
         data: [],
-        isLoading: true,
       }
     }
-
 
      componentDidMount() {
        callCanvas((json) => {
         if (json.errors || !json) {
           return;
         }
-        this.state.data = json;
-        this.setState({ isLoading: false });
+        this.setState({ data: json });
       })
     }
-
     
-    render() {       
+    render() {    
       console.disableYellowBox = true;
         return (
           <ScrollView contentContainerStyle={GlobalStyle.container}> 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-evenly'}}>
               <Text style={[styles.description]}> Overview </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("SignUp")}
+              >
                 <Icon
                   name="plus"
                   backgroundColor="#fff"
                   size={30}
                   color="#000"
-                  />
+                />
               </TouchableOpacity>
             </View>
-              <Calendar 
-                data={this.state.data}
-              /> 
-
+            <Calendar 
+              data={this.state.data}
+            /> 
             <Text style={styles.description}> Growth in Numbers </Text>
           </ScrollView>
         );

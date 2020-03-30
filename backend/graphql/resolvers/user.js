@@ -21,6 +21,7 @@ module.exports = {
       throw err;
     }
   },
+  
   setStudyPreference: async ({
     userID,
     defaultStudyLength,

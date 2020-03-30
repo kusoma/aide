@@ -1,5 +1,6 @@
 const { google } = require("googleapis");
-const privatekey = require('/Users/greg/Documents/Projects/aide/backend/google/apu-calendar-cca4c98d0afb.json'); // This was downloaded when you created your Service Account Key
+const privatekey = require('./apu-calendar-cca4c98d0afb.json'); // This was downloaded when you created your Service Account Key
+
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
 module.exports = {

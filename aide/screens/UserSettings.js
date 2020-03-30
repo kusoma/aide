@@ -4,7 +4,7 @@ import { Constant, GlobalStyle } from "../utils/Variables";
 import { TextField } from "../components/Form";
 import { WideButton } from "../components/Buttons";
 
-export default class Login extends Component {
+export default class UserSettings extends Component {
   constructor(props) {
     super(props);
     const { navigation } = this.props;
@@ -72,6 +72,7 @@ export default class Login extends Component {
             label="Study Preferences"
             image="lightbulb-o"
             imageColor="#000"
+            onPress={() => this.props.navigation.navigate('StudyPreference')}
           />
           <WideButton
             label="Log Out "
@@ -82,6 +83,7 @@ export default class Login extends Component {
             textStyle={{ color: "#fff" }}
             image="share"
             imageColor="#fff"
+            onPress={() => this.props.navigation.navigate('Login')}
           />
         </View>
       </ScrollView>
