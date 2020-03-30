@@ -61,7 +61,7 @@ app.use("/google", (err, res, next) => {
 
 app.get("/canvas", (req, res) => {
   const token =
-    "2948~lAYRABCVzi7Sm1DJf0knwM9cif2nCzBRiNVEPyJ6AuRQkdlLwTSPCYQV9UlzNMq0";
+    "2948~9xKAB9OaqKDraVLBrqO0b3KiIpdq3aKW3cdp3IaoC2U6kcRo9bIjeiLeRSNEfnz0";
 
   getCanvasAssignments(token).then(data => {
     res.send(data);
