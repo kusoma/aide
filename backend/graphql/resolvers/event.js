@@ -1,14 +1,14 @@
 const Event = require("../../models/event");
 
 module.exports = {
-    createEvent: async eventInput => {
+    createEvent: async args => {
         try{ 
             const event = new Event({
-                title: eventInput.title,
-                startTime: eventInput.startTime,
-                endTime: eventInput.endTime,
-                isQuiz: eventInput.isQuiz,
-                users: eventInput.users
+                title: args.eventInput.title,
+                startTime: args.eventInput.startTime,
+                endTime: args.eventInput.endTime,
+                isQuiz: args.eventInput.isQuiz,
+                users: args.eventInput.users
             })
 
             const result = await event.save();
