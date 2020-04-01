@@ -1,9 +1,82 @@
 <!DOCTYPE html>
-<html>
     <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <script>
+            buttonClick() {
+                alert('Hello');
+            }
+        </script>
+        <style>
+            .container{
+                padding: 20px;
+                width: 50%;
+                border: 2px black solid;
+                border-radius: 10px;
+                
+            }
+            .title{
+                display: flex;
+                justify-content: center;
+            }
+            .formInput{
+                display: flex;
+                justify-content: center;
+            }
+            .buttonContainer{
+                display: flex;
+                justify-content: center;
+            }
+            .headerFirst{
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .headerSecond{
+                font-family: 'Times New Roman', Times, serif;
+                color: red;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 40%;
+                opacity: 0.9;
+            }
+            button:hover {
+                opacity:1;
+            }   
+            input[type=text], input[type=password] {
+                width: 80%;
+                padding: 15px;
+                margin: 5px 0 22px 0;
+                display: inline-block;
+                border: none;
+                background: #F1F1F1;
+                cursor: pointer;
+            }       
+        </style>
     </head>
     <body>
-    <h1> Testing </h1>
+        <form>
+            <div class="container">
+                <div class="title">
+                    <h1 class="headerFirst">AI</h1>
+                    <h1 class="headerSecond">DE</h1>
+                </div>
+                <hr>
+                <br>
+                <br>
+                <div class='formInput'> 
+                    <input type="password" placeholder="New Password" id="psw" required>
+                </div>
+                <div class="formInput">
+                    <input type="password" placeholder="Confirm Password" id="psw-repeat" required>
+                </div>
+                <div class="buttonContainer">
+                    <button type="submit" class="resetPassword" onclick="buttonClick()"> Submit </button>
+                </div>
+            </div>
+        </form>
+            
     </body>
 </html>
