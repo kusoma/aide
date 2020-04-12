@@ -43,7 +43,7 @@ module.exports = {
 
             // TODO: This is trash
             if (response.users.length === 1) {
-                let response = await Event.findByIdAndDelete(eventID);
+                let response = await Event.findOneAndDelete(eventID);
             }
 
             return {...response._doc};

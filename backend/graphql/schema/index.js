@@ -12,6 +12,7 @@ type User {
     defaultBreakLength: Int
     defaultTechnique: String
     createdEvents: [Event!]
+    classPreferences: [ClassPreference!]
 }
 
 input UserInput {
@@ -42,6 +43,25 @@ input EventInput {
     users: [ID!]!
 }
 
+type ClassPreference {
+    _id: ID!
+    user: ID!
+    classID: Int!
+    className: String!
+    defaultStudyLength: Int!
+    defaultBreakLength: Int!
+    defaultTechnique: String!
+}
+
+input ClassPreferenceInput {
+    user: ID!
+    classID: Int!
+    className: String!
+    defaultStudyLength: Int!
+    defaultBreakLength: Int!
+    defaultTechnique: String!
+}
+
 type RootQuery {
     login(email: String!, password: String!): User
 }
@@ -52,6 +72,8 @@ type RootMutation {
     setStudyPreference(userID: ID!, defaultStudyLength: Int!, defaultBreakLength: Int!, defaultTechnique: String!): User
     createEvent(eventInput: EventInput): Event!
     deleteEvent(userID: ID!, eventID: ID!): Event!
+    createClassPreferences(classPreferenceInput: ClassPreferenceInput!): ClassPreference!
+    deleteClassPreferences(userID: ID!, classPreferencesID: ID!): ClassPreference!
 }
 
 schema {

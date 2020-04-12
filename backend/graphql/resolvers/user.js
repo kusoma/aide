@@ -23,25 +23,20 @@ module.exports = {
     }
   },
   
-  setStudyPreference: async ({
-    userID,
-    defaultStudyLength,
-    defaultBreakLength,
-    defaultTechnique
-  }) => {
+  setStudyPreference: async args => {
     try {
-      const user = await User.findById({ _id: userID });
+      const user = await User.findById({ _id: args.userID });
       if (!user) {
         throw new Error("User does not exist!");
       }
 
       // TODO: There is probably a better way
       const result = await User.findByIdAndUpdate(
-        { _id: userID },
+        { _id: args.userID },
         {
-          defaultStudyLength: defaultStudyLength,
-          defaultBreakLength: defaultBreakLength,
-          defaultTechnique: defaultTechnique
+          defaultStudyLength: args.defaultStudyLength,
+          defaultBreakLength: args.defaultBreakLength,
+          defaultTechnique: args.defaultTechnique
         },
         { new: true }
       ).catch(err => {
