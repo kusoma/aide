@@ -31,7 +31,7 @@ type Event {
     startTime: String!
     endTime: String!
     isQuiz: Boolean!
-    users: [User!]
+    users: [ID!]!
 }
 
 input EventInput {
@@ -39,6 +39,7 @@ input EventInput {
     startTime: String!
     endTime: String!
     isQuiz: Boolean!
+    users: [ID!]!
 }
 
 type RootQuery {
