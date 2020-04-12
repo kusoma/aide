@@ -51,7 +51,7 @@ type RootMutation {
     setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, defaultStudyLength: Int!, defaultBreakLength: Int!, defaultTechnique: String!): User
     createEvent(eventInput: EventInput): Event!
-    deleteEvent(eventId: ID!): Event!
+    deleteEvent(userID: ID!, eventID: ID!): Event!
 }
 
 schema {

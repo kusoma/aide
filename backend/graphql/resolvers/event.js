@@ -29,10 +29,23 @@ module.exports = {
             throw err;
         }
     },
-    deleteEvent: async ({eventID}) => {
+    deleteEvent: async ({userID, eventID}) => {
         try {
-            const response = await Event.findOneAndDelete(eventID)
-            
+            await User.findByIdAndUpdate(
+                { _id: userID},
+                { $pull: { 'createdEvents': eventID } }
+            );
+
+            let response = await Event.findByIdAndUpdate(
+                { _id: eventID },
+                { $pull: { 'users': userID } }
+            );
+
+            // TODO: This is trash
+            if (response.users.length === 1) {
+                let response = await Event.findByIdAndDelete(eventID);
+            }
+
             return {...response._doc};
         } catch (err) {
             throw err;
