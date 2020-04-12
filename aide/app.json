@@ -3,10 +3,7 @@
     "name": "aide",
     "slug": "aide",
     "privacy": "public",
-<<<<<<< HEAD
-=======
     "sdkVersion": "36.0.0",
->>>>>>> origin/test
     "platforms": [
       "ios",
       "android",
