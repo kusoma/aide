@@ -11,6 +11,7 @@ import UserSettings from "../screens/UserSettings";
 import { Constant } from "../utils/Variables";
 import StudyPreferences from "../screens/StudyPreferences";
 import StudySession from "../screens/StudySession"
+import ConnectCanvas from "../screens/ConnectCanvas";
 
 const ICON_SIZE = 25;
 
@@ -76,8 +77,8 @@ const BottomNavigator = createMaterialBottomTabNavigator(
         tabBarColor: Constant.COLORS.MAROON
       }
     },
-    StudyPreferences: {
-      screen: StudyPreferences,
+    ConnectCanvas: {
+      screen: ConnectCanvas,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View>

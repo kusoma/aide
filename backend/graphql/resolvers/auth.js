@@ -34,7 +34,8 @@ module.exports = {
         password: hashedPassword,
         defaultStudyLength: args.userInput.defaultStudyLength,
         defaultBreakLength: args.userInput.defaultBreakLength,
-        defaultTechnique: args.userInput.defaultTechnique
+        defaultTechnique: args.userInput.defaultTechnique,
+        canvasToken: arges.userInput.canvasToken,
       });
       const result = await user.save();
 

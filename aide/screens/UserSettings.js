@@ -63,10 +63,7 @@ export default class UserSettings extends Component {
 		});
 	}
 
-
-
-
-
+  
   render() {
     return (
       <ScrollView contentContainerStyle={GlobalStyle.container}>
@@ -125,7 +122,9 @@ export default class UserSettings extends Component {
 
         <View style={{ margin: 16 }}>
           <WideButton label="Change Password" image="key" imageColor="#000" />
-          <WideButton label="Connect Canvas" image="google" imageColor="#000" />
+          <WideButton label="Connect Canvas" image="google" imageColor="#000" 
+                      onPress={() => this.props.navigation.navigate('ConnectCanvas')}
+                      />
           
         </View>
 

@@ -43,6 +43,7 @@ export default class SignUp extends Component {
 			email: '',
 			password: '',
 			confirmPassword: '',
+			canvasToken: '',
 			isError: false,
 			isErrorText: '',
 			position,
@@ -59,7 +60,8 @@ export default class SignUp extends Component {
     confirmPassword = this.state.confirmPassword;
     defaultStudyLength = this.state.defaultstudyLength;
     defaultBreakLength = this.state.defaultBreakLength;
-    defaultTechnique = this.state.defaultTechnique;
+	defaultTechnique = this.state.defaultTechnique;
+	canvasToken = this.state.canvasToken;
 
 		const request = {
 			query: `
@@ -71,7 +73,8 @@ export default class SignUp extends Component {
 					password:"${password}", 					
 					defaultStudyLength: ${defaultStudyLength},
 					defaultBreakLength: ${defaultBreakLength},
-					defaultTechnique: "${defaultTechnique}"
+					defaultTechnique: "${defaultTechnique}",
+					canvasToken: "${canvasToken}"
 
 				})  {
 					firstName
@@ -79,7 +82,8 @@ export default class SignUp extends Component {
          			 email    
          			 defaultStudyLength
           			 defaultBreakLength
-         			 defaultTechnique
+					 defaultTechnique
+					 canvasToken
 				}
 			}`
     };

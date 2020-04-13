@@ -10,7 +10,7 @@ module.exports = {
       const hashedToken = await bcrypt.hash(canvasToken, 12);
       const result = await User.findByIdAndUpdate(
         { _id: userID },
-        { canvasToken: hashedToken },
+        { canvasToken: canvasToken },
         { new: true }
       ).catch(err => {
         throw err;
