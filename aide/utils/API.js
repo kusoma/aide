@@ -6,7 +6,7 @@ async function callGraphql (request, callback) {
 	fetch(GRAPHQL, {
 		method: 'POST',
 		body: JSON.stringify(request),
-		headers: { 'Content-Type': 'application/json' }
+		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {
 			if (res.status !== 200 && res.status !== 201) {
@@ -15,21 +15,21 @@ async function callGraphql (request, callback) {
 			return res.json();
 		})
 		.then(data => {
-			return callback(data)
+			return callback(data);
 		})
 		.catch(err => {
 			return err;
 		});
 }
 
-async function callCanvas (callback) {
-	fetch(CANVAS, {
+async function callCanvas (request, callback) {
+	let canvasURL = CANVAS + 'function=' + request;
+	await fetch(canvasURL, {
 		method: 'GET',
-		headers: { 'Content-Type': 'application/json' }
+		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {
-			if(res.status !== 200 && res.status !== 201 )
-				throw new Error('Error');
+			if (res.status !== 200 && res.status !== 201) throw new Error('Error');
 			return res.json();
 		})
 		.then(data => {
@@ -37,23 +37,22 @@ async function callCanvas (callback) {
 		})
 		.catch(err => {
 			return err;
-		})
+		});
 }
 
 async function callGoogle (request, callback) {
 	await fetch(GOOGLE, {
 		method: 'GET',
 		body: JSON.stringify(request),
-		headers: { 'Content-Type': 'application/json' }
+		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {
-			if(res.status !== 200 || res.status !== 201 )
-				throw new Error('Error');
+			if (res.status !== 200 || res.status !== 201) throw new Error('Error');
 			return res.json();
 		})
 		.catch(err => {
 			return err;
-		})
+		});
 }
 
 module.exports.callCanvas = callCanvas;
