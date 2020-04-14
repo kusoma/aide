@@ -36,7 +36,6 @@ module.exports = {
             );
 
             const response = await ClassPreference.findOneAndDelete(classPreferenceID);
-            console.log(response);
 
             return {...response._doc};
         } catch (err) {

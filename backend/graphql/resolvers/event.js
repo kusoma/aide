@@ -5,8 +5,8 @@ module.exports = {
     createEvent: async args => {
         const event = new Event({
             title: args.eventInput.title,
-            startTime: args.eventInput.startTime,
-            endTime: args.eventInput.endTime,
+            start: args.eventInput.start,
+            end: args.eventInput.end,
             isQuiz: args.eventInput.isQuiz,
             users: args.eventInput.users
         })

@@ -29,16 +29,16 @@ input UserInput {
 type Event {
     _id: ID!
     title: String!
-    startTime: String!
-    endTime: String!
+    start: String!
+    end: String!
     isQuiz: Boolean!
     users: [ID!]!
 }
 
 input EventInput {
     title: String!
-    startTime: String!
-    endTime: String!
+    start: String!
+    end: String!
     isQuiz: Boolean!
     users: [ID!]!
 }

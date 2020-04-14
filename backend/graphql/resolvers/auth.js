@@ -14,8 +14,10 @@ module.exports = {
         throw new Error("Last Name cannot contain numbers");
       if (!args.userInput.email) throw new Error("Please Provide an Email!");
       if (
-        !args.userInput.email.includes("@") ||
-        !args.userInput.email.includes(".com")
+        !args.userInput.email.includes("@") || (
+          !args.userInput.email.includes(".edu") &&
+          !args.userInput.email.includes(".com")
+          )
       )
         throw new Error("Invalid Email!");
       if (!args.userInput.password)
@@ -45,8 +47,8 @@ module.exports = {
   },
 
   login: async ({ email, password }) => {
-    if (!email) throw new Error("Please Provde an Email!");
-    if (!email.includes("@") || !email.includes(".com"))
+    if (!email) throw new Error("Please Provide an Email!");
+    if (!email.includes("@") || (!email.includes(".edu") && !email.includes(".com")))
       throw new Error("Invalid Email!");
     if (!password) throw new Error("Please Provide a Password!");
 
