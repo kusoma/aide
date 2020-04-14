@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { 
-	ScrollView, 
+import {
 	Text, 
 	TouchableOpacity, 
 	View, 
@@ -15,7 +14,6 @@ import { callGraphql } from '../utils/API';
 export default class SignUp extends Component {
 	constructor() {
 		super();
-
 		const position = new Animated.ValueXY();
 		const panResponder = PanResponder.create({
 		  onPanResponderRelease: () => {
@@ -52,14 +50,18 @@ export default class SignUp extends Component {
 	}
 
   signUpHandler() {
-    firstName = this.state.firstName;
-    lastName = this.state.lastName;
-    email = this.state.email;
-    password = this.state.password;
-    confirmPassword = this.state.confirmPassword;
-    defaultStudyLength = this.state.defaultstudyLength;
-    defaultBreakLength = this.state.defaultBreakLength;
-    defaultTechnique = this.state.defaultTechnique;
+    const firstName = this.state.firstName;
+	  const lastName = this.state.lastName;
+	  const email = this.state.email;
+	  const password = this.state.password;
+	  const confirmPassword = this.state.confirmPassword;
+	  const defaultStudyLength = 5;
+	  const defaultBreakLength = 30;
+	  const defaultTechnique = "Pomodoro";
+
+	  if (password !== confirmPassword) {
+	  	throw new Error("Passwords do not match!")
+	  }
 
 		const request = {
 			query: `
@@ -76,10 +78,10 @@ export default class SignUp extends Component {
 				})  {
 					firstName
 					lastName
-         			 email    
-         			 defaultStudyLength
-          			 defaultBreakLength
-         			 defaultTechnique
+         	email    
+         	defaultStudyLength
+          defaultBreakLength
+         	defaultTechnique
 				}
 			}`
     };
