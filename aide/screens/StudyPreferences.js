@@ -53,8 +53,6 @@ export default class Login extends Component {
 
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, json => {
-			console.log(json)
-
 			if (json.errors) {
 				this.setState({isError: true});
 				this.setState({isErrorText: json.errors[0].message});
@@ -64,7 +62,6 @@ export default class Login extends Component {
 					defaultBreakLength: json.data.setStudyPreference.defaultBreakLength,
 					defaultStudyLength: json.data.setStudyPreference.defaultStudyLength,
 					defaultTechnique: json.data.setStudyPreference.defaultTechnique
-
 				};
 				this.props.navigation.navigate('StudyPreferences', user);
 			}
@@ -113,7 +110,6 @@ export default class Login extends Component {
 				/>
 
 				<Text style={styles.Text}>Default Technique</Text>
-
 				<TextField
 					style={{
 						width: 300,
