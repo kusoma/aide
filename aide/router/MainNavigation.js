@@ -12,10 +12,12 @@ import StudyPreference from '../screens/StudyPreferences';
 import StudySession from '../screens/StudySession';
 import UserSettings from '../screens/UserSettings';
 import Week from '../screens/WeeklyView';
+import ChangePassword from '../screens/ChangePassword';
 
 
 const MainNavigator = createStackNavigator({
   Login: { screen: Login},
+  ChangePassword: { screen: ChangePassword},
   SignUp: { screen: SignUp},
   ForgotPassword: { screen: ForgotPassword},
   BottomNavigation: { screen: BottomNavigation },

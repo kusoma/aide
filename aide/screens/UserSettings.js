@@ -57,7 +57,12 @@ export default class UserSettings extends Component {
         </View>
 
         <View style={{ margin: 16 }}>
-          <WideButton label="Change Password" image="key" imageColor="#000" />
+          <WideButton 
+            label="Change Password" 
+            image="key" 
+            imageColor="#000"
+            onPress={() => this.props.navigation.navigate('ChangePassword', this.state)}
+           />
           <WideButton label="Connect Google" image="google" imageColor="#000" />
           <WideButton label="Connect Canvas" image="google" imageColor="#000" />
           <WideButton

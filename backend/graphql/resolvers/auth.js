@@ -51,6 +51,7 @@ module.exports = {
     if (!password) throw new Error("Please Provide a Password!");
 
     const user = await User.findOne({ email: email });
+    
     if (!user) {
       throw new Error("User does not exist!");
     }

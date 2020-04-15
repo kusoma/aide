@@ -1,7 +1,7 @@
 const GRAPHQL = 'http://localhost:3000/api?';
 const CANVAS = 'http://localhost:3000/canvas?';
 const GOOGLE = 'http://localhost:3000/google?';
-const RESTPASSWORD  = 'http://localhost:3000/resetPassword';
+const RESTPASSWORD  = 'http://localhost:3000/forgetpassword?';
 
 async function callGraphql (request, callback) {
 	fetch(GRAPHQL, {
@@ -59,14 +59,22 @@ async function callGoogle (request, callback) {
 
 async function callResetPassword (request, callback) {
 	await fetch(RESTPASSWORD, {
-		method: 'GET',
+		method: 'POST',
 		body: JSON.stringify(request),
 		headers: { 'Content-Type': 'application/json' }
 	})
 		.then(res => {
-			if(res.status !== 200 || res.status !== 201 )
+			console.log('here');
+			
+			if(res.status !== 200 || res.status !== 201 ) {
+				console.log('failed');
 				throw new Error('Error');
+				
+			}
 			return res.json();
+		})
+		.then(data => {
+			callback(data);
 		})
 		.catch(err => {
 			return err;

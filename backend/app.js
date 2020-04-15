@@ -9,6 +9,7 @@ const app = express();
 
 const getCanvasAssignments = require("./canvas/utils");
 const sentEmail = require("./resetPassword/utils");
+const resetPassword = require("./resetPassword/utils");
 
 app.use(bodyParser.json());
 
@@ -68,8 +69,15 @@ app.get("/canvas", (req, res) => {
   });
 });
 
-app.use("/forgetpassword", () => {
-  sentEmail();
+app.post("/forgetpassword", (req, res) => {
+  var result = resetPassword(req, res);
+ // console.log(result);
+  // res.send(result);
+  
+})
+
+app.post("/sentemail", (req, res) => {
+  sentEmail(req);
 })
 
 mongoose

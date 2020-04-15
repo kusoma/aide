@@ -40,7 +40,6 @@ export default class Login extends Component {
 			  }
 			`
     };
-    
 
     callGraphql(request, json => {
       if (json.errors) {

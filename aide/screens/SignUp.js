@@ -84,11 +84,18 @@ export default class SignUp extends Component {
 			}`
     };
 
+
+	console.log('here');
+	
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, json => {
+			console.log('what is going on?');
+			
 			if (json.errors) {
 				this.setState({ isError: true });
 				this.setState({ isErrorText: json.errors[0].message });
+				console.log('eroor is ', this.state.isErrorText);
+				
 			} else {
 				const user = {
 					firstName: json.data.createUser.firstName,

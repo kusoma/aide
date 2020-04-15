@@ -7,14 +7,14 @@ import {
    Animated } from 'react-native';
    import { TextField } from '../components/Form';
    import  { Title } from '../components/Title';
-   import { WebModal } from '../components/Modal';
    import { Constant, GlobalStyle } from '../utils/Variables';
 import { callResetPassword } from '../utils/API';
 
 
 export default class app extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { navigation } = this.props;
 
     const position = new Animated.ValueXY();
     const panResponder = PanResponder.create({
@@ -38,7 +38,10 @@ export default class app extends Component {
    });
 
     this.state = {
-      email: "",
+      email: navigation.getParam("email"),
+      oldPassword: "",
+      newPassword: "",
+      message: "",
       position,
       panResponder,
       changeScreen: false,
@@ -46,9 +49,32 @@ export default class app extends Component {
   }
 
   handleResetPassword = () => {
-    console.log('here');
+    console.log('request');
     
-  }
+    const request = {
+        email: this.state.email,
+        oldPassword: this.state.oldPassword,
+        newPassword: this.state.newPassword,
+        isEmailSent: false
+    }
+    console.log('sent', request);
+    
+    callResetPassword(request, json => {
+      if (json.errors) {
+          this.setState({ isError: true });
+          this.setState({ isErrorText: json.errors[0].message });
+          console.log(this.state.isErrorText);
+          
+        } 
+      else {
+          this.setState({ isError: true });
+          this.setState({ isErrorText: "Password Sucessfully Reseted" });
+          console.log(this.state.isErrorText);
+          
+      }
+
+    })
+ }
   
   
   render() {
@@ -63,14 +89,22 @@ export default class app extends Component {
           <TextField
             image="envelope"
             style={GlobalStyle.formIcon}
-            placeholder="Email"
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
+            placeholder="Old Password"
+            onChangeText={oldPassword => this.setState({ oldPassword })}
+            value={this.state.oldPassword}
+            autoCapitalize="none"
+          />
+          <TextField
+            image="envelope"
+            style={GlobalStyle.formIcon}
+            placeholder="New Password"
+            onChangeText={newPassword => this.setState({ newPassword })}
+            value={this.state.newPassword}
             autoCapitalize="none"
           />
         </View>
         <TouchableOpacity style={[GlobalStyle.pillButtonSide, { top: 30 }]} onPress={() => this.handleResetPassword()}>
-          <Text style={GlobalStyle.pillButtonSideText}>Reset</Text>
+          <Text style={GlobalStyle.pillButtonSideText}>Change</Text>
         </TouchableOpacity>
       </Animated.View>
     );
