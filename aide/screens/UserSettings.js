@@ -27,20 +27,9 @@ export default class UserSettings extends Component {
 					<TextField image='envelope' style={GlobalStyle.formIcon} placeholder='Email' onChangeText={email => this.setState({ email })} value={this.state.email} editable={false} />
 				</View>
 
-				<View>
-					<TouchableOpacity onPress={() => this.props.navigation.navigate('ClassSettings')}>
-						<Text style={GlobalStyle.text}> Class Settings </Text>
-					</TouchableOpacity>
-				</View>
-
-				<View style={{ margin: 16 }}>
+				<View style={{ marginTop: 30, marginHorizontal: 16 }}>
 					<WideButton label='Change Password' image='key' imageColor='#000' />
-					<WideButton label='Connect Google' image='google' imageColor='#000' />
 					<WideButton label='Connect Canvas' image='google' imageColor='#000' />
-					<WideButton label='Connect Device Calendar' image='calendar-o' imageColor='#000' />
-				</View>
-
-				<View>
 					<WideButton label='Study Preferences' image='lightbulb-o' imageColor='#000' onPress={() => this.props.navigation.navigate('StudyPreference')} />
 					<WideButton
 						label='Log Out '
