@@ -65,9 +65,7 @@ export default class Login extends Component {
 				console.log('Courses Errors: ' + courses.errors);
 				return;
 			}
-			console.log('TESTING: ' + JSON.stringify(courses));
 			this.setState({ courses });
-			console.log('-------------------- ' + JSON.stringify(this.state.courses));
 		});
 	}
 
@@ -148,9 +146,6 @@ export default class Login extends Component {
 				) : (
 					<Text>Loading...</Text>
 				)}
-				{/* <WideButton label='CS125 - Intro to Computer Science' onPress={() => {}} />
-				<WideButton label='UBBL110 - World Religions' imageColor='#000' />
-				<WideButton label='MATH350 - Diff Equations' /> */}
 
 				<View style={{ marginTop: 15, marginBottom: 15 }}>
 					<TouchableOpacity
