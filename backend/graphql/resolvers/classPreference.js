@@ -1,46 +1,47 @@
-const User = require('../../models/user')
-const ClassPreference = require('../../models/classPreference')
+const User = require('../../models/user');
+const ClassPreference = require('../../models/classPreference');
 
 module.exports = {
-    createClassPreferences: async args => {
-        const classPreference = new ClassPreference({
-            classID: args.classPreferenceInput.classID,
-            className: args.classPreferenceInput.className,
-            defaultStudyLength: args.classPreferenceInput.defaultStudyLength,
-            defaultBreakLength: args.classPreferenceInput.defaultBreakLength,
-            defaultTechnique: args.classPreferenceInput.defaultTechnique,
-            user: args.classPreferenceInput.user
-        })
+	createClassPreferences: async args => {
+		const classPreference = new ClassPreference({
+			classID: args.classPreferenceInput.classID,
+			className: args.classPreferenceInput.className,
+			defaultStudyLength: args.classPreferenceInput.defaultStudyLength,
+			defaultBreakLength: args.classPreferenceInput.defaultBreakLength,
+			defaultTechnique: args.classPreferenceInput.defaultTechnique,
+			user: args.classPreferenceInput.user,
+		});
 
-        try {
-            const result = await classPreference.save();
-            const user = await User.findById(args.classPreferenceInput.user);
+		try {
+			const existingClass = await ClassPreference.findOne({ classID: args.classPreferenceInput.classID, user: args.classPreferenceInput.user });
+			if (existingClass) {
+				return existingClass;
+			}
+			const result = await classPreference.save();
+			const user = await User.findById(args.classPreferenceInput.user);
 
-            if (!user) {
-                throw new Error("User does not exist");
-            }
+			if (!user) {
+				throw new Error('User does not exist');
+			}
 
-            user.classPreferences.push(result._id)
-            await user.save();
+			user.classPreferences.push(result._id);
+			await user.save();
 
-            return {...result._doc};
-        } catch (err) {
-            throw err;
-        }
-    },
-    deleteClassPreferences: async ({userID, classPreferenceID}) => {
-        try {
-            await User.findByIdAndUpdate(
-                { _id: userID},
-                { $pull: { 'classPreferences': classPreferenceID } }
-            );
+			return { ...result._doc };
+		} catch (err) {
+			throw err;
+		}
+	},
+	deleteClassPreferences: async ({ userID, classPreferenceID }) => {
+		try {
+			await User.findByIdAndUpdate({ _id: userID }, { $pull: { classPreferences: classPreferenceID } });
 
-            const response = await ClassPreference.findOneAndDelete(classPreferenceID);
-            console.log(response);
+			const response = await ClassPreference.findOneAndDelete(classPreferenceID);
+			console.log(response);
 
-            return {...response._doc};
-        } catch (err) {
-            throw err;
-        }
-    }
-}
+			return { ...response._doc };
+		} catch (err) {
+			throw err;
+		}
+	},
+};
