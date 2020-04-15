@@ -15,8 +15,99 @@ export default class Login extends Component {
 			defaultBreakLength: navigation.getParam('defaultBreakLength'),
 			defaultTechnique: navigation.getParam('defaultTechnique'),
 			_id: navigation.getParam('_id'),
-			courses: '',
+			courses: null,
 		};
+	}
+	async coursesHandler () {
+		let calledCourses = null;
+
+		callCanvas('courses', courses => {
+			if (courses.errors || !courses) {
+				console.log('Courses Errors: ' + courses.errors);
+				return;
+			}
+			calledCourses = courses;
+			console.log('calledCourses ' + JSON.stringify(calledCourses));
+			for (const course of calledCourses) {
+				console.log('forlooping');
+				this.createCoursePreference(course, '5e9393146b4c621e9b49e092');
+			}
+		});
+	}
+
+	checkCoursePreference (classID, userID) {
+		console.log('CHECKING');
+		let classExist = false;
+		const request = {
+			query: `
+				query {
+					checkPreference(user: "${userID}", classID: "${classID}") {
+						_id
+					}
+				}
+				`,
+		};
+
+		callGraphql(request, json => {
+			if (json.errors) {
+				this.setState({ isError: true });
+				this.setState({ isErrorText: json.errors[0].message });
+			} else {
+				classExist = json.data.checkPreference;
+			}
+		});
+
+		return classExist;
+	}
+
+	async createCoursePreference (course, userID) {
+		const classExist = this.checkCoursePreference(course.id, userID);
+		console.log('STARTING TO CREATE');
+		if (classExist) return null;
+		console.log('CONT TO CREATE');
+		//console.log('COURSEE ' + JSON.stringify(course));
+		const request = {
+			query: `
+				mutation {
+					createClassPreferences(classPreferenceInput: {
+						user: "${userID}"
+						classID: ${course.id},
+						className: "${course.name}",
+						defaultStudyLength: ${this.state.defaultStudyLength},
+						defaultBreakLength: ${this.state.defaultBreakLength},
+						defaultTechnique: "${this.state.defaultTechnique}",
+					}) {
+						user
+						classID
+						className
+						defaultStudyLength
+						defaultBreakLength
+						defaultTechnique
+					}
+				}
+				`,
+		};
+
+		await callGraphql(request, json => {
+			console.log('THE GRP');
+			if (json.errors) {
+				this.setState({ isError: true });
+				this.setState({ isErrorText: json.errors[0].message });
+				console.log('eorro' + this.state.isErrorText);
+			} else {
+				console.log('WORKS');
+				const course = {
+					...json.data.createClassPreferences,
+				};
+				console.log(JSON.stringify(course));
+				this.setState(prevState => ({
+					courses: [ ...prevState.courses, course ],
+				}));
+				created = true;
+			}
+		});
+
+		return true;
 	}
 
 	StudyPreferenceHandler () {
@@ -27,20 +118,20 @@ export default class Login extends Component {
 
 		const request = {
 			query: `
-			mutation {
-				setStudyPreference(
-          userID: "${_id}",
-					defaultStudyLength: ${defaultStudyLength},
-					defaultBreakLength: ${defaultBreakLength},
-					defaultTechnique: "${defaultTechnique}"
+				mutation {
+					setStudyPreference(
+						userID: "${_id}",
+						defaultStudyLength: ${defaultStudyLength},
+						defaultBreakLength: ${defaultBreakLength},
+						defaultTechnique: "${defaultTechnique}"
 
-				)  {
-         		 defaultStudyLength
-          	 defaultBreakLength
-         		 defaultTechnique
+					)  {
+						defaultStudyLength
+						defaultBreakLength
+						defaultTechnique
+					}
 				}
-      }
-      `,
+      		`,
 		};
 
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
@@ -60,13 +151,7 @@ export default class Login extends Component {
 	}
 
 	componentDidMount () {
-		callCanvas('courses', courses => {
-			if (courses.errors || !courses) {
-				console.log('Courses Errors: ' + courses.errors);
-				return;
-			}
-			this.setState({ courses });
-		});
+		this.coursesHandler();
 	}
 
 	render () {

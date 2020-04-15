@@ -1,4 +1,4 @@
-const { buildSchema } = require("graphql");
+const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
 type User {
@@ -64,6 +64,7 @@ input ClassPreferenceInput {
 
 type RootQuery {
     login(email: String!, password: String!): User
+    checkPreference(user: ID!, classID: Int!): ClassPreference
 }
 
 type RootMutation {

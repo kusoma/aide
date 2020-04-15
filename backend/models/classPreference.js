@@ -14,10 +14,6 @@ const classPreferenceSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	automate: {
-		type: Boolean,
-		required: true,
-	},
 	defaultStudyLength: {
 		type: Number,
 		required: true,
