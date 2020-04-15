@@ -37,7 +37,7 @@ module.exports = {
 		return data;
 	},
 	getCanvasCourses: async token => {
-		let url = 'https://canvas.apu.edu/api/v1/courses';
+		let url = 'https://canvas.apu.edu/api/v1/courses?enrollment_state=active';
 		let data = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -53,13 +53,14 @@ module.exports = {
 				return res.json();
 			})
 			.then(data => {
+				//console.log('data:' + JSON.stringify(data[0]));
 				const courses = [];
 				data.map(course => {
 					courses.push({
 						id: course.id,
 						code: course.course_code,
 						name: course.name,
-						term: course.term,
+						start_at: course.start_at,
 					});
 				});
 				return courses;

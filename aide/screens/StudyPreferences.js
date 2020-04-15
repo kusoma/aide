@@ -4,20 +4,18 @@ import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-nati
 import { Constant, GlobalStyle } from '../utils/Variables';
 import { TextField } from '../components/Form';
 import { WideButton } from '../components/Buttons';
-import { callGraphql } from '../utils/API';
+import { callGraphql, callCanvas } from '../utils/API';
 
 export default class Login extends Component {
 	constructor (props) {
 		super(props);
 		const { navigation } = this.props;
 		this.state = {
-			// email: navigation.getParam("email"),
-			// firstName: navigation.getParam("firstName"),
-			// lastName: navigation.getParam("lastName"),
 			defaultStudyLength: navigation.getParam('defaultStudyLength'),
 			defaultBreakLength: navigation.getParam('defaultBreakLength'),
 			defaultTechnique: navigation.getParam('defaultTechnique'),
 			_id: navigation.getParam('_id'),
+			courses: '',
 		};
 	}
 
@@ -58,6 +56,18 @@ export default class Login extends Component {
 				};
 				this.props.navigation.navigate('StudyPreferences', user);
 			}
+		});
+	}
+
+	componentDidMount () {
+		callCanvas('courses', courses => {
+			if (courses.errors || !courses) {
+				console.log('Courses Errors: ' + courses.errors);
+				return;
+			}
+			console.log('TESTING: ' + JSON.stringify(courses));
+			this.setState({ courses });
+			console.log('-------------------- ' + JSON.stringify(this.state.courses));
 		});
 	}
 
@@ -131,9 +141,16 @@ export default class Login extends Component {
 					<Text style={styles.title2}>Classes to Automate</Text>
 				</View>
 
-				<WideButton label='CS125 - Intro to Computer Science' onPress={() => {}} />
+				{this.state.courses ? (
+					this.state.courses.map(course => {
+						return <WideButton label={course.name} onPress={() => this.props.navigation.navigate('ClassSettings')} />;
+					})
+				) : (
+					<Text>Loading...</Text>
+				)}
+				{/* <WideButton label='CS125 - Intro to Computer Science' onPress={() => {}} />
 				<WideButton label='UBBL110 - World Religions' imageColor='#000' />
-				<WideButton label='MATH350 - Diff Equations' />
+				<WideButton label='MATH350 - Diff Equations' /> */}
 
 				<View style={{ marginTop: 15, marginBottom: 15 }}>
 					<TouchableOpacity

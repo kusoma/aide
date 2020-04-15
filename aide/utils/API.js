@@ -33,6 +33,7 @@ async function callCanvas (request, callback) {
 			return res.json();
 		})
 		.then(data => {
+			console.log('DATA ' + JSON.stringify(data));
 			callback(data);
 		})
 		.catch(err => {
