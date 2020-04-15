@@ -12,6 +12,7 @@ type User {
     defaultBreakLength: Int
     defaultTechnique: String
     createdEvents: [Event!]
+    classPreferences: [ClassPreference!]
 }
 
 input UserInput {
@@ -28,17 +29,37 @@ input UserInput {
 type Event {
     _id: ID!
     title: String!
-    startTime: String!
-    endTime: String!
+    start: String!
+    end: String!
     isQuiz: Boolean!
-    users: [User!]
+    users: [ID!]!
 }
 
 input EventInput {
     title: String!
-    startTime: String!
-    endTime: String!
+    start: String!
+    end: String!
     isQuiz: Boolean!
+    users: [ID!]!
+}
+
+type ClassPreference {
+    _id: ID!
+    user: ID!
+    classID: Int!
+    className: String!
+    defaultStudyLength: Int!
+    defaultBreakLength: Int!
+    defaultTechnique: String!
+}
+
+input ClassPreferenceInput {
+    user: ID!
+    classID: Int!
+    className: String!
+    defaultStudyLength: Int!
+    defaultBreakLength: Int!
+    defaultTechnique: String!
 }
 
 type RootQuery {
@@ -50,7 +71,9 @@ type RootMutation {
     setCanvasToken(userID: ID!, canvasToken: String): User
     setStudyPreference(userID: ID!, defaultStudyLength: Int!, defaultBreakLength: Int!, defaultTechnique: String!): User
     createEvent(eventInput: EventInput): Event!
-    deleteEvent(eventId: ID!): Event!
+    deleteEvent(userID: ID!, eventID: ID!): Event!
+    createClassPreferences(classPreferenceInput: ClassPreferenceInput!): ClassPreference!
+    deleteClassPreferences(userID: ID!, classPreferencesID: ID!): ClassPreference!
 }
 
 schema {

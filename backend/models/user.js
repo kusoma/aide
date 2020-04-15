@@ -37,6 +37,10 @@ const userSchema = new Schema({
   createdEvents: [{
     type: Schema.Types.ObjectId,
     ref: 'Event'
+  }],
+  classPreferences: [{
+    type: Schema.Types.ObjectId,
+    ref: 'ClassPreference'
   }]
 });
 
