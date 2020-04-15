@@ -15,7 +15,7 @@ export default class Login extends Component {
 			defaultBreakLength: navigation.getParam('defaultBreakLength'),
 			defaultTechnique: navigation.getParam('defaultTechnique'),
 			_id: navigation.getParam('_id'),
-			courses: null,
+			courses: [],
 		};
 	}
 	async coursesHandler () {
@@ -23,29 +23,36 @@ export default class Login extends Component {
 
 		callCanvas('courses', courses => {
 			if (courses.errors || !courses) {
-				console.log('Courses Errors: ' + courses.errors);
 				return;
 			}
 			calledCourses = courses;
-			console.log('calledCourses ' + JSON.stringify(calledCourses));
 			for (const course of calledCourses) {
-				console.log('forlooping');
 				this.createCoursePreference(course, '5e9393146b4c621e9b49e092');
 			}
 		});
 	}
 
-	checkCoursePreference (classID, userID) {
-		console.log('CHECKING');
-		let classExist = false;
+	createCoursePreference (course, userID) {
 		const request = {
 			query: `
-				query {
-					checkPreference(user: "${userID}", classID: "${classID}") {
-						_id
+					mutation {
+						createClassPreferences(classPreferenceInput: {
+							user: "${userID}"
+							classID: ${course.id},
+							className: "${course.name}",
+							defaultStudyLength: 1000,
+							defaultBreakLength: 10,
+							defaultTechnique: "pomodoro",
+						}) {
+							user
+							classID
+							className
+							defaultStudyLength
+							defaultBreakLength
+							defaultTechnique
+						}
 					}
-				}
-				`,
+					`,
 		};
 
 		callGraphql(request, json => {
@@ -53,61 +60,15 @@ export default class Login extends Component {
 				this.setState({ isError: true });
 				this.setState({ isErrorText: json.errors[0].message });
 			} else {
-				classExist = json.data.checkPreference;
-			}
-		});
-
-		return classExist;
-	}
-
-	async createCoursePreference (course, userID) {
-		const classExist = this.checkCoursePreference(course.id, userID);
-		console.log('STARTING TO CREATE');
-		if (classExist) return null;
-		console.log('CONT TO CREATE');
-		//console.log('COURSEE ' + JSON.stringify(course));
-		const request = {
-			query: `
-				mutation {
-					createClassPreferences(classPreferenceInput: {
-						user: "${userID}"
-						classID: ${course.id},
-						className: "${course.name}",
-						defaultStudyLength: ${this.state.defaultStudyLength},
-						defaultBreakLength: ${this.state.defaultBreakLength},
-						defaultTechnique: "${this.state.defaultTechnique}",
-					}) {
-						user
-						classID
-						className
-						defaultStudyLength
-						defaultBreakLength
-						defaultTechnique
-					}
-				}
-				`,
-		};
-
-		await callGraphql(request, json => {
-			console.log('THE GRP');
-			if (json.errors) {
-				this.setState({ isError: true });
-				this.setState({ isErrorText: json.errors[0].message });
-				console.log('eorro' + this.state.isErrorText);
-			} else {
-				console.log('WORKS');
 				const course = {
 					...json.data.createClassPreferences,
 				};
-				console.log(JSON.stringify(course));
+
 				this.setState(prevState => ({
 					courses: [ ...prevState.courses, course ],
 				}));
-				created = true;
 			}
 		});
-
-		return true;
 	}
 
 	StudyPreferenceHandler () {
@@ -226,7 +187,16 @@ export default class Login extends Component {
 
 				{this.state.courses ? (
 					this.state.courses.map(course => {
-						return <WideButton label={course.name} onPress={() => this.props.navigation.navigate('ClassSettings')} />;
+						return (
+							<WideButton
+								key={course.classID}
+								label={course.className.length > 30 ? `${course.className.substring(0, 30)}...` : course.className}
+								onPress={() =>
+									this.props.navigation.navigate('ClassSettings', {
+										className: course.className,
+									})}
+							/>
+						);
 					})
 				) : (
 					<Text>Loading...</Text>
