@@ -2,15 +2,15 @@ const bcrypt = require("bcrypt");
 const User = require("../../models/user");
 
 module.exports = {
-  setCanvasToken: async ({ userID, canvasToken }) => {
+  setCanvasToken: async ({ userId, canvasToken }) => {
     try {
-      const user = await User.findById({ _id: userID });
+      const user = await User.findById({ _id: userId });
       if (!user) {
         throw new Error("User does not exist!");
       }
       const hashedToken = await bcrypt.hash(canvasToken, 12);
       const result = await User.findByIdAndUpdate(
-        { _id: userID },
+        { _id: userId },
         { canvasToken: hashedToken },
         { new: true }
       ).catch(err => {
@@ -22,17 +22,16 @@ module.exports = {
       throw err;
     }
   },
-  
   setStudyPreference: async args => {
     try {
-      const user = await User.findById({ _id: args.userID });
+      const user = await User.findById({ _id: args.userId });
       if (!user) {
         throw new Error("User does not exist!");
       }
 
       // TODO: There is probably a better way
       const result = await User.findByIdAndUpdate(
-        { _id: args.userID },
+        { _id: args.userId },
         {
           defaultStudyLength: args.defaultStudyLength,
           defaultBreakLength: args.defaultBreakLength,

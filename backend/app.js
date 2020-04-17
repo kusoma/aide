@@ -25,18 +25,29 @@ app.use(
 	})
 );
 
-app.use("/aps", (err, res, next) => {
+app.use("/aps", (req, res) => {
 	// const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
 	const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
 	const email = "gmontilla18@apu.edu"
-
-	let schedule = APS.createSchedule();
+	const classPreferences = req.classPreferences;
+	const userId = req.userId;
 
 	getCanvasAssignments(token).then(assignments => {
+		// If assignment not scheduled
+		//      If there is a class preferences
+		//          Use class preferences
+		//          If there are users
+		//              Cycle through users to create a schedule that fits
+		//              Cycle through users to insert event
+		//          Else
+		//      Else
+		//          Just run it normally
+
+
 		googleCalendar.auth(email).then(client => {
 			let calendar = googleCalendar.calendar(client);
 			googleCalendar.getEvents(calendar).then(data => {
-
+				let schedule = APS.createSchedule();
 				APS.fillSchedule(schedule, data);
 				let scheduledEvents = APS.scheduleEvents(schedule, assignments);
 				for (let event of scheduledEvents) {

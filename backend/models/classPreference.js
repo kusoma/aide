@@ -6,7 +6,7 @@ const classPreferenceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    classID: {
+    classId: {
         type: Number,
         required: true
     },

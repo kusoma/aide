@@ -4,7 +4,7 @@ const ClassPreference = require('../../models/classPreference')
 module.exports = {
     createClassPreferences: async args => {
         const classPreference = new ClassPreference({
-            classID: args.classPreferenceInput.classID,
+            classId: args.classPreferenceInput.classId,
             className: args.classPreferenceInput.className,
             defaultStudyLength: args.classPreferenceInput.defaultStudyLength,
             defaultBreakLength: args.classPreferenceInput.defaultBreakLength,
@@ -28,14 +28,14 @@ module.exports = {
             throw err;
         }
     },
-    deleteClassPreferences: async ({userID, classPreferenceID}) => {
+    deleteClassPreferences: async ({userId, classPreferenceId}) => {
         try {
             await User.findByIdAndUpdate(
-                { _id: userID},
-                { $pull: { 'classPreferences': classPreferenceID } }
+                { _id: userId},
+                { $pull: { 'classPreferences': classPreferenceId } }
             );
 
-            const response = await ClassPreference.findOneAndDelete(classPreferenceID);
+            const response = await ClassPreference.findOneAndDelete(classPreferenceId);
 
             return {...response._doc};
         } catch (err) {
