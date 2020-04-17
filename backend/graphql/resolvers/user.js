@@ -46,5 +46,12 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  getUserEmail: async userId => {
+    try {
+      return User.findById(userId);
+    } catch (err) {
+      return err;
+    }
   }
 };

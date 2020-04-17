@@ -51,7 +51,7 @@ module.exports = {
             throw err;
         }
     },
-    eventExists: async ({userId, title}) => {
+    eventExists: async (userId, title) => {
         try {
             return await Event.findOne({
                 users: {$in: [userId]},

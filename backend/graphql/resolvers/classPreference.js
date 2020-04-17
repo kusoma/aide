@@ -42,7 +42,7 @@ module.exports = {
             throw err;
         }
     },
-    getClassPreferences: async ({userId, classId}) => {
+    classPreferencesExists: async (userId, classId) => {
         try {
             return await ClassPreference.findOne({
                 user: userId,
