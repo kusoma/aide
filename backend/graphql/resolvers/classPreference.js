@@ -41,5 +41,15 @@ module.exports = {
         } catch (err) {
             throw err;
         }
+    },
+    getClassPreferences: async ({userId, classId}) => {
+        try {
+            return await ClassPreference.findOne({
+                user: userId,
+                classId: classId
+            });
+        } catch (err) {
+            throw err;
+        }
     }
 }

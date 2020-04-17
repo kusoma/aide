@@ -64,6 +64,8 @@ input ClassPreferenceInput {
 
 type RootQuery {
     login(email: String!, password: String!): User
+    eventExists(userId: ID!, title: String!): Event
+    getClassPreferences(userId: ID!, classId: Int): ClassPreference
 }
 
 type RootMutation {

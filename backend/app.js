@@ -9,7 +9,7 @@ const app = express();
 
 const getCanvasAssignments = require("./canvas/utils");
 const sentEmail = require("./resetPassword/utils");
-const {createEvent} = require("./graphql/resolvers/event")
+const {createEvent, eventExists} = require("./graphql/resolvers/event")
 
 app.use(bodyParser.json());
 
@@ -43,39 +43,43 @@ app.use("/aps", (req, res) => {
 		//      Else
 		//          Just run it normally
 
+		for (const assignment of assignments) {
+			if (eventExists(userId, assignment.title) !== null) {
 
-		googleCalendar.auth(email).then(client => {
-			let calendar = googleCalendar.calendar(client);
-			googleCalendar.getEvents(calendar).then(data => {
-				let schedule = APS.createSchedule();
-				APS.fillSchedule(schedule, data);
-				let scheduledEvents = APS.scheduleEvents(schedule, assignments);
-				for (let event of scheduledEvents) {
-					googleEvent = event[0]
-					eventInput = event[1]
+				googleCalendar.auth(email).then(client => {
+					let calendar = googleCalendar.calendar(client);
+					googleCalendar.getEvents(calendar).then(data => {
+						let schedule = APS.createSchedule();
+						APS.fillSchedule(schedule, data);
+						let scheduledEvents = APS.scheduleEvents(schedule, assignments);
+						for (let event of scheduledEvents) {
+							googleEvent = event[0]
+							eventInput = event[1]
 
-					// calendar.events.insert({
-					// 		calendarId: "primary",
-					// 		resource: event
-					// 	},
-					// 	function (err, event) {
-					// 		if (err) console.log(err);
-					// 		// if event
-					// 		// 	store event in user scheduledEvents
-					// 	}
-					// );
-					eventInput['users'] = ["5e9736e7f45d4a4ec995d7f2", "5e9736f0f45d4a4ec995d7f3"] // TODO: Need to grab the user id from profile/class preferences
+							// calendar.events.insert({
+							// 		calendarId: "primary",
+							// 		resource: event
+							// 	},
+							// 	function (err, event) {
+							// 		if (err) console.log(err);
+							// 		// if event
+							// 		// 	store event in user scheduledEvents
+							// 	}
+							// );
+							eventInput['users'] = ["5e9736e7f45d4a4ec995d7f2", "5e9736f0f45d4a4ec995d7f3"] // TODO: Need to grab the user id from profile/class preferences
 
-					createEvent({eventInput}).catch(err => {
+							createEvent({eventInput}).catch(err => {
+								throw err;
+							})
+						}
+
+						res.send(schedule);
+					}).catch(err => {
 						throw err;
 					})
-				}
-
-				res.send(schedule);
-			}).catch(err => {
-				throw err;
-			})
-		});
+				});
+			}
+		}
 	});
 
 });
