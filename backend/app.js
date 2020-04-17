@@ -9,7 +9,7 @@ const app = express();
 
 const getCanvasAssignments = require("./canvas/utils");
 const sentEmail = require("./resetPassword/utils");
-const { createEvent } = require("./graphql/resolvers/event")
+const {createEvent} = require("./graphql/resolvers/event")
 
 app.use(bodyParser.json());
 
@@ -26,45 +26,45 @@ app.use(
 );
 
 app.use("/aps", (err, res, next) => {
-	const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
-	// const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
+	// const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
+	const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
 	const email = "gmontilla18@apu.edu"
 
 	let schedule = APS.createSchedule();
 
 	getCanvasAssignments(token).then(assignments => {
-			googleCalendar.auth(email).then(client => {
-				let calendar = googleCalendar.calendar(client);
-				googleCalendar.getEvents(calendar).then(data => {
+		googleCalendar.auth(email).then(client => {
+			let calendar = googleCalendar.calendar(client);
+			googleCalendar.getEvents(calendar).then(data => {
 
-					APS.fillSchedule(schedule, data);
-					let scheduledEvents = APS.scheduleEvents(schedule, assignments);
-					for (let event of scheduledEvents) {
-						googleEvent = event[0]
-						eventInput = event[1]
+				APS.fillSchedule(schedule, data);
+				let scheduledEvents = APS.scheduleEvents(schedule, assignments);
+				for (let event of scheduledEvents) {
+					googleEvent = event[0]
+					eventInput = event[1]
 
-						// calendar.events.insert({
-						// 		calendarId: "primary",
-						// 		resource: event
-						// 	},
-						// 	function (err, event) {
-						// 		if (err) console.log(err);
-						// 		// if event
-						// 		// 	store event in user scheduledEvents
-						// 	}
-						// );
-						eventInput['users'] = ["5e9393146b4c621e9b49e092", "5e953f88c3b86437271193ee"] // TODO: Need to grab the user id from profile/class preferences
+					// calendar.events.insert({
+					// 		calendarId: "primary",
+					// 		resource: event
+					// 	},
+					// 	function (err, event) {
+					// 		if (err) console.log(err);
+					// 		// if event
+					// 		// 	store event in user scheduledEvents
+					// 	}
+					// );
+					eventInput['users'] = ["5e9736e7f45d4a4ec995d7f2", "5e9736f0f45d4a4ec995d7f3"] // TODO: Need to grab the user id from profile/class preferences
 
-						createEvent({eventInput}).catch(err => {
-							throw err;
-						})
-					}
+					createEvent({eventInput}).catch(err => {
+						throw err;
+					})
+				}
 
-					res.send(schedule);
-				}).catch(err => {
-					throw err;
-				})
-			});
+				res.send(schedule);
+			}).catch(err => {
+				throw err;
+			})
+		});
 	});
 
 });
@@ -85,7 +85,11 @@ app.use("/forgetpassword", () => {
 mongoose
 	.connect(
 		`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`,
-		{useNewUrlParser: true, useUnifiedTopology: true}
+		{
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useFindAndModify: false
+		}
 	)
 	.then(() => {
 		app.listen(3000);

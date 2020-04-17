@@ -28,15 +28,21 @@ module.exports = {
 	},
 
 	dayDifference: eventDate => {
-		const today = new Date()
+		const today = module.exports.timezone()
 		eventDate = new Date(eventDate)
 
 		return Math.abs(Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate())) / (1000 * 60 * 60 * 24)));
 	},
 
+	timezone: () => {
+		const today = new Date();
+		const timeZoneOffset = (today.getTimezoneOffset() * 60 * 1000);
+		return new Date(today.getTime() - timeZoneOffset);
+	},
+
 	scheduleEvents: (schedule, events) => {
 		let scheduledEvents = [];
-		let today = new Date()
+
 		for (let event of events) {
 			let isScheduled = false
 			for (const day in schedule) {
@@ -44,14 +50,17 @@ module.exports = {
 				for (const interval in schedule[day]) {
 					if (isScheduled) continue;
 					if (schedule[day][interval] === 0) {
-						schedule[day][interval] = 2;
+						schedule[day][interval] = 1;
+
+						let date = module.exports.timezone()
+						date.setDate(date.getDate() + Number(day));
 
 						let hours = Math.floor(Number(interval) / 2 + 8)
 						let minutes = interval % 2 === 1 ? '30' : '00'
-						let startDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
+						let startDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
 						let endMinutes = (parseInt(minutes) + 30) % 60;
 						let endHours = (((parseInt(minutes) + 30) / 60) === 1) ? (hours + 1) : hours
-						let endDateTime = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}T${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:00`
+						let endDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:00`
 
 						let googleEvent = {
 							summary: event.title,
@@ -67,7 +76,7 @@ module.exports = {
 						};
 
 						event.start = startDateTime
-            event.end = endDateTime
+                        event.end = endDateTime
 
 						scheduledEvents.push([googleEvent, event])
 						isScheduled = true;
