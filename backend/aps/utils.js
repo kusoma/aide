@@ -9,8 +9,7 @@ module.exports = {
 
 		return schedule;
 	},
-
-	fillSchedule: (schedule, events) => {
+	fillSchedule: (schedule, mark, events) => {
 		for (const event of events) {
 			const startDateISO = new Date(event.start.dateTime)
 			const endDateISO = new Date(event.end.dateTime)
@@ -22,11 +21,12 @@ module.exports = {
 			let endTimeHours = endDateISO.getHours() + (endDateISO.getHours() - 16)
 
 			if (startDateISO.getMinutes() > 30) startTimeHours += 1;
-
 			if (endDateISO.getMinutes() > 30 && endDateISO.getMinutes <= 59) endTimeHours += 1;
 
-			for (let index = startTimeHours; index <= endTimeHours; index++) {
-				schedule[day][index] = 1;
+			for (let index = startTimeHours; index < endTimeHours; index++) {
+				if (schedule[day][index] === 0) {
+					schedule[day][index] = mark;
+				}
 			}
 		}
 	},
@@ -45,6 +45,7 @@ module.exports = {
 	},
 
 	scheduleEvent: (schedule, event) => {
+		console.log(event)
 		for (const day in schedule) {
 			for (const interval in schedule[day]) {
 				if (schedule[day][interval] === 0) {
@@ -75,7 +76,7 @@ module.exports = {
 
 					event.start = startDateTime
                     event.end = endDateTime
-
+					console.log(event.start, event.end)
 					return [googleEvent, event]
 				}
 			}
@@ -91,7 +92,6 @@ module.exports = {
 					let calendar = await googleCalendar.calendar(client);
 					await googleCalendar.getEvents(calendar).then(data => {
 						module.exports.fillSchedule(schedule, mark, data);
-						console.log(schedule[4]);
 					}).catch(err => {
 						throw err;
 					})

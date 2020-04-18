@@ -78,12 +78,14 @@ app.use("/aps", (req, res) => {
 								})
 							});
 						} else {
+							// Peer Collaboration
 							console.log("Class preferences found\nFilling schedule")
-
 							const peers = classPreferences.peers;
 							console.log(peers);
 							APS.peerCollaboration(peers).then(schedule => {
-								console.log("Filled schedule", schedule);
+								console.log("Filled schedule", schedule[2]);
+								[googleEvent, aideEvent] = APS.scheduleEvent(schedule, assignment);
+								console.log(googleEvent, aideEvent)
 							})
 						}
 					});
