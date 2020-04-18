@@ -1,3 +1,7 @@
+const { getUserEmail } = require("../graphql/resolvers/user")
+
+const googleCalendar = require("../google/utils");
+
 module.exports = {
 	createSchedule: () => {
 		let [r, c] = [8, 24];
@@ -76,5 +80,23 @@ module.exports = {
 				}
 			}
 		}
+	},
+	peerCollaboration: async (schedule, peers) => {
+		for (const peer of peers) {
+			await getUserEmail(peer).then(user => {
+				console.log("Doing " + user.email)
+				googleCalendar.auth(user.email).then(client => {
+					let calendar = googleCalendar.calendar(client);
+					googleCalendar.getEvents(calendar).then(data => {
+						module.exports.fillSchedule(schedule, data);
+					}).catch(err => {
+						throw err;
+					})
+				});
+			}).catch(err => {
+				throw err;
+			});
+		}
+		return schedule;
 	}
 }

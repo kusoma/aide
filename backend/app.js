@@ -34,15 +34,6 @@ app.use("/aps", (req, res) => {
 
 	// TODO: Change to req.token
 	getCanvasAssignments(token).then(assignments => {
-		// If assignment not scheduled
-		//      If there is a class preferences
-		//          Use class preferences
-		//          If there are users
-		//              Cycle through users to create a schedule that fits
-		//              Cycle through users to insert event
-		//          Else
-		//      Else
-		//          Just run it normally
 		let req = {userId: "5e9ae3d3f5c45d09c2c617b4"}
 
 		for (const assignment of assignments) {
@@ -87,26 +78,15 @@ app.use("/aps", (req, res) => {
 								})
 							});
 						} else {
-							console.log("Class preferences found")
+							console.log("Class preferences found\nFilling schedule")
 							let schedule = APS.createSchedule();
-							for (const peer of classPreferences.peers) {
-								getUserEmail(peer).then(user => {
-									console.log("Doing " + user.email)
-									googleCalendar.auth(user.email).then(client => {
-										let calendar = googleCalendar.calendar(client);
-										googleCalendar.getEvents(calendar).then(data => {
-											APS.fillSchedule(schedule, data);
-										}).catch(err => {
-											throw err;
-										})
-									});
-								}).catch(err => {
-									throw err;
-								});
-							}
+							const peers = classPreferences.peers;
+							console.log(peers);
+							APS.peerCollaboration(schedule, peers).then(schedule => {
+								console.log("Filled schedule", schedule);
+							})
 						}
 					});
-
 				}});
 
 			}
