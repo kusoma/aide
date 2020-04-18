@@ -9,7 +9,8 @@ module.exports = {
             defaultStudyLength: args.classPreferenceInput.defaultStudyLength,
             defaultBreakLength: args.classPreferenceInput.defaultBreakLength,
             defaultTechnique: args.classPreferenceInput.defaultTechnique,
-            user: args.classPreferenceInput.user
+            user: args.classPreferenceInput.user,
+            peers: args.classPreferenceInput.peers
         })
 
         try {
@@ -43,10 +44,11 @@ module.exports = {
         }
     },
     classPreferencesExists: async (userId, classId) => {
+        console.log(classId)
         try {
             return await ClassPreference.findOne({
-                user: userId,
-                classId: classId
+                // user: userId,
+                // classId: classId
             });
         } catch (err) {
             throw err;

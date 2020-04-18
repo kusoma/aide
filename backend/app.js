@@ -28,8 +28,8 @@ app.use(
 );
 
 app.use("/aps", (req, res) => {
-	// const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
-	const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
+	const token = "2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO"; // Greg
+	// const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
 	const email = "gmontilla18@apu.edu"
 
 	// TODO: Change to req.token
@@ -43,12 +43,52 @@ app.use("/aps", (req, res) => {
 		//          Else
 		//      Else
 		//          Just run it normally
+		let req = {userId: "5e9ae3d3f5c45d09c2c617b4"}
 
 		for (const assignment of assignments) {
 			eventExists(req.userId, assignment.title).then(event => {
-				if (event !== null) {
-					classPreferencesExists(userId, assignment.course).then(classPreferences => {
-						if (classPreferences !== null) {
+				console.log("Check if assignment already scheduled")
+				if (event === null) {
+					console.log("Not scheduled\nChecking for class preferences - " + assignment.course)
+					classPreferencesExists(req.userId, assignment.course).then(classPreferences => {
+						if (classPreferences === null) {
+							console.log("Class preferences not found")
+							googleCalendar.auth(email).then(client => {
+								let calendar = googleCalendar.calendar(client);
+								googleCalendar.getEvents(calendar).then(data => {
+									console.log("Creating schedule")
+									let schedule = APS.createSchedule();
+									APS.fillSchedule(schedule, data);
+									console.log("Scheduling event")
+									let scheduledEvent = APS.scheduleEvent(schedule, assignments);
+									googleEvent = scheduledEvent[0]
+									eventInput = scheduledEvent[1]
+
+									// calendar.events.insert({
+									// 		calendarId: "primary",
+									// 		resource: event
+									// 	},
+									// 	function (err, event) {
+									// 		if (err) console.log(err);
+									// 		// if event
+									// 		// 	store event in user scheduledEvents
+									// 	}
+									// );
+									eventInput['users'] = [req.userId] // TODO: Need to grab the user id from profile/class preferences
+
+									console.log("Adding event to db")
+									// createEvent({eventInput}).catch(err => {
+									// 	throw err;
+									// })
+
+									// res.send(schedule);
+								}).catch(err => {
+									throw err;
+								})
+							});
+						} else {
+							console.log("Class preferences found")
+							console.log(classPreferences)
 							if (classPreferences.users.length > 1) {
 								let schedule = APS.createSchedule();
 								for (const userId in classPreferences.users) {
@@ -65,39 +105,6 @@ app.use("/aps", (req, res) => {
 									});
 								}
 							}
-						} else {
-							googleCalendar.auth(email).then(client => {
-								let calendar = googleCalendar.calendar(client);
-								googleCalendar.getEvents(calendar).then(data => {
-									let schedule = APS.createSchedule();
-									APS.fillSchedule(schedule, data);
-									let scheduledEvents = APS.scheduleEvents(schedule, assignments);
-									for (let event of scheduledEvents) {
-										googleEvent = event[0]
-										eventInput = event[1]
-
-										// calendar.events.insert({
-										// 		calendarId: "primary",
-										// 		resource: event
-										// 	},
-										// 	function (err, event) {
-										// 		if (err) console.log(err);
-										// 		// if event
-										// 		// 	store event in user scheduledEvents
-										// 	}
-										// );
-										eventInput['users'] = ["5e9736e7f45d4a4ec995d7f2", "5e9736f0f45d4a4ec995d7f3"] // TODO: Need to grab the user id from profile/class preferences
-
-										createEvent({eventInput}).catch(err => {
-											throw err;
-										})
-									}
-
-									// res.send(schedule);
-								}).catch(err => {
-									throw err;
-								})
-							});
 						}
 					});
 

@@ -40,51 +40,41 @@ module.exports = {
 		return new Date(today.getTime() - timeZoneOffset);
 	},
 
-	scheduleEvents: (schedule, events) => {
-		let scheduledEvents = [];
+	scheduleEvent: (schedule, event) => {
+		for (const day in schedule) {
+			for (const interval in schedule[day]) {
+				if (schedule[day][interval] === 0) {
+					schedule[day][interval] = 1;
 
-		for (let event of events) {
-			let isScheduled = false
-			for (const day in schedule) {
-				if (isScheduled) continue;
-				for (const interval in schedule[day]) {
-					if (isScheduled) continue;
-					if (schedule[day][interval] === 0) {
-						schedule[day][interval] = 1;
+					let date = module.exports.timezone()
+					date.setDate(date.getDate() + Number(day));
 
-						let date = module.exports.timezone()
-						date.setDate(date.getDate() + Number(day));
+					let hours = Math.floor(Number(interval) / 2 + 8)
+					let minutes = interval % 2 === 1 ? '30' : '00'
+					let startDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
+					let endMinutes = (parseInt(minutes) + 30) % 60;
+					let endHours = (((parseInt(minutes) + 30) / 60) === 1) ? (hours + 1) : hours
+					let endDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:00`
 
-						let hours = Math.floor(Number(interval) / 2 + 8)
-						let minutes = interval % 2 === 1 ? '30' : '00'
-						let startDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(hours).padStart(2, '0')}:${minutes}:00`
-						let endMinutes = (parseInt(minutes) + 30) % 60;
-						let endHours = (((parseInt(minutes) + 30) / 60) === 1) ? (hours + 1) : hours
-						let endDateTime = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}T${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}:00`
+					let googleEvent = {
+						summary: event.title,
+						description: event.description,
+						start: {
+							dateTime: startDateTime,
+							timeZone: "America/Los_Angeles"
+						},
+						end: {
+							dateTime: endDateTime,
+							timeZone: "America/Los_Angeles"
+						}
+					};
 
-						let googleEvent = {
-							summary: event.title,
-							description: event.description,
-							start: {
-								dateTime: startDateTime,
-								timeZone: "America/Los_Angeles"
-							},
-							end: {
-								dateTime: endDateTime,
-								timeZone: "America/Los_Angeles"
-							}
-						};
+					event.start = startDateTime
+                    event.end = endDateTime
 
-						event.start = startDateTime
-                        event.end = endDateTime
-
-						scheduledEvents.push([googleEvent, event])
-						isScheduled = true;
-					}
+					return [googleEvent, event]
 				}
 			}
 		}
-
-		return scheduledEvents;
 	}
 }

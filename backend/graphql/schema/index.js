@@ -46,6 +46,7 @@ input EventInput {
 type ClassPreference {
     _id: ID!
     user: ID!
+    peers: [ID!]
     classId: Int!
     className: String!
     defaultStudyLength: Int!
@@ -55,6 +56,7 @@ type ClassPreference {
 
 input ClassPreferenceInput {
     user: ID!
+    peers: [ID!]!
     classId: Int!
     className: String!
     defaultStudyLength: Int!
