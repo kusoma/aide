@@ -68,7 +68,7 @@ type RootQuery {
     login(email: String!, password: String!): User
     eventExists(userId: ID!, title: String!): Event
     classPreferencesExists(userId: ID!, classId: Int): ClassPreference
-    getUserEmail(userId: ID!): User
+    getUser(userId: ID!): User
 }
 
 type RootMutation {

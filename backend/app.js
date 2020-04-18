@@ -52,8 +52,6 @@ app.use("/aps", (req, res) => {
 									APS.fillSchedule(schedule, data);
 									console.log("Scheduling event")
 									let scheduledEvent = APS.scheduleEvent(schedule, assignments);
-									googleEvent = scheduledEvent[0]
-									eventInput = scheduledEvent[1]
 
 									// calendar.events.insert({
 									// 		calendarId: "primary",
@@ -81,11 +79,11 @@ app.use("/aps", (req, res) => {
 							// Peer Collaboration
 							console.log("Class preferences found\nFilling schedule")
 							const peers = classPreferences.peers;
-							console.log(peers);
+							console.log("Peers - " + peers);
 							APS.peerCollaboration(peers).then(schedule => {
 								console.log("Filled schedule", schedule[2]);
 								[googleEvent, aideEvent] = APS.scheduleEvent(schedule, assignment);
-								console.log(googleEvent, aideEvent)
+								APS.saveEvent(peers, googleEvent, aideEvent);
 							})
 						}
 					});

@@ -1,5 +1,6 @@
-const { getUserEmail } = require("../graphql/resolvers/user")
-
+// const { getUser } = require("../graphql/resolvers/user")
+const { createEvent } = require("../graphql/resolvers/event")
+const User = require("../models/user")
 const googleCalendar = require("../google/utils");
 
 module.exports = {
@@ -82,11 +83,12 @@ module.exports = {
 			}
 		}
 	},
-	peerCollaboration: async (peers) => {
+
+	peerCollaboration: async (ids) => {
 		let schedule = module.exports.createSchedule();
 		let mark = 1;
-		for (const peer of peers) {
-			await getUserEmail(peer).then(async user => {
+		for (const id of ids) {
+			await User.findById(id).then(async user => {
 				console.log("Doing " + user.email)
 				await googleCalendar.auth(user.email).then(async client => {
 					let calendar = await googleCalendar.calendar(client);
@@ -101,6 +103,35 @@ module.exports = {
 			});
 			mark += 1;
 		}
+
 		return schedule;
+	},
+
+	saveEvent: async (ids, googleEvent, aideEvent) => {
+		for (const id of ids) {
+			// Get their ids & emails
+			await User.findById(id).then(async user => {
+				// Save to Google Calendar
+				await googleCalendar.auth(user.email).then(async client => {
+					let calendar = googleCalendar.calendar(client);
+						// calendar.events.insert({
+						// 		calendarId: "primary",
+						// 		resource: event
+						// 	},
+						// 	function (err, event) {
+						// 		if (err) console.log(err);
+						// 		// if event
+						// 		// 	store event in user scheduledEvents
+						// 	}
+						// );
+				});
+				// Save to Aide database
+				let eventInput = aideEvent
+				eventInput['users'] = ids
+				createEvent({eventInput}).catch(err => {
+					throw err;
+				})
+			})
+		}
 	}
 }
