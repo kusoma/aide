@@ -49,7 +49,7 @@ app.use("/aps", (req, res) => {
 			eventExists(req.userId, assignment.title).then(event => {
 				console.log("Check if assignment already scheduled")
 				if (event === null) {
-					console.log("Not scheduled\nChecking for class preferences - " + assignment.course)
+					console.log("Not scheduled\nChecking for class preferences")
 					classPreferencesExists(req.userId, assignment.course).then(classPreferences => {
 						if (classPreferences === null) {
 							console.log("Class preferences not found")
@@ -88,22 +88,21 @@ app.use("/aps", (req, res) => {
 							});
 						} else {
 							console.log("Class preferences found")
-							console.log(classPreferences)
-							if (classPreferences.users.length > 1) {
-								let schedule = APS.createSchedule();
-								for (const userId in classPreferences.users) {
-									getUserEmail(userId).then(user => {
-										const email = user.email;
-										googleCalendar.auth(email).then(client => {
-											let calendar = googleCalendar.calendar(client);
-											googleCalendar.getEvents(calendar).then(data => {
-												APS.fillSchedule(schedule, data);
-											}).catch(err => {
-												throw err;
-											})
-										});
+							let schedule = APS.createSchedule();
+							for (const peer of classPreferences.peers) {
+								getUserEmail(peer).then(user => {
+									console.log("Doing " + user.email)
+									googleCalendar.auth(user.email).then(client => {
+										let calendar = googleCalendar.calendar(client);
+										googleCalendar.getEvents(calendar).then(data => {
+											APS.fillSchedule(schedule, data);
+										}).catch(err => {
+											throw err;
+										})
 									});
-								}
+								}).catch(err => {
+									throw err;
+								});
 							}
 						}
 					});

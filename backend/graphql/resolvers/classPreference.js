@@ -44,11 +44,10 @@ module.exports = {
         }
     },
     classPreferencesExists: async (userId, classId) => {
-        console.log(classId)
         try {
             return await ClassPreference.findOne({
-                // user: userId,
-                // classId: classId
+                user: userId,
+                classId: classId
             });
         } catch (err) {
             throw err;
