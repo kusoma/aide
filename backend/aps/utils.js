@@ -81,14 +81,17 @@ module.exports = {
 			}
 		}
 	},
-	peerCollaboration: async (schedule, peers) => {
+	peerCollaboration: async (peers) => {
+		let schedule = module.exports.createSchedule();
+		let mark = 1;
 		for (const peer of peers) {
-			await getUserEmail(peer).then(user => {
+			await getUserEmail(peer).then(async user => {
 				console.log("Doing " + user.email)
-				googleCalendar.auth(user.email).then(client => {
-					let calendar = googleCalendar.calendar(client);
-					googleCalendar.getEvents(calendar).then(data => {
-						module.exports.fillSchedule(schedule, data);
+				await googleCalendar.auth(user.email).then(async client => {
+					let calendar = await googleCalendar.calendar(client);
+					await googleCalendar.getEvents(calendar).then(data => {
+						module.exports.fillSchedule(schedule, mark, data);
+						console.log(schedule[4]);
 					}).catch(err => {
 						throw err;
 					})
@@ -96,6 +99,7 @@ module.exports = {
 			}).catch(err => {
 				throw err;
 			});
+			mark += 1;
 		}
 		return schedule;
 	}

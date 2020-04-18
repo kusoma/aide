@@ -79,10 +79,10 @@ app.use("/aps", (req, res) => {
 							});
 						} else {
 							console.log("Class preferences found\nFilling schedule")
-							let schedule = APS.createSchedule();
+
 							const peers = classPreferences.peers;
 							console.log(peers);
-							APS.peerCollaboration(schedule, peers).then(schedule => {
+							APS.peerCollaboration(peers).then(schedule => {
 								console.log("Filled schedule", schedule);
 							})
 						}
