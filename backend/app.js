@@ -35,7 +35,6 @@ app.use("/aps", (req, res) => {
 	// TODO: Change to req.token
 	getCanvasAssignments(token).then(assignments => {
 		let req = {userId: "5e9ae3d3f5c45d09c2c617b4"}
-
 		for (const assignment of assignments) {
 			eventExists(req.userId, assignment.title).then(event => {
 				console.log("Check if assignment already scheduled")
@@ -51,7 +50,7 @@ app.use("/aps", (req, res) => {
 									let schedule = APS.createSchedule();
 									APS.fillSchedule(schedule, data);
 									console.log("Scheduling event")
-									let scheduledEvent = APS.scheduleEvent(schedule, assignments);
+									[googleEvent, aideEvent] = APS.scheduleEvent(schedule, assignments);
 
 									// calendar.events.insert({
 									// 		calendarId: "primary",
@@ -66,11 +65,9 @@ app.use("/aps", (req, res) => {
 									eventInput['users'] = [req.userId] // TODO: Need to grab the user id from profile/class preferences
 
 									console.log("Adding event to db")
-									// createEvent({eventInput}).catch(err => {
-									// 	throw err;
-									// })
-
-									// res.send(schedule);
+									createEvent({eventInput}).catch(err => {
+										throw err;
+									})
 								}).catch(err => {
 									throw err;
 								})
