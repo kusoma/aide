@@ -6,7 +6,13 @@ const classPreferenceSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
-	classID: {
+	peers: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+		},
+	],
+	classId: {
 		type: Number,
 		required: true,
 	},

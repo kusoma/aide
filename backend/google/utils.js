@@ -45,7 +45,7 @@ module.exports = {
   },
   createEvent: async ({ calendar, event }) => {
     try {
-      let res = await calendar.events.insert(
+      await calendar.events.insert(
         {
           calendarId: "primary",
           resource: event

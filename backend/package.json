@@ -19,6 +19,7 @@
     "express-graphql": "^0.9.0",
     "googleapis": "^47.0.0",
     "graphql": "^14.5.8",
+    "luxon": "^1.23.0",
     "mongoose": "^5.8.9",
     "nodemailer": "^6.4.2",
     "npm-check-updates": "^4.0.1"

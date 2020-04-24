@@ -5,8 +5,8 @@ module.exports = {
     createEvent: async args => {
         const event = new Event({
             title: args.eventInput.title,
-            startTime: args.eventInput.startTime,
-            endTime: args.eventInput.endTime,
+            start: args.eventInput.start,
+            end: args.eventInput.end,
             isQuiz: args.eventInput.isQuiz,
             users: args.eventInput.users
         })
@@ -29,24 +29,34 @@ module.exports = {
             throw err;
         }
     },
-    deleteEvent: async ({userID, eventID}) => {
+    deleteEvent: async ({userId, eventId}) => {
         try {
             await User.findByIdAndUpdate(
-                { _id: userID},
-                { $pull: { 'createdEvents': eventID } }
+                { _id: userId},
+                { $pull: { 'createdEvents': eventId } }
             );
 
             let response = await Event.findByIdAndUpdate(
-                { _id: eventID },
-                { $pull: { 'users': userID } }
+                { _id: eventId },
+                { $pull: { 'users': userId } }
             );
 
             // TODO: This is trash
             if (response.users.length === 1) {
-                let response = await Event.findOneAndDelete(eventID);
+                let response = await Event.findOneAndDelete(eventId);
             }
 
             return {...response._doc};
+        } catch (err) {
+            throw err;
+        }
+    },
+    eventExists: async (userId, title) => {
+        try {
+            return await Event.findOne({
+                users: {$in: [userId]},
+                title: title
+            });
         } catch (err) {
             throw err;
         }

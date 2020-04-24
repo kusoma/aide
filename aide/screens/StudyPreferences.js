@@ -151,24 +151,7 @@ export default class Login extends Component {
 					editable={true}
 				/>
 
-				<Text style={styles.Text}>defaultTechnique</Text>
-
-				<TextField
-					style={{
-						width: 300,
-						marginBottom: 5,
-						fontSize: 16,
-						fontFamily: 'Comfortaa',
-					}}
-					placeholder=''
-					onChangeText={defaultTechnique => this.setState({ defaultTechnique })}
-					value={this.state.defaultTechnique}
-					autoCapitalize='none'
-					editable={true}
-				/>
-
-				<Text style={styles.Text}>Rest After Each Session</Text>
-
+				<Text style={styles.Text}>Default Technique</Text>
 				<TextField
 					style={{
 						width: 300,
