@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, Text, View, ScrollView } from 'react-native';
 import { WeeklyButton } from './Buttons';
 import { Constant } from '../utils/Variables';
 
-const COLORS = [ '#C72400', '#E3640D', '#5B9E05', '#1e90ff', '#ffdf00', '#b19cd9' ];
+const COLORS = [ '#C72400', '#E3640D', '#5B9E05', '#1e90ff', '#ffdf00', '#b19cd9', '#000' ];
 const MONTHNAME = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 const YEAR = new Date().getFullYear();
 const MONTH = new Date().getMonth() + 1;
