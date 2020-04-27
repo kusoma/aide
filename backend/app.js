@@ -51,12 +51,11 @@ app.use('/aps', (req, res) => {
 		const sleep = (milliseconds) => {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
-		APS.APS(assignments[0], req.userId);
-		// assignments.forEach(async (assignment, i) => {
-		// 	setTimeout(() => {
-		// 		APS.APS(assignment, req.userId);
-		// 	}, i*2500)
-		// })
+		assignments.forEach(async (assignment, i) => {
+			setTimeout(() => {
+				APS.APS(assignment, req.userId);
+			}, i*2500)
+		})
 	});
 });
 

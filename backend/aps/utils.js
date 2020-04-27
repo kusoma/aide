@@ -19,19 +19,13 @@ module.exports = {
 			const day = module.exports.dayDifference(startDateISO)
 
 			if (startDateISO.getHours() > 20) continue;
-			console.log(startDateISO)
 
 			let startTimeHours = startDateISO.getHours() + (startDateISO.getHours() - 16)
-			let endTimeHours = endDateISO.getHours() + (endDateISO.getHours() - 16)
+			if (startDateISO.getMinutes() >= 30) startTimeHours += 1;
 
-			if (startDateISO.getMinutes() > 30) { startTimeHours += 1}
-			let diff = Math.floor((Math.abs(endDateISO - startDateISO)/1000)/60);
-			// console.log(event.summary , startTimeHours, startTimeHours + Number(diff/30));
+			const diff = Math.round(Math.floor((Math.abs(endDateISO - startDateISO)/1000)/60)/30);
 
-			if (startDateISO.getMinutes() > 30) startTimeHours += 1;
-			if ((endDateISO.getMinutes() > 30 && endDateISO.getMinutes <= 59))endTimeHours += 2;
-
-			for (let index = startTimeHours; index <= startTimeHours + Number(diff/30); index++) {
+			for (let index = startTimeHours; index < startTimeHours + diff; index++) {
 				if (schedule[day][index] === 0) {
 					schedule[day][index] = 1;
 				}
@@ -187,7 +181,6 @@ module.exports = {
 						module.exports.peerCollaboration(peers).then(async schedule => {
 							[ googleEvent, aideEvent ] = module.exports.scheduleEvent(schedule, assignment);
 							await module.exports.saveEvent(peers, googleEvent, aideEvent);
-							console.log(schedule[2]);
 						});
 					}
 				});
