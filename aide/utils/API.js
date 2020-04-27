@@ -10,7 +10,7 @@ async function callGraphql (request, callback) {
 	})
 		.then(res => {
 			if (res.status !== 200 && res.status !== 201) {
-				throw new Error('Failed!---status: ' + res.status);
+				throw new Error('Failed!---status: ' + JSON.stringify(res));
 			}
 			return res.json();
 		})

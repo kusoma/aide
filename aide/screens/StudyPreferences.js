@@ -27,7 +27,7 @@ export default class Login extends Component {
 			}
 			calledCourses = courses;
 			for (const course of calledCourses) {
-				this.createCoursePreference(course, '5e9393146b4c621e9b49e092');
+				this.createCoursePreference(course, '5ea256bbab009911227360c9');
 			}
 		});
 	}
@@ -37,15 +37,17 @@ export default class Login extends Component {
 			query: `
 					mutation {
 						createClassPreferences(classPreferenceInput: {
-							user: "${userID}"
-							classID: ${course.id},
+							user: "${userID}",
+							peers: [],
+							classId: ${course.id},
 							className: "${course.name}",
 							defaultStudyLength: 1000,
 							defaultBreakLength: 10,
 							defaultTechnique: "pomodoro",
 						}) {
 							user
-							classID
+							peers
+							classId
 							className
 							defaultStudyLength
 							defaultBreakLength
@@ -81,7 +83,7 @@ export default class Login extends Component {
 			query: `
 				mutation {
 					setStudyPreference(
-						userID: "${_id}",
+						userId: "${_id}",
 						defaultStudyLength: ${defaultStudyLength},
 						defaultBreakLength: ${defaultBreakLength},
 						defaultTechnique: "${defaultTechnique}"

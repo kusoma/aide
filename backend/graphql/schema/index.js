@@ -80,6 +80,7 @@ type RootMutation {
     deleteEvent(userId: ID!, eventId: ID!): Event!
     createClassPreferences(classPreferenceInput: ClassPreferenceInput!): ClassPreference!
     deleteClassPreferences(userId: ID!, classPreferencesId: ID!): ClassPreference!
+    setUserSettings(userID: ID!, firstName: String!, lastName: String!): User
 }
 
 schema {

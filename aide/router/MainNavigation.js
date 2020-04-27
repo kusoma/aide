@@ -12,6 +12,7 @@ import StudyPreference from '../screens/StudyPreferences';
 import StudySession from '../screens/StudySession';
 import UserSettings from '../screens/UserSettings';
 import Week from '../screens/WeeklyView';
+import ConnectCanvas from "../screens/ConnectCanvas";
 
 
 const MainNavigator = createStackNavigator({
@@ -26,6 +27,7 @@ const MainNavigator = createStackNavigator({
   ClassSettings: { screen: ClassSettings },
   StudyPreference: { screen: StudyPreference},
   EventDetail: { screen: EventDetail },
+  ConnectCanvas: {screen: ConnectCanvas}
 }, {
   headerMode: 'none',
   navigationOptions: {
