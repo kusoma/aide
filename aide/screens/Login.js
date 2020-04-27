@@ -57,7 +57,8 @@ export default class Login extends Component {
           email: json.data.login.email,
           defaultBreakLength: json.data.login.defaultBreakLength,
           defaultStudyLength: json.data.login.defaultStudyLength,
-          defaultTechnique: json.data.login.defaultTechnique
+          defaultTechnique: json.data.login.defaultTechnique,
+          canvasToken: json.data.login.canvasToken
         };
         
         this.props.navigation.navigate("BottomNavigation", user);

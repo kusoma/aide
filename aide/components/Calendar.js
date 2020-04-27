@@ -48,7 +48,9 @@ const getEventsDates = ({ data }) => {
   let hash = {};
   
   data.forEach(i => {
-    const date = i.end.slice(0,10);
+    const date = i.start_at.slice(0,10);
+    console.log(date);
+    
     
     if(hash[date])
       results[results.length - 1].count++;
@@ -90,6 +92,8 @@ const GetDates = ( data ) => {
 
          if(events) {
           events.forEach((i) => {
+            //console.log(i.day, temp.Date, i.month, currentmonth + 1);
+            
             if(i.day == temp.Date && i.month == currentmonth + 1)
               temp.Assignments = i.count;
           })

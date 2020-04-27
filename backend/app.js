@@ -9,16 +9,9 @@ const { createEvent, eventExists } = require('./graphql/resolvers/event');
 const { classPreferencesExists } = require('./graphql/resolvers/classPreference');
 const { getUserEmail } = require('./graphql/resolvers/user');
 
-<<<<<<< Updated upstream
 const Canvas = require('./canvas/utils');
 const googleCalendar = require('./google/utils');
 const APS = require('./aps/utils');
-=======
-const getCanvasAssignments = require("./canvas/utils");
-const sentEmail = require("./resetPassword/utils");
-const resetPassword = require("./resetPassword/utils");
-const { createEvent } = require("./graphql/resolvers/event")
->>>>>>> Stashed changes
 
 const sentEmail = require('./resetPassword/utils');
 
@@ -113,10 +106,8 @@ app.use('/aps', (req, res) => {
 });
 
 app.get('/canvas', (req, res) => {
-	
-	const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
-	console.log(req.query.function);
-	
+	const token = req.query.token;
+
 	switch (req.query.function) {
 		case 'assignments':
 			//res.send('ok + ' + JSON.stringify(req.query.function));
@@ -127,25 +118,15 @@ app.get('/canvas', (req, res) => {
 			break;
 			case 'courses':
 				//res.send('ok + ' + JSON.stringify(req.query.function));
-				
 				Canvas.getCanvasCourses(token).then(data => {
+					console.log(data);
+					
 				res.send(data);
 			});
 			break;
 	}
 });
 
-<<<<<<< Updated upstream
-=======
-app.post("/forgetpassword", (req, res) => {
-	resetPassword(req, res);
-})
-
-app.get("/sentemail", () => {
-  sentEmail();
-})
-
->>>>>>> Stashed changes
 mongoose
 	.connect(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`, {
 		useNewUrlParser: true,

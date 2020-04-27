@@ -10,7 +10,7 @@ export default class WeeklyView extends Component {
 		const { navigation } = this.props;
 		this.state = {
 			data: [],
-			token: navigation.getParam('canvasToken') || '',
+			token: navigation.getParam('canvasToken')
 		};
 		
 	}
@@ -18,12 +18,11 @@ export default class WeeklyView extends Component {
 	componentDidMount () {
 		const request = {
 			function: 'assignments',
-			token: this.state.token
+			token: this.state.token || '',
 		}
-		console.log('this is request', request);
-		
 		callCanvas(request , json => {
 			if (json.errors || !json) {
+				console.log(json.errors);
 				return;
 			}
 			this.setState({ data: json });

@@ -23,11 +23,11 @@ async function callGraphql (request, callback) {
 		});
 }
 
+	
 async function callCanvas (request, callback) {
-	let canvasURL = CANVAS + 'function=' + request.function + '?token='+ request.token;
+	let canvasURL = CANVAS + 'function=' + request.function + '&token=' + request.token;
 	await fetch(canvasURL, {
 		method: 'GET',
-		body: JSON.stringify(request),
 		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {
@@ -39,6 +39,7 @@ async function callCanvas (request, callback) {
 			callback(data);
 		})
 		.catch(err => {
+			console.log(err)
 			return err;
 		});
 }
@@ -55,9 +56,6 @@ async function callGoogle (request, callback) {
 		})
 		.catch(err => {
 			return err;
-<<<<<<< Updated upstream
-		});
-=======
 		})
 }
 
@@ -79,7 +77,6 @@ async function callResetPassword (request, callback) {
 		.catch(err => {
 			return err;
 		})
->>>>>>> Stashed changes
 }
 
 module.exports.callCanvas = callCanvas;

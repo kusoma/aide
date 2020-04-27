@@ -77,13 +77,8 @@ export default class SignUp extends Component {
 					defaultTechnique
 					canvasToken
 				}
-<<<<<<< Updated upstream
-			}`,
-		};
-=======
 			}`
     };
->>>>>>> Stashed changes
 
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, json => {
