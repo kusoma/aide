@@ -10,6 +10,8 @@ export default class Login extends Component {
     super();
     this.state = {
       email: "",
+      firstName: "",
+      lastName: "",
       password: "",
       showPassword: true,
       isError: false,
@@ -48,6 +50,7 @@ export default class Login extends Component {
         this.setState({ isErrorText: json.errors[0].message });
       } else {
         const user = {
+          _id: json.data.login._id,
           firstName: json.data.login.firstName,
           lastName: json.data.login.lastName,
           email: json.data.login.email,

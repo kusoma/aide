@@ -1,79 +1,127 @@
-import React, {Component} from "react";
-import {
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-	TouchableOpacity
-} from "react-native";
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import {Constant, GlobalStyle} from "../utils/Variables";
-import {TextField} from "../components/Form";
-import {WideButton} from "../components/Buttons";
-import {callGraphql} from "../utils/API";
-
+import { Constant, GlobalStyle } from '../utils/Variables';
+import { TextField } from '../components/Form';
+import { WideButton } from '../components/Buttons';
+import { callGraphql, callCanvas } from '../utils/API';
 
 export default class Login extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
-		const {navigation} = this.props;
+		const { navigation } = this.props;
 		this.state = {
-			// email: navigation.getParam("email"),
-			// firstName: navigation.getParam("firstName"),
-			// lastName: navigation.getParam("lastName"),
-			defaultStudyLength: navigation.getParam("defaultStudyLength"),
-			defaultBreakLength: navigation.getParam("defaultBreakLength"),
-			defaultTechnique: navigation.getParam("defaultTechnique"),
-			_id: navigation.getParam("_id")
+			defaultStudyLength: navigation.getParam('defaultStudyLength'),
+			defaultBreakLength: navigation.getParam('defaultBreakLength'),
+			defaultTechnique: navigation.getParam('defaultTechnique'),
+			_id: navigation.getParam('_id'),
+			courses: [],
 		};
 	}
+	async coursesHandler () {
+		let calledCourses = null;
 
-	StudyPreferenceHandler() {
+		callCanvas('courses', courses => {
+			if (courses.errors || !courses) {
+				return;
+			}
+			calledCourses = courses;
+			for (const course of calledCourses) {
+				this.createCoursePreference(course, '5ea256bbab009911227360c9');
+			}
+		});
+	}
+
+	createCoursePreference (course, userID) {
+		const request = {
+			query: `
+					mutation {
+						createClassPreferences(classPreferenceInput: {
+							user: "${userID}",
+							peers: [],
+							classId: ${course.id},
+							className: "${course.name}",
+							defaultStudyLength: 1000,
+							defaultBreakLength: 10,
+							defaultTechnique: "pomodoro",
+						}) {
+							user
+							peers
+							classId
+							className
+							defaultStudyLength
+							defaultBreakLength
+							defaultTechnique
+						}
+					}
+					`,
+		};
+
+		callGraphql(request, json => {
+			if (json.errors) {
+				this.setState({ isError: true });
+				this.setState({ isErrorText: json.errors[0].message });
+			} else {
+				const course = {
+					...json.data.createClassPreferences,
+				};
+
+				this.setState(prevState => ({
+					courses: [ ...prevState.courses, course ],
+				}));
+			}
+		});
+	}
+
+	StudyPreferenceHandler () {
 		defaultStudyLength = this.state.defaultStudyLength;
 		defaultBreakLength = this.state.defaultBreakLength;
 		defaultTechnique = this.state.defaultTechnique;
-		_id = this.state._id
+		_id = this.state._id;
 
 		const request = {
 			query: `
-			mutation {
-				setStudyPreference(
-				    userID: "${_id}",
-					defaultStudyLength: ${defaultStudyLength},
-					defaultBreakLength: ${defaultBreakLength},
-					defaultTechnique: "${defaultTechnique}"
+				mutation {
+					setStudyPreference(
+						userId: "${_id}",
+						defaultStudyLength: ${defaultStudyLength},
+						defaultBreakLength: ${defaultBreakLength},
+						defaultTechnique: "${defaultTechnique}"
 
-				){
-				    defaultStudyLength
-          	        defaultBreakLength
-         		    defaultTechnique
-			    }
-            }`
+					)  {
+						defaultStudyLength
+						defaultBreakLength
+						defaultTechnique
+					}
+				}
+      		`,
 		};
 
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, json => {
 			if (json.errors) {
-				this.setState({isError: true});
-				this.setState({isErrorText: json.errors[0].message});
-
+				this.setState({ isError: true });
+				this.setState({ isErrorText: json.errors[0].message });
 			} else {
 				const user = {
 					defaultBreakLength: json.data.setStudyPreference.defaultBreakLength,
 					defaultStudyLength: json.data.setStudyPreference.defaultStudyLength,
-					defaultTechnique: json.data.setStudyPreference.defaultTechnique
+					defaultTechnique: json.data.setStudyPreference.defaultTechnique,
 				};
 				this.props.navigation.navigate('StudyPreferences', user);
 			}
 		});
 	}
 
+	componentDidMount () {
+		this.coursesHandler();
+	}
 
-	render() {
+	render () {
 		return (
 			<ScrollView contentContainerStyle={GlobalStyle.container}>
 				<Text style={styles.title}>Study Preferences</Text>
-				<View style={{marginTop: 25}}>
+				<View style={{ marginTop: 25 }}>
 					<Text style={styles.Text}>Study Length</Text>
 				</View>
 				<TextField
@@ -81,14 +129,12 @@ export default class Login extends Component {
 						width: 300,
 						marginBottom: 5,
 						fontSize: 16,
-						fontFamily: "Comfortaa"
+						fontFamily: 'Comfortaa',
 					}}
-					placeholder=""
-					onChangeText={defaultStudyLength =>
-						this.setState({defaultStudyLength})
-					}
+					placeholder=''
+					onChangeText={defaultStudyLength => this.setState({ defaultStudyLength })}
 					value={`${this.state.defaultStudyLength}`}
-					autoCapitalize="words"
+					autoCapitalize='words'
 					editable={true}
 				/>
 
@@ -98,14 +144,12 @@ export default class Login extends Component {
 						width: 300,
 						marginBottom: 5,
 						fontSize: 16,
-						fontFamily: "Comfortaa"
+						fontFamily: 'Comfortaa',
 					}}
-					placeholder=""
-					onChangeText={defaultBreakLength =>
-						this.setState({defaultBreakLength})
-					}
+					placeholder=''
+					onChangeText={defaultBreakLength => this.setState({ defaultBreakLength })}
 					value={`${this.state.defaultBreakLength}`}
-					autoCapitalize="words"
+					autoCapitalize='words'
 					editable={true}
 				/>
 
@@ -115,47 +159,58 @@ export default class Login extends Component {
 						width: 300,
 						marginBottom: 5,
 						fontSize: 16,
-						fontFamily: "Comfortaa"
+						fontFamily: 'Comfortaa',
 					}}
-					placeholder=""
-					onChangeText={defaultTechnique => this.setState({defaultTechnique})}
-					value={this.state.defaultTechnique}
-					autoCapitalize="none"
-					editable={true}
+					placeholder='45 mins'
+					onChangeText={email => this.setState({ email })}
+					value={this.state.email}
+					autoCapitalize='none'
 				/>
-
-				<View style={{marginTop: 20, marginBottom: 20}}>
+				<View style={{ marginTop: 20, marginBottom: 20 }}>
 					<Text style={styles.title2}>Classes to Automate</Text>
 				</View>
 
-				<WideButton label="CS125 - Intro to Computer Science"/>
-				<WideButton label="UBBL110 - World Religions" imageColor="#000"/>
-				<WideButton label="MATH350 - Diff Equations"/>
+				{this.state.courses ? (
+					this.state.courses.map(course => {
+						return (
+							<WideButton
+								key={course.classID}
+								label={course.className.length > 30 ? `${course.className.substring(0, 30)}...` : course.className}
+								onPress={() =>
+									this.props.navigation.navigate('ClassSettings', {
+										className: course.className,
+									})}
+							/>
+						);
+					})
+				) : (
+					<Text>Loading...</Text>
+				)}
 
-				<View style={{marginTop: 15, marginBottom: 15}}>
+				<View style={{ marginTop: 15, marginBottom: 15 }}>
 					<TouchableOpacity
 						style={[
 							GlobalStyle.pillButton,
 							GlobalStyle.shadow,
 							{
 								width: Constant.MAX_WIDTH / 9,
-								height: Constant.MAX_HEIGHT / 22
-							}
+								height: Constant.MAX_HEIGHT / 22,
+							},
 						]}
 						onPress={() => this.StudyPreferenceHandler(this.state.defaultBreakLength, this.state.defaultStudyLength, this.state.defaultTechnique)}
 					>
 						<Text style={styles.textplus}> + </Text>
 					</TouchableOpacity>
 				</View>
-				<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 					<TouchableOpacity
 						style={[
 							GlobalStyle.pillButton,
 							GlobalStyle.shadow,
 							{
 								width: Constant.MAX_WIDTH / 4.5,
-								height: Constant.MAX_HEIGHT / 22
-							}
+								height: Constant.MAX_HEIGHT / 22,
+							},
 						]}
 					>
 						<Text style={styles.textlogout}> Save </Text>
@@ -166,8 +221,8 @@ export default class Login extends Component {
 							GlobalStyle.shadow,
 							{
 								width: Constant.MAX_WIDTH / 4.5,
-								height: Constant.MAX_HEIGHT / 22
-							}
+								height: Constant.MAX_HEIGHT / 22,
+							},
 						]}
 					>
 						<Text style={styles.textlogout}> Cancel </Text>
@@ -181,31 +236,31 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
 	title: {
 		fontSize: 36,
-		fontWeight: "bold",
-		fontFamily: "Comfortaa",
-		color: Constant.COLORS.MAROON
+		fontWeight: 'bold',
+		fontFamily: 'Comfortaa',
+		color: Constant.COLORS.MAROON,
 	},
 	title2: {
 		fontSize: 26,
-		fontWeight: "bold",
-		fontFamily: "Comfortaa",
-		color: Constant.COLORS.MAROON
+		fontWeight: 'bold',
+		fontFamily: 'Comfortaa',
+		color: Constant.COLORS.MAROON,
 	},
 	Text: {
 		fontSize: 13,
-		color: "#828282",
-		fontFamily: "Comfortaa"
+		color: '#828282',
+		fontFamily: 'Comfortaa',
 	},
 	textlogout: {
-		color: "white",
+		color: 'white',
 		paddingVertical: 6,
 		fontSize: 17,
-		marginBottom: 7
+		marginBottom: 7,
 	},
 	textplus: {
-		color: "white",
+		color: 'white',
 		paddingVertical: 1,
 		fontSize: 25,
-		marginBottom: 7
-	}
+		marginBottom: 7,
+	},
 });

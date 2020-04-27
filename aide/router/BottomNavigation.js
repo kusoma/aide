@@ -9,6 +9,7 @@ import WeeklyView from "../screens/WeeklyView";
 import UserSettings from "../screens/UserSettings";
 import { Constant } from "../utils/Variables";
 import StudySession from "../screens/StudySession"
+import ConnectCanvas from "../screens/ConnectCanvas";
 
 const ICON_SIZE = 25;
 
@@ -74,7 +75,24 @@ const BottomNavigator = createMaterialBottomTabNavigator(
         tabBarColor: Constant.COLORS.MAROON
       }
     },
+    ConnectCanvas: {
+      screen: ConnectCanvas,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <View>
+            <Icon
+              style={[{ color: tintColor }]}
+              size={ICON_SIZE}
+              name={"user"}
+            />
+          </View>
+        ),
+        tabBarColor: Constant.COLORS.MAROON
+      }
+    },
+    
   },
+  
   {
     labeled: false,
     activeColor: "#FFF",

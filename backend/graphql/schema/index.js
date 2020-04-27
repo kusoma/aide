@@ -1,4 +1,4 @@
-const { buildSchema } = require("graphql");
+const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
 type User {
@@ -69,6 +69,7 @@ type RootQuery {
     eventExists(userId: ID!, title: String!): Event
     classPreferencesExists(userId: ID!, classId: Int): ClassPreference
     getUser(userId: ID!): User
+    
 }
 
 type RootMutation {
@@ -79,6 +80,7 @@ type RootMutation {
     deleteEvent(userId: ID!, eventId: ID!): Event!
     createClassPreferences(classPreferenceInput: ClassPreferenceInput!): ClassPreference!
     deleteClassPreferences(userId: ID!, classPreferencesId: ID!): ClassPreference!
+    setUserSettings(userID: ID!, firstName: String!, lastName: String!): User
 }
 
 schema {
