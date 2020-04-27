@@ -119,8 +119,6 @@ app.get('/canvas', (req, res) => {
 			case 'courses':
 				//res.send('ok + ' + JSON.stringify(req.query.function));
 				Canvas.getCanvasCourses(token).then(data => {
-					console.log(data);
-					
 				res.send(data);
 			});
 			break;
