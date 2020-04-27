@@ -106,18 +106,22 @@ app.use('/aps', (req, res) => {
 });
 
 app.get('/canvas', (req, res) => {
+	
 	const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO';
-
+	console.log(req.query.function);
+	
 	switch (req.query.function) {
 		case 'assignments':
 			//res.send('ok + ' + JSON.stringify(req.query.function));
+			
 			Canvas.getCanvasAssignments(token).then(data => {
 				res.send(data);
 			});
 			break;
-		case 'courses':
-			//res.send('ok + ' + JSON.stringify(req.query.function));
-			Canvas.getCanvasCourses(token).then(data => {
+			case 'courses':
+				//res.send('ok + ' + JSON.stringify(req.query.function));
+				
+				Canvas.getCanvasCourses(token).then(data => {
 				res.send(data);
 			});
 			break;
