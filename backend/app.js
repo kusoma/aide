@@ -9,9 +9,16 @@ const { createEvent, eventExists } = require('./graphql/resolvers/event');
 const { classPreferencesExists } = require('./graphql/resolvers/classPreference');
 const { getUserEmail } = require('./graphql/resolvers/user');
 
+<<<<<<< Updated upstream
 const Canvas = require('./canvas/utils');
 const googleCalendar = require('./google/utils');
 const APS = require('./aps/utils');
+=======
+const getCanvasAssignments = require("./canvas/utils");
+const sentEmail = require("./resetPassword/utils");
+const resetPassword = require("./resetPassword/utils");
+const { createEvent } = require("./graphql/resolvers/event")
+>>>>>>> Stashed changes
 
 const sentEmail = require('./resetPassword/utils');
 
@@ -128,6 +135,17 @@ app.get('/canvas', (req, res) => {
 	}
 });
 
+<<<<<<< Updated upstream
+=======
+app.post("/forgetpassword", (req, res) => {
+	resetPassword(req, res);
+})
+
+app.get("/sentemail", () => {
+  sentEmail();
+})
+
+>>>>>>> Stashed changes
 mongoose
 	.connect(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`, {
 		useNewUrlParser: true,

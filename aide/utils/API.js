@@ -55,7 +55,31 @@ async function callGoogle (request, callback) {
 		})
 		.catch(err => {
 			return err;
+<<<<<<< Updated upstream
 		});
+=======
+		})
+}
+
+async function callResetPassword (request, callback) {
+	await fetch(RESTPASSWORD, {
+		method: 'POST',
+		body: JSON.stringify(request),
+		headers: { 'Content-Type': 'application/json' }
+	})
+		.then(res => {
+			if(res.status !== 200 || res.status !== 201 ) {
+				throw new Error('Error');
+			}
+			return res.json();
+		})
+		.then(data => {
+			callback(data);
+		})
+		.catch(err => {
+			return err;
+		})
+>>>>>>> Stashed changes
 }
 
 module.exports.callCanvas = callCanvas;
