@@ -46,9 +46,9 @@ const getEventsDates = ({ data }) => {
 
   const results = [];
   let hash = {};
-  
+
   data.forEach(i => {
-    const date = i.end.slice(0,10);
+    const date = i.start_at.slice(0,10);
     
     if(hash[date])
       results[results.length - 1].count++;

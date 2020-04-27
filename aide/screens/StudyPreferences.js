@@ -224,6 +224,7 @@ export default class Login extends Component {
 								height: Constant.MAX_HEIGHT / 22,
 							},
 						]}
+						onPress={() => this.props.navigation.navigate("BottomNavigation")}
 					>
 						<Text style={styles.textlogout}> Cancel </Text>
 					</TouchableOpacity>

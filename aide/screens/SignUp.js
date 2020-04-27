@@ -77,8 +77,8 @@ export default class SignUp extends Component {
 					defaultTechnique
 					canvasToken
 				}
-			}`,
-		};
+			}`
+    };
 
 		// MAYBE: Essentially same function as login handler, maybe we coould combine them
 		callGraphql(request, json => {

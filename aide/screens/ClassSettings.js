@@ -62,7 +62,9 @@ export default class ClassSettings extends Component {
 							<Text style={GlobalStyle.pillButtonText}> Save </Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ GlobalStyle.cancelPillButton, { width: Constant.MAX_WIDTH / 2.5 } ]}>
-							<Text style={GlobalStyle.pillButtonText}> Cancel </Text>
+							<Text style={GlobalStyle.pillButtonText}
+									onPress={() => this.props.navigation.navigate("StudyPreference")}
+							> Cancel </Text>
 						</TouchableOpacity>
 					</View>
 				</View>

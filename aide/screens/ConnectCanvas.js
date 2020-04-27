@@ -32,6 +32,9 @@ export default class ConnectCanvas extends Component {
       `,
 		};
 
+		console.log(canvasToken);
+		
+
 		callGraphql(request, json => {
 			console.log(json);
 

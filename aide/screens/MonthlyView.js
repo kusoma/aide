@@ -8,15 +8,22 @@ import { callCanvas } from '../utils/API';
 
 
 export default class MonthlyView extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
+      const { navigation } = this.props;
       this.state = {
         data: [],
+        token: navigation.getParam('canvasToken') || '',
       }
     }
 
      componentDidMount() {
-       callCanvas((json) => {
+       const request = {
+         function: 'courses',
+         token: this.state.token
+       }
+
+       callCanvas(request, json => {
         if (json.errors || !json) {
           return;
         }

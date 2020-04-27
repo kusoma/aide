@@ -13,7 +13,7 @@ module.exports = {
 				throw err;
 			});
 
-			return { ...result._doc, canvasToken: null, password: null };
+			return { ...result._doc, canvasToken: canvasToken, password: null };
 		} catch (err) {
 			throw err;
 		}
