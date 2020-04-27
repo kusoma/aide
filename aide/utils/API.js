@@ -24,9 +24,10 @@ async function callGraphql (request, callback) {
 }
 
 async function callCanvas (request, callback) {
-	let canvasURL = CANVAS + 'function=' + request;
+	let canvasURL = CANVAS + 'function=' + request.function + '?token='+ request.token;
 	await fetch(canvasURL, {
 		method: 'GET',
+		body: JSON.stringify(request),
 		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {

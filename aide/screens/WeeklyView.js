@@ -5,15 +5,24 @@ import { WeeklyViewList } from '../components/List';
 import { callCanvas } from '../utils/API';
 
 export default class WeeklyView extends Component {
-	constructor () {
-		super();
+	constructor (props) {
+		super(props);
+		const { navigation } = this.props;
 		this.state = {
 			data: [],
+			token: navigation.getParam('canvasToken') || '',
 		};
+		
 	}
 
 	componentDidMount () {
-		callCanvas('assignments', json => {
+		const request = {
+			function: 'assignments',
+			token: this.state.token
+		}
+		console.log('this is request', request);
+		
+		callCanvas(request , json => {
 			if (json.errors || !json) {
 				return;
 			}

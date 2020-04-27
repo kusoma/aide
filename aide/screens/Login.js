@@ -38,6 +38,7 @@ export default class Login extends Component {
           defaultStudyLength
           defaultBreakLength
           defaultTechnique
+          canvasToken
 				}
 			  }
 			`
