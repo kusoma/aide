@@ -47,7 +47,7 @@ module.exports = {
 	},
 
 	scheduleEvent: (schedule, event) => {
-		for (const day in schedule) {
+		for(let day = 1; day < schedule.length; day++) {
 			for (const interval in schedule[day]) {
 				if (schedule[day][interval] === 0) {
 					schedule[day][interval] = 1;
@@ -78,6 +78,7 @@ module.exports = {
 					event.start = startDateTime
                     event.end = endDateTime
 					console.log(event.start, event.end)
+					console.log(googleEvent)
 					return [googleEvent, event]
 				}
 			}
@@ -139,7 +140,7 @@ module.exports = {
 			if (event === null) {
 				console.log('Not scheduled\nChecking for class preferences');
 				await classPreferencesExists(userId, assignment.course).then(async classPreferences => {
-					if (classPreferences === null) {
+					if (classPreferences !== null) {
 						console.log('Class preferences not found');
 						googleCalendar.auth(email).then(async client => {
 							let calendar = await googleCalendar.calendar(client);
@@ -154,7 +155,7 @@ module.exports = {
 
 									await calendar.events.insert({
 											calendarId: "primary",
-											resource: event
+											resource: googleEvent
 										},
 										function (err, event) {
 											if (err) console.log(err);
@@ -162,7 +163,7 @@ module.exports = {
 											// 	store event in user scheduledEvents
 										}
 									);
-									event['users'] = [ userId ]; // TODO: Need to grab the user id from profile/class preferences
+									aideEvent['users'] = [ userId ]; // TODO: Need to grab the user id from profile/class preferences
 
 									console.log('Adding event to db');
 									// createEvent({ event }).catch(err => {
@@ -180,7 +181,7 @@ module.exports = {
 						console.log('Peers - ' + peers);
 						module.exports.peerCollaboration(peers).then(async schedule => {
 							[ googleEvent, aideEvent ] = module.exports.scheduleEvent(schedule, assignment);
-							await module.exports.saveEvent(peers, googleEvent, aideEvent);
+							module.exports.saveEvent(peers, googleEvent, aideEvent);
 						});
 					}
 				});
