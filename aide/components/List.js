@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, FlatList, Text, View, ScrollView } from 'react-native';
 import { WeeklyButton } from './Buttons';
 import { Constant } from '../utils/Variables';
+import { callGraphql } from '../utils/API';
 
 const COLORS = [ '#C72400', '#E3640D', '#5B9E05', '#1e90ff', '#ffdf00' ];
 const MONTHNAME = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
@@ -67,7 +68,7 @@ const getDate = data => {
 
 	if (YEAR === year && MONTH === month && DAY === day) return 'Today';
 	if (YEAR === year && MONTH == month && DAY + 1 === day) return `Tomorrow, ${MONTHNAME[month - 1]} ${day}`;
-	if (YEAR === year && MONTH == month && DAY - 1 === day) return `Yesturday, ${MONTHNAME[month - 1]} ${day}`;
+	if (YEAR === year && MONTH == month && DAY - 1 === day) return `Yesterday, ${MONTHNAME[month - 1]} ${day}`;
 	else return `${MONTHNAME[month - 1]} ${day}`;
 };
 

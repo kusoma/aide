@@ -30,14 +30,12 @@ export default class Login extends Component {
 		};
 		console.log(this.state._id);
 		callCanvas(request, courses => {
-			//console.log('------------------------', courses);
-
 			if (courses.errors || !courses) {
 				return;
 			}
 			calledCourses = courses;
 			for (const course of calledCourses) {
-				this.createCoursePreference(course, '5ea256bbab009911227360c9');
+				this.createCoursePreference(course, this.state._id);
 			}
 		});
 	}
@@ -199,7 +197,7 @@ export default class Login extends Component {
 						fontSize: 16,
 						fontFamily: 'Comfortaa',
 					}}
-					placeholder='45 mins'
+					placeholder='Pomodoro'
 					onChangeText={email => this.setState({ email })}
 					value={this.state.email}
 					autoCapitalize='none'
@@ -240,7 +238,7 @@ export default class Login extends Component {
 						<Text style={styles.textplus}> + </Text>
 					</TouchableOpacity>
 				</View>
-				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 15, marginBottom: 15 }}>
 					<TouchableOpacity
 						style={[
 							GlobalStyle.pillButton,

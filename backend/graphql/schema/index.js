@@ -69,7 +69,6 @@ type RootQuery {
     eventExists(userId: ID!, title: String!): Event
     classPreferencesExists(userId: ID!, classId: Int): ClassPreference
     getUser(userId: ID!): User
-    
 }
 
 type RootMutation {

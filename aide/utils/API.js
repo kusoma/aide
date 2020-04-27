@@ -12,6 +12,7 @@ async function callGraphql (request, callback) {
 			if (res.status !== 200 && res.status !== 201) {
 				throw new Error('Failed!---status: ' + JSON.stringify(res));
 			}
+			//console.log('HEREERE' + JSON.stringify(res.json()));
 			return res.json();
 		})
 		.then(data => {
@@ -23,7 +24,6 @@ async function callGraphql (request, callback) {
 		});
 }
 
-	
 async function callCanvas (request, callback) {
 	let canvasURL = CANVAS + 'function=' + request.function + '&token=' + request.token;
 	await fetch(canvasURL, {
@@ -39,7 +39,7 @@ async function callCanvas (request, callback) {
 			callback(data);
 		})
 		.catch(err => {
-			console.log(err)
+			console.log(err);
 			return err;
 		});
 }
@@ -56,17 +56,17 @@ async function callGoogle (request, callback) {
 		})
 		.catch(err => {
 			return err;
-		})
+		});
 }
 
 async function callResetPassword (request, callback) {
 	await fetch(RESTPASSWORD, {
 		method: 'POST',
 		body: JSON.stringify(request),
-		headers: { 'Content-Type': 'application/json' }
+		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => {
-			if(res.status !== 200 || res.status !== 201 ) {
+			if (res.status !== 200 || res.status !== 201) {
 				throw new Error('Error');
 			}
 			return res.json();
@@ -76,7 +76,7 @@ async function callResetPassword (request, callback) {
 		})
 		.catch(err => {
 			return err;
-		})
+		});
 }
 
 module.exports.callCanvas = callCanvas;
