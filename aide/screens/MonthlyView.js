@@ -19,7 +19,7 @@ export default class MonthlyView extends Component {
 
      componentDidMount() {
        const request = {
-         function: 'courses',
+         function: 'assignments',
          token: this.state.token
        }
 

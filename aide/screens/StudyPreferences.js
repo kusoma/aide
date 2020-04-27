@@ -10,18 +10,28 @@ export default class Login extends Component {
 	constructor (props) {
 		super(props);
 		const { navigation } = this.props;
+		
 		this.state = {
 			defaultStudyLength: navigation.getParam('defaultStudyLength'),
 			defaultBreakLength: navigation.getParam('defaultBreakLength'),
 			defaultTechnique: navigation.getParam('defaultTechnique'),
 			_id: navigation.getParam('_id'),
 			courses: [],
+			token: navigation.getParam('token') || '',
 		};
 	}
 	async coursesHandler () {
 		let calledCourses = null;
+		console.log('here', this.state.token);
+		
+		const request = {
+			function: 'courses',
+			token: this.state.token
+		  }
 
-		callCanvas('courses', courses => {
+		callCanvas(request, courses => {
+			console.log('------------------------', courses);
+			
 			if (courses.errors || !courses) {
 				return;
 			}

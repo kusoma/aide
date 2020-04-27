@@ -14,6 +14,7 @@ export default class UserSettings extends Component {
 			firstName: navigation.getParam('firstName'),
 			lastName: navigation.getParam('lastName'),
 			_id: navigation.getParam('_id'),
+			token: navigation.getParam('canvasToken') || '',
 		};
 	}
 
@@ -91,7 +92,7 @@ export default class UserSettings extends Component {
 				</View>
 
 				<View>
-					<WideButton label='Study Preferences' image='lightbulb-o' imageColor='#000' onPress={() => this.props.navigation.navigate('StudyPreference')} />
+					<WideButton label='Study Preferences' image='lightbulb-o' imageColor='#000' onPress={() => this.props.navigation.navigate('StudyPreference', this.state)} />
 					<WideButton
 						label='Log Out '
 						buttonStyle={{
