@@ -5,7 +5,7 @@ export const Constant = {
 	MAX_HEIGHT: Dimensions.get('screen').height,
 	COLORS: {
 		MAROON: '#8B1D1D',
-		SHADOW_COLOR: 'rgba(0,0,0,0.25)',
+		SHADOW_COLOR: 'rgba(0,0,0,0.3)',
 	},
 };
 
@@ -75,7 +75,7 @@ export const GlobalStyle = StyleSheet.create({
 	},
 	shadow: {
 		shadowColor: Constant.COLORS.SHADOW_COLOR,
-		shadowOffset: { width: 0, height: 0 },
+		shadowOffset: { width: 3, height: 8 },
 		shadowOpacity: 0.2,
 		shadowRadius: 1,
 	},
