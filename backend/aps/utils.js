@@ -1,6 +1,9 @@
 const { getUser } = require("../graphql/resolvers/user")
-const { createEvent } = require("../graphql/resolvers/event")
-const googleCalendar = require("../google/utils");
+const { createEvent, eventExists } = require('../graphql/resolvers/event');
+const { classPreferencesExists } = require('../graphql/resolvers/classPreference');
+
+const googleCalendar = require('../google/utils');
+
 
 module.exports = {
 	createSchedule: () => {
@@ -9,23 +12,28 @@ module.exports = {
 
 		return schedule;
 	},
-	fillSchedule: (schedule, mark, events) => {
+	fillSchedule: (schedule, events) => {
 		for (const event of events) {
 			const startDateISO = new Date(event.start.dateTime)
 			const endDateISO = new Date(event.end.dateTime)
 			const day = module.exports.dayDifference(startDateISO)
 
 			if (startDateISO.getHours() > 20) continue;
+			console.log(startDateISO)
 
 			let startTimeHours = startDateISO.getHours() + (startDateISO.getHours() - 16)
 			let endTimeHours = endDateISO.getHours() + (endDateISO.getHours() - 16)
 
-			if (startDateISO.getMinutes() > 30) startTimeHours += 1;
-			if (endDateISO.getMinutes() > 30 && endDateISO.getMinutes <= 59) endTimeHours += 1;
+			if (startDateISO.getMinutes() > 30) { startTimeHours += 1}
+			let diff = Math.floor((Math.abs(endDateISO - startDateISO)/1000)/60);
+			// console.log(event.summary , startTimeHours, startTimeHours + Number(diff/30));
 
-			for (let index = startTimeHours; index < endTimeHours; index++) {
+			if (startDateISO.getMinutes() > 30) startTimeHours += 1;
+			if ((endDateISO.getMinutes() > 30 && endDateISO.getMinutes <= 59))endTimeHours += 2;
+
+			for (let index = startTimeHours; index <= startTimeHours + Number(diff/30); index++) {
 				if (schedule[day][index] === 0) {
-					schedule[day][index] = mark;
+					schedule[day][index] = 1;
 				}
 			}
 		}
@@ -45,7 +53,6 @@ module.exports = {
 	},
 
 	scheduleEvent: (schedule, event) => {
-		console.log(event)
 		for (const day in schedule) {
 			for (const interval in schedule[day]) {
 				if (schedule[day][interval] === 0) {
@@ -85,14 +92,13 @@ module.exports = {
 
 	peerCollaboration: async (ids) => {
 		let schedule = module.exports.createSchedule();
-		let mark = 1;
 		for (const id of ids) {
 			await getUser(id).then(async user => {
 				console.log("Doing " + user.email)
 				await googleCalendar.auth(user.email).then(async client => {
 					let calendar = await googleCalendar.calendar(client);
 					await googleCalendar.getEvents(calendar).then(data => {
-						module.exports.fillSchedule(schedule, mark, data);
+						module.exports.fillSchedule(schedule, data);
 					}).catch(err => {
 						throw err;
 					})
@@ -100,9 +106,7 @@ module.exports = {
 			}).catch(err => {
 				throw err;
 			});
-			mark += 1;
 		}
-
 		return schedule;
 	},
 
@@ -110,27 +114,84 @@ module.exports = {
 		// Save to Aide database
 		let eventInput = aideEvent
 		eventInput['users'] = ids
-		createEvent({eventInput}).catch(err => {
-			throw err;
-		})
+		// createEvent({eventInput}).catch(err => {
+		// 	throw err;
+		// })
 		for (const id of ids) {
 			// Get their ids & emails
 			await getUser(id).then(async user => {
 				// Save to Google Calendar
-				// await googleCalendar.auth(user.email).then(async client => {
-				// 	let calendar = googleCalendar.calendar(client);
-				// 		calendar.events.insert({
-				// 				calendarId: "primary",
-				// 				resource: googleEvent
-				// 			},
-				// 			function (err, event) {
-				// 				if (err) console.log(err);
-				// 				// if event
-				// 				// 	store event in user scheduledEvents
-				// 			}
-				// 		);
-				// });
+				await googleCalendar.auth(user.email).then(async client => {
+					let calendar = googleCalendar.calendar(client);
+						await calendar.events.insert({
+								calendarId: "primary",
+								resource: googleEvent
+							},
+							function (err, event) {
+								if (err) console.log(err);
+								// if event
+								// 	store event in user scheduledEvents
+							}
+						);
+				});
 			})
 		}
+	},
+
+	APS: async (assignment, userId) => {
+		const email = 'gmontilla18@apu.edu';
+		await eventExists(userId, assignment.title).then(async event => {
+			console.log('Check if assignment already scheduled');
+			if (event === null) {
+				console.log('Not scheduled\nChecking for class preferences');
+				await classPreferencesExists(userId, assignment.course).then(async classPreferences => {
+					if (classPreferences === null) {
+						console.log('Class preferences not found');
+						googleCalendar.auth(email).then(async client => {
+							let calendar = await googleCalendar.calendar(client);
+							googleCalendar
+								.getEvents(calendar)
+								.then(async data => {
+									console.log('Creating schedule');
+									let schedule = module.exports.createSchedule();
+									module.exports.fillSchedule(schedule, data);
+									console.log('Scheduling event');
+									[googleEvent, aideEvent] = module.exports.scheduleEvent(schedule, assignment);
+
+									await calendar.events.insert({
+											calendarId: "primary",
+											resource: event
+										},
+										function (err, event) {
+											if (err) console.log(err);
+											// if event
+											// 	store event in user scheduledEvents
+										}
+									);
+									event['users'] = [ userId ]; // TODO: Need to grab the user id from profile/class preferences
+
+									console.log('Adding event to db');
+									// createEvent({ event }).catch(err => {
+									// 	throw err;
+									// });
+								})
+								.catch(err => {
+									throw err;
+								});
+						});
+					} else {
+						// Peer Collaboration
+						console.log('Class preferences found\nFilling schedule');
+						const peers = classPreferences.peers;
+						console.log('Peers - ' + peers);
+						module.exports.peerCollaboration(peers).then(async schedule => {
+							[ googleEvent, aideEvent ] = module.exports.scheduleEvent(schedule, assignment);
+							await module.exports.saveEvent(peers, googleEvent, aideEvent);
+							console.log(schedule[2]);
+						});
+					}
+				});
+			}
+		});
 	}
 }

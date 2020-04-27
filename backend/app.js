@@ -48,60 +48,15 @@ app.use('/aps', (req, res) => {
 	// TODO: Change to req.token
 	Canvas.getCanvasAssignments(token).then(assignments => {
 		let req = { userId: '5e9ae3d3f5c45d09c2c617b4' };
-		for (const assignment of assignments) {
-			eventExists(req.userId, assignment.title).then(event => {
-				console.log('Check if assignment already scheduled');
-				if (event === null) {
-					console.log('Not scheduled\nChecking for class preferences');
-					classPreferencesExists(req.userId, assignment.course).then(classPreferences => {
-						if (classPreferences === null) {
-							console.log('Class preferences not found');
-							googleCalendar.auth(email).then(client => {
-								let calendar = googleCalendar.calendar(client);
-								googleCalendar
-									.getEvents(calendar)
-									.then(data => {
-										console.log('Creating schedule');
-										let schedule = APS.createSchedule();
-										APS.fillSchedule(schedule, data);
-										console.log('Scheduling event')[(googleEvent, aideEvent)] = APS.scheduleEvent(schedule, assignments);
-
-										// calendar.events.insert({
-										// 		calendarId: "primary",
-										// 		resource: event
-										// 	},
-										// 	function (err, event) {
-										// 		if (err) console.log(err);
-										// 		// if event
-										// 		// 	store event in user scheduledEvents
-										// 	}
-										// );
-										eventInput['users'] = [ req.userId ]; // TODO: Need to grab the user id from profile/class preferences
-
-										console.log('Adding event to db');
-										createEvent({ eventInput }).catch(err => {
-											throw err;
-										});
-									})
-									.catch(err => {
-										throw err;
-									});
-							});
-						} else {
-							// Peer Collaboration
-							console.log('Class preferences found\nFilling schedule');
-							const peers = classPreferences.peers;
-							console.log('Peers - ' + peers);
-							APS.peerCollaboration(peers).then(schedule => {
-								console.log('Filled schedule', schedule[2]);
-								[ googleEvent, aideEvent ] = APS.scheduleEvent(schedule, assignment);
-								APS.saveEvent(peers, googleEvent, aideEvent);
-							});
-						}
-					});
-				}
-			});
+		const sleep = (milliseconds) => {
+			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
+		APS.APS(assignments[0], req.userId);
+		// assignments.forEach(async (assignment, i) => {
+		// 	setTimeout(() => {
+		// 		APS.APS(assignment, req.userId);
+		// 	}, i*2500)
+		// })
 	});
 });
 
