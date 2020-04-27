@@ -23,17 +23,16 @@ export default class ConnectCanvas extends Component {
 			query: `
 			mutation {
 				setCanvasToken(
-             userId: "${_id}",
-             canvasToken: "${canvasToken}"
+             		userId: "${_id}",
+             		canvasToken: "${canvasToken}"
 				)  {
-            canvasToken
+            		canvasToken
 				}
-      }
-      `,
+			  }
+			  `,
 		};
 
 		console.log(canvasToken);
-		
 
 		callGraphql(request, json => {
 			console.log(json);

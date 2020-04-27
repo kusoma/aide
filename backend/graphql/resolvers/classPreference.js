@@ -14,7 +14,7 @@ module.exports = {
 		});
 
 		try {
-			const existingClass = await ClassPreference.findOne({ classID: args.classPreferenceInput.classID, user: args.classPreferenceInput.user });
+			const existingClass = await ClassPreference.findOne({ classId: args.classPreferenceInput.classId, user: args.classPreferenceInput.user });
 			if (existingClass) {
 				return existingClass;
 			}

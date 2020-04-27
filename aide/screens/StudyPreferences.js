@@ -10,7 +10,7 @@ export default class Login extends Component {
 	constructor (props) {
 		super(props);
 		const { navigation } = this.props;
-		
+
 		this.state = {
 			defaultStudyLength: navigation.getParam('defaultStudyLength'),
 			defaultBreakLength: navigation.getParam('defaultBreakLength'),
@@ -23,15 +23,15 @@ export default class Login extends Component {
 	async coursesHandler () {
 		let calledCourses = null;
 		console.log('here', this.state.token);
-		
+
 		const request = {
 			function: 'courses',
-			token: this.state.token
-		  }
-
+			token: this.state.token,
+		};
+		console.log(this.state._id);
 		callCanvas(request, courses => {
-			console.log('------------------------', courses);
-			
+			//console.log('------------------------', courses);
+
 			if (courses.errors || !courses) {
 				return;
 			}
@@ -83,11 +83,38 @@ export default class Login extends Component {
 		});
 	}
 
+	defaultHandler () {
+		const request = {
+			query: `
+				query {
+					getUser(userId: "${this.state._id}") {
+						defaultStudyLength
+						defaultBreakLength
+						defaultTechnique
+					}
+				  }
+				`,
+		};
+
+		callGraphql(request, json => {
+			if (json.errors) {
+				this.setState({ isError: true });
+				this.setState({ isErrorText: json.errors[0].message });
+			} else {
+				this.setState({
+					defaultBreakLength: json.data.getUser.defaultBreakLength,
+					defaultStudyLength: json.data.getUser.defaultStudyLength,
+					defaultTechnique: json.data.getUser.defaultTechnique,
+				});
+			}
+		});
+	}
+
 	StudyPreferenceHandler () {
-		defaultStudyLength = this.state.defaultStudyLength;
-		defaultBreakLength = this.state.defaultBreakLength;
-		defaultTechnique = this.state.defaultTechnique;
-		_id = this.state._id;
+		let defaultStudyLength = this.state.defaultStudyLength;
+		let defaultBreakLength = this.state.defaultBreakLength;
+		let defaultTechnique = this.state.defaultTechnique;
+		let _id = this.state._id;
 
 		const request = {
 			query: `
@@ -124,6 +151,7 @@ export default class Login extends Component {
 	}
 
 	componentDidMount () {
+		this.defaultHandler();
 		this.coursesHandler();
 	}
 
@@ -222,6 +250,7 @@ export default class Login extends Component {
 								height: Constant.MAX_HEIGHT / 22,
 							},
 						]}
+						onPress={() => this.StudyPreferenceHandler()}
 					>
 						<Text style={styles.textlogout}> Save </Text>
 					</TouchableOpacity>
@@ -234,7 +263,7 @@ export default class Login extends Component {
 								height: Constant.MAX_HEIGHT / 22,
 							},
 						]}
-						onPress={() => this.props.navigation.navigate("BottomNavigation")}
+						onPress={() => this.props.navigation.navigate('BottomNavigation')}
 					>
 						<Text style={styles.textlogout}> Cancel </Text>
 					</TouchableOpacity>
