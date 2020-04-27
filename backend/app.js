@@ -41,8 +41,10 @@ app.use(
 );
 
 app.use('/aps', (req, res) => {
+	// const token = '2948~YkXHUltkirz8HGTca7lEVgpBR6AM8KQb9c2sOYuMe4Z5m52wMu6UuuLeGzvxUpJp'
+	// const email = 'nseheult16@apu.edu'
+
 	const token = '2948~F5QurelFrTW4C9AyKJmihX5AyUp7Wrb0T5a51tXdZtdmr5i6Zva4EmLKEbnaa2aO'; // Greg
-	// const token = "2948~LagNvqsbqAGzlHBjIMoNaCUqQSHLRRsNkvIl8rohSOvQXNFRhumwwK4oyXS4xd5U"; // Blake
 	const email = 'gmontilla18@apu.edu';
 
 	// TODO: Change to req.token
@@ -54,7 +56,7 @@ app.use('/aps', (req, res) => {
 		assignments.forEach(async (assignment, i) => {
 			setTimeout(() => {
 				APS.APS(assignment, req.userId);
-			}, i*2500)
+			}, i*3000)
 		})
 	});
 });

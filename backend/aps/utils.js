@@ -78,7 +78,6 @@ module.exports = {
 					event.start = startDateTime
                     event.end = endDateTime
 					console.log(event.start, event.end)
-					console.log(googleEvent)
 					return [googleEvent, event]
 				}
 			}
@@ -140,7 +139,7 @@ module.exports = {
 			if (event === null) {
 				console.log('Not scheduled\nChecking for class preferences');
 				await classPreferencesExists(userId, assignment.course).then(async classPreferences => {
-					if (classPreferences !== null) {
+					if (classPreferences === null) {
 						console.log('Class preferences not found');
 						googleCalendar.auth(email).then(async client => {
 							let calendar = await googleCalendar.calendar(client);
